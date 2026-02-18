@@ -2021,13 +2021,41 @@ details[open]>summary i {
         /* hide 3D graphic on mobile */
     }
 
-    /* --- APPLE CINEMATIC SECTION --- */
-    .apple-text-block {
-        padding: 0 1.5rem;
+    /* --- APPLE CINEMATIC SECTION — Static fallback on mobile ---
+       The JS scroll effects use CSS vars that never change on mobile
+       because the scroll thresholds rely on desktop viewport heights.
+       Force the overlay dark and text visible on mobile. */
+    #apple-section {
+        height: 100vh;
+        /* single screen — no scroll journey */
+        min-height: 480px;
     }
 
-    .apple-headline {
-        font-size: clamp(1.8rem, 7vw, 2.5rem);
+    #apple-sticky-container {
+        position: relative;
+        /* de-sticky so section doesn't stay fixed */
+        height: 100vh;
+        min-height: 480px;
+    }
+
+    #apple-overlay {
+        /* Force overlay visible regardless of JS CSS var */
+        opacity: 1 !important;
+        background: linear-gradient(to bottom,
+                rgba(0, 0, 0, 0.25) 0%,
+                rgba(0, 0, 0, 0.60) 50%,
+                rgba(0, 0, 0, 0.88) 100%);
+    }
+
+    /* Force text visible regardless of JS */
+    .apple-text-reveal {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    #apple-bg-image {
+        /* No blur on mobile — too expensive */
+        filter: none !important;
     }
 
     /* --- TRUCK SCENE --- */
@@ -2182,17 +2210,21 @@ details[open]>summary i {
         justify-content: center;
     }
 
-    /* --- UNIVERSITY FEATURES --- */
+    /* --- UNIVERSITY FEATURES --- turn off scroll-sticky layout */
     #university-features {
-        min-height: auto;
+        min-height: auto !important;
+        height: auto !important;
     }
 
     .uf-container {
-        grid-template-columns: 1fr;
-        padding: 2rem 1.25rem;
-        gap: 1.5rem;
-        position: relative;
-        height: auto;
+        grid-template-columns: 1fr !important;
+        padding: 2.5rem 1.25rem !important;
+        gap: 1.5rem !important;
+        position: relative !important;
+        /* de-sticky */
+        top: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
     }
 
     .uf-left {
@@ -2201,8 +2233,11 @@ details[open]>summary i {
 
     .uf-right {
         order: 1;
-        height: 250px;
+        height: 260px;
         border-radius: 20px;
+        position: relative !important;
+        /* ensure mockup screens stack correctly */
+        overflow: hidden;
     }
 
     .uf-headline {
@@ -2221,7 +2256,35 @@ details[open]>summary i {
         border-radius: 20px;
     }
 
-    /* --- STATS SECTION --- */
+    /* --- STATS SECTION ---
+       #stats-section uses `bg-brand-900` (Tailwind) — Tailwind CDN removed,
+       so we must set the dark background and text colors in vanilla CSS. */
+    #stats-section {
+        background-color: #0c4a6e !important;
+        /* brand-900 equivalent */
+        color: white !important;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    /* Counter numbers: white solid */
+    #stats-section .counter,
+    #stats-section [class*="text-white"] {
+        color: white !important;
+    }
+
+    /* Accent labels ("Millones de Paquetes" etc) — keep orange/accent */
+    #stats-section [class*="text-accent"] {
+        color: #fb923c !important;
+        /* accent-400 */
+    }
+
+    /* Reveal class: force visible (overflow can block counter animation) */
+    #stats-section .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
