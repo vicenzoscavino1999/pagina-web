@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO & Open Graph -->
+    <title>GlobalLogistics | Envíos Rápidos y Seguros</title>
+    <meta name="description"
+        content="Soluciones logísticas globales. Rastreo en tiempo real, envíos aéreos, marítimos y terrestres. Infraestructura de última generación.">
+    <meta name="theme-color" content="#0284c7">
+
+    <meta property="og:title" content="GlobalLogistics | Envíos Rápidos y Seguros" />
+    <meta property="og:description"
+        content="Cotiza y rastrea tu envío en segundos. Conectamos tu negocio con el mundo." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://globallogistics.demo" />
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80" />
+
+    <!-- 
+        ADVERTENCIA DE PRODUCCIÓN:
+        Este CDN es solo para desarrollo/preview. 
+        En producción, instalar Tailwind vía CLI y usar PurgeCSS.
+    -->
+    <!-- Tailwind CDN Removed via migration -->
+
+    <!-- Fuentes y Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+
+<body class="text-slate-600 antialiased bg-slate-50 relative overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <a href="/" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group"
+                    aria-label="Ir al inicio">
+                    <div
+                        class="w-10 h-10 bg-brand-600 group-hover:bg-accent-500 transition-colors duration-300 rounded flex items-center justify-center text-white text-xl shadow-lg">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div class="leading-none">
+                        <span class="block font-extrabold text-2xl tracking-tighter drop-shadow-md"
+                            id="logo-text">GLOBAL</span>
+                        <span
+                            class="block font-bold text-[10px] text-accent-500 tracking-[0.2em] uppercase">Logistics</span>
+                    </div>
+                </a>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="javascript:void(0)"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Envíos
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
+                    </a>
+                    <a href="#tracking-widget"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Rastreo
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
+                    </a>
+                    <a href="#servicios"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Soluciones
+                        <span
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
+                    </a>
+                    <a href="/login"
+                        class="bg-white text-brand-900 hover:bg-accent-500 hover:text-white px-6 py-2.5 rounded font-bold transition-all shadow-lg hover:shadow-accent-500/30 text-sm transform hover:-translate-y-0.5">Area
+                        Clientes</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-btn" type="button" class="text-2xl focus:outline-none p-2"
+                        aria-label="Abrir menú de navegación" aria-controls="mobile-menu" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu"
+            class="hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl md:hidden h-screen z-40">
+            <div class="flex flex-col p-6 space-y-6 text-lg">
+                <a href="javascript:void(0)"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Envíos</a>
+                <a href="#tracking-widget"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Rastreo</a>
+                <a href="#servicios"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Soluciones</a>
+                <a href="/login"
+                    class="bg-brand-900 text-white text-center py-4 rounded-xl font-bold shadow-lg mt-4">Area
+                    Clientes</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <!-- LCP Optimization: fetchpriority high, sync decoding -->
+            <img id="hero-bg"
+                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80"
+                width="1920" height="1080" alt="Logistics Network"
+                class="w-full h-[120%] object-cover absolute top-0 left-0 will-change-transform" fetchpriority="high"
+                decoding="sync">
+            <div class="absolute inset-0 hero-overlay"></div>
+        </div>
+
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7 text-white reveal">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6 rounded-full">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> Operando globalmente 24/7
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 drop-shadow-lg">
+                    Mueve tu mundo <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600">sin
+                        límites.</span>
+                </h1>
+                <p class="text-xl text-slate-200 mb-10 max-w-xl leading-relaxed font-light drop-shadow">
+                    Infraestructura logística de última generación para empresas que no pueden detenerse.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <!-- Botones placeholder con type="button" y disabled para evitar confusión -->
+                    <button type="button"
+                        class="bg-accent-600 hover:bg-accent-700 text-white px-8 py-4 rounded font-bold transition shadow-lg shadow-accent-600/30 transform hover:-translate-y-1 flex items-center gap-2"
+                        onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})">
+                        Cotizar Ahora <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button type="button"
+                        class="px-8 py-4 rounded font-bold text-white border border-white/30 hover:bg-white/10 transition backdrop-blur-sm flex items-center gap-2"
+                        disabled title="Video no disponible en demo">
+                        <i class="fa-solid fa-play-circle text-xl"></i> Ver Video
+                    </button>
+                </div>
+            </div>
+
+            <!-- Widget de Rastreo -->
+            <div id="tracking-widget"
+                class="lg:col-span-5 bg-white p-8 rounded-2xl shadow-2xl reveal border-t-4 border-accent-500 relative overflow-hidden group">
+                <div
+                    class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-50 rounded-full blur-3xl opacity-50 group-hover:scale-150 transition-transform duration-1000 ease-in-out">
+                </div>
+
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">Rastrear Envío</h3>
+                <p class="text-slate-500 text-sm mb-6 relative z-10">Visualiza el estado de tu paquete en tiempo real.
+                </p>
+
+                <form id="tracking-form" class="space-y-4 relative z-10">
+                    <div>
+                        <label for="tracking-input" class="sr-only">Número de guía</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-magnifying-glass text-brand-400"></i>
+                            </div>
+                            <input type="text" id="tracking-input"
+                                class="block w-full pl-11 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 placeholder-slate-400 font-mono uppercase tracking-wide transition-all shadow-inner focus:outline-none focus-visible:outline-none"
+                                placeholder="Ejem: TRACK-123" required>
+                        </div>
+                    </div>
+                    <button type="submit" id="tracking-btn"
+                        class="w-full bg-brand-900 hover:bg-brand-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-900/30 flex justify-center items-center gap-3">
+                        <span>RASTREAR</span> <i class="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </form>
+
+                <div id="tracking-result" class="hidden mt-6 pt-6 border-t border-slate-100 relative z-10">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <p class="text-xs text-slate-400 uppercase font-bold">Guía</p>
+                            <p class="text-brand-900 font-mono font-bold" id="result-id">TRACK-123</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400 uppercase font-bold">Estimado</p>
+                            <p class="text-green-600 font-bold" id="result-date">Calculando...</p>
+                        </div>
+                    </div>
+                    <div class="space-y-0 mt-4">
+                        <div class="timeline-item completed">
+                            <span class="timeline-dot"></span>
+                            <p class="text-sm font-bold text-slate-800">Recolectado</p>
+                            <p class="text-xs text-slate-500">Madrid, ES - 10:00 AM</p>
+                        </div>
+                        <div class="timeline-item completed">
+                            <span class="timeline-dot"></span>
+                            <p class="text-sm font-bold text-slate-800">En Centro de Distribución</p>
+                            <p class="text-xs text-slate-500">Madrid, Hub Central - 14:30 PM</p>
+                        </div>
+                        <div class="timeline-item current">
+                            <span class="timeline-dot"></span>
+                            <p class="text-sm font-bold text-accent-600">En Tránsito Internacional</p>
+                            <p class="text-xs text-slate-500">Vuelo IB6403 - En curso</p>
+                        </div>
+                        <div class="timeline-item">
+                            <span class="timeline-dot"></span>
+                            <p class="text-sm font-bold text-slate-400">Entrega</p>
+                            <p class="text-xs text-slate-400">Pendiente</p>
+                        </div>
+                    </div>
+                    <button type="button" id="reset-tracking-btn"
+                        class="mt-4 text-xs text-slate-400 hover:text-brand-600 underline w-full text-center">Nueva
+                        búsqueda</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW APPLE-STYLE IMMERSIVE SECTION -->
+    <section id="apple-section" aria-label="Tecnología de rastreo">
+        <div id="apple-sticky-container">
+            <img id="apple-bg-image"
+                src="https://images.unsplash.com/photo-1516937941348-c09645f31e88?auto=format&fit=crop&w=1920&q=80"
+                width="1920" height="1080" alt="Conectividad Global" decoding="async">
+            <div id="apple-overlay"></div>
+
+            <div class="relative z-10 max-w-5xl px-6 text-center">
+                <!-- Se ha eliminado aria-hidden dinámico. El contenido es visible o está en opacidad 0, pero accesible en el DOM -->
+                <h2 id="apple-heading" class="apple-text-reveal text-5xl md:text-8xl font-bold tracking-tight mb-6">
+                    Conectividad <br> Inteligente.
+                </h2>
+                <p id="apple-subheading"
+                    class="apple-text-reveal text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed"
+                    style="transition-delay: 100ms;">
+                    Tu carga monitoreada por satélite en cada kilómetro del océano. Precisión absoluta cuando más
+                    importa.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Ticker Corrected -->
+    <div class="bg-white border-b border-slate-100 py-8 overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>
+
+        <div id="ticker-container" class="flex animate-scroll whitespace-nowrap gap-16 items-center">
+            <!-- Content injected via JS for perfect loop -->
+        </div>
+    </div>
+
+    <!-- Template para Ticker (Para clonar en JS) -->
+    <template id="ticker-content">
+        <div class="text-2xl font-bold text-slate-300 flex gap-16 items-center pr-16">
+            <span class="flex items-center gap-2"><i class="fa-brands fa-dhl text-4xl"></i> DHL Partner</span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-fedex text-3xl"></i> FedEx Connect</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-plane-up text-3xl"></i> LATAM Cargo</span>
+            <span class="flex items-center gap-2"><i class="fa-solid fa-ship text-3xl"></i> MAERSK Line</span>
+            <span class="flex items-center gap-2"><i class="fa-brands fa-amazon text-3xl"></i> Amazon Logistics</span>
+        </div>
+    </template>
+
+    <!-- Servicios -->
+    <section id="servicios" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-accent-500 font-bold tracking-widest uppercase text-sm mb-3">Nuestras Soluciones</h2>
+                <p class="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight">Transporte adaptado a tus
+                    necesidades</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div
+                    class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform">
+                    <div class="h-64 relative parallax-wrapper">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+                            width="800" height="500" alt="Avión de carga" class="parallax-img" loading="lazy">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-4 bg-brand-600 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
+                            Express</div>
+                    </div>
+                    <div class="p-8 relative">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
+                            Carga Aérea</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Envíos urgentes con prioridad de
+                            embarque. Conectividad directa con los principales hubs aeroportuarios.</p>
+                        <span
+                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
+                            detalles <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <div class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform"
+                    style="transition-delay: 100ms;">
+                    <div class="h-64 relative parallax-wrapper">
+                        <img src="https://images.unsplash.com/photo-1577702312572-5bb9fbca732d?auto=format&fit=crop&w=800&q=80"
+                            width="800" height="500" alt="Barco carguero" class="parallax-img" loading="lazy">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-4 bg-slate-800 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
+                            Económico</div>
+                    </div>
+                    <div class="p-8 relative">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
+                            Carga Marítima</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Soluciones FCL y LCL. Gestión integral de
+                            aduanas y documentación internacional.</p>
+                        <span
+                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
+                            detalles <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+
+                <div class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform"
+                    style="transition-delay: 200ms;">
+                    <div class="h-64 relative parallax-wrapper">
+                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=80"
+                            width="800" height="500" alt="Camión de carga" class="parallax-img" loading="lazy">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
+                        </div>
+                        <div
+                            class="absolute bottom-4 left-4 bg-accent-500 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
+                            Nacional</div>
+                    </div>
+                    <div class="p-8 relative">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
+                            Terrestre</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Flota moderna monitoreada por GPS.
+                            Servicios de carga completa (FTL) y paquetería (LTL).</p>
+                        <span
+                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
+                            detalles <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Funciona -->
+    <section class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-16 reveal">Tu envío en 3 pasos simples</h2>
+
+            <div class="grid md:grid-cols-3 gap-12 relative">
+                <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-slate-100 z-0"></div>
+
+                <div class="reveal relative z-10">
+                    <div
+                        class="w-24 h-24 bg-white border-4 border-brand-50 rounded-full flex items-center justify-center text-brand-600 text-3xl mx-auto mb-6 shadow-xl">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">1. Cotiza en línea</h3>
+                    <p class="text-slate-500 text-sm">Obtén tarifas instantáneas para tus envíos nacionales e
+                        internacionales sin compromiso.</p>
+                </div>
+
+                <div class="reveal relative z-10" style="transition-delay: 100ms;">
+                    <div
+                        class="w-24 h-24 bg-brand-600 border-4 border-brand-200 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6 shadow-xl ring-4 ring-brand-50">
+                        <i class="fa-solid fa-dolly"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. Recolección</h3>
+                    <p class="text-slate-500 text-sm">Nuestras unidades pasan por tu domicilio o almacén. Etiquetado y
+                        documentación incluida.</p>
+                </div>
+
+                <div class="reveal relative z-10" style="transition-delay: 200ms;">
+                    <div
+                        class="w-24 h-24 bg-white border-4 border-green-50 rounded-full flex items-center justify-center text-green-500 text-3xl mx-auto mb-6 shadow-xl">
+                        <i class="fa-solid fa-flag-checkered"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Entrega Segura</h3>
+                    <p class="text-slate-500 text-sm">Entregamos en la puerta del destinatario con firma digital y
+                        confirmación fotográfica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-24 bg-brand-900 text-white relative overflow-hidden" id="stats-section">
+        <div class="absolute inset-0 overflow-hidden">
+            <img id="stats-bg"
+                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1920&q=80"
+                width="1920" height="1080" alt="Background"
+                class="w-full h-[150%] object-cover absolute top-0 left-0 opacity-10 mix-blend-overlay will-change-transform"
+                decoding="async">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
+                <div class="reveal p-4">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="15"
+                        data-suffix="M+">0</div>
+                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Millones de Paquetes</div>
+                </div>
+                <div class="reveal p-4">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="220"
+                        data-suffix="+">0</div>
+                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Países Cubiertos</div>
+                </div>
+                <div class="reveal p-4">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="1200"
+                        data-suffix="+">0</div>
+                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Vehículos</div>
+                </div>
+                <div class="reveal p-4">
+                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 flex justify-center gap-1"><span
+                            class="counter" data-target="99" data-suffix="%">0</span></div>
+                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Entregas a Tiempo</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-slate-50" id="contacto">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-3xl font-extrabold text-slate-900">Preguntas Frecuentes</h2>
+                <p class="text-slate-500 mt-2">Resolvemos tus dudas antes de enviar.</p>
+            </div>
+
+            <div class="space-y-4">
+                <details
+                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
+                    <summary
+                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
+                        <span>¿Cómo calculan el peso volumétrico?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
+                        </span>
+                    </summary>
+                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
+                        El peso volumétrico se calcula multiplicando largo x ancho x alto (en cm) y dividiéndolo entre
+                        5000. Cobramos el mayor entre el peso real y el volumétrico, estándar en la industria.
+                    </div>
+                </details>
+
+                <details
+                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
+                    <summary
+                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
+                        <span>¿Ofrecen seguro para mercancía valiosa?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
+                        </span>
+                    </summary>
+                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
+                        Sí, ofrecemos un seguro opcional que cubre hasta el 110% del valor declarado de la factura
+                        comercial ante pérdida total o daños visibles durante el transporte.
+                    </div>
+                </details>
+
+                <details
+                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
+                    <summary
+                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
+                        <span>¿Cuáles son los tiempos de entrega internacionales?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
+                        </span>
+                    </summary>
+                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
+                        Depende del servicio: Express (24-48 horas a capitales principales), Estándar Aéreo (3-5 días) y
+                        Marítimo (15-45 días según el puerto de destino).
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 text-sm border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center text-white"><i
+                                class="fa-solid fa-box-open"></i></div>
+                        <span class="font-bold text-xl text-white">GLOBAL</span>
+                    </div>
+                    <p class="mb-6 leading-relaxed">Conectando mercados, impulsando negocios. La red logística más
+                        fiable para tus operaciones críticas.</p>
+                    <div class="flex gap-4">
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-slate-900 flex items-center justify-center rounded-full hover:bg-brand-600 hover:text-white transition"><i
+                                class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="javascript:void(0)"
+                            class="w-10 h-10 bg-slate-900 flex items-center justify-center rounded-full hover:bg-brand-600 hover:text-white transition"><i
+                                class="fa-brands fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Empresa</h4>
+                    <ul class="space-y-3">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Sobre Nosotros</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Sostenibilidad</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Carreras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Soporte</h4>
+                    <ul class="space-y-3">
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Centro de Ayuda</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Reclamos</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-white transition">Objetos Prohibidos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Newsletter</h4>
+                    <p class="mb-4 text-xs">Recibe actualizaciones de mercado y ofertas.</p>
+                    <form onsubmit="event.preventDefault();" class="flex">
+                        <input type="email" placeholder="Email"
+                            class="bg-slate-900 text-white px-4 py-2 rounded-l-lg w-full focus:outline-none focus:ring-1 focus:ring-brand-500 border border-slate-800"
+                            aria-label="Email para newsletter">
+                        <button type="submit"
+                            class="bg-brand-600 px-4 py-2 rounded-r-lg text-white hover:bg-brand-500 transition"
+                            aria-label="Suscribirse"><i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div
+                class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
+                <p>&copy; 2026 Global Logistics Inc.</p>
+                <div class="flex gap-6">
+                    <a href="javascript:void(0)" class="hover:text-white">Privacidad</a>
+                    <a href="javascript:void(0)" class="hover:text-white">Cookies</a>
+                    <a href="javascript:void(0)" class="hover:text-white">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Soporte -->
+    <a href="javascript:void(0)"
+        class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl z-50 transition transform hover:scale-110 flex items-center gap-2 group"
+        aria-label="Chat de soporte">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span
+            class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-bold">Chat
+            Soporte</span>
+    </a>
+
+    <!-- LÓGICA DE APLICACIÓN ARQUITECTURA (MODULAR TYPESCRIPT) -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

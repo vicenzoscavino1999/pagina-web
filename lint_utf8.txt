@@ -1,0 +1,27 @@
+﻿
+> delivery-web-page@0.0.0 lint
+> eslint src --ext .ts
+
+
+C:\Users\Vicenzo\Documents\antygravity\delivery-web-page\src\main.ts
+  30:9  error  This is the default value for this type parameter, so it can be omitted  @typescript-eslint/no-unnecessary-type-arguments
+
+C:\Users\Vicenzo\Documents\antygravity\delivery-web-page\src\modules\AppleScrollScene.ts
+  26:38  error  Missing return type on function       @typescript-eslint/explicit-function-return-type
+  27:38  error  Missing return type on function       @typescript-eslint/explicit-function-return-type
+  42:12  error  '_scrollY' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Vicenzo\Documents\antygravity\delivery-web-page\src\modules\CounterAnimation.ts
+  38:51  error  Missing return type on function                                                 @typescript-eslint/explicit-function-return-type
+  44:37  error  Operands of '+' operations must be a number or string. Got `number` + `string`  @typescript-eslint/restrict-plus-operands
+  49:41  error  Operands of '+' operations must be a number or string. Got `number` + `string`  @typescript-eslint/restrict-plus-operands
+
+C:\Users\Vicenzo\Documents\antygravity\delivery-web-page\src\modules\NavbarController.ts
+  11:13  error  Unnecessary conditional, value is always falsy                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unnecessary-condition
+  17:51  error  A method that is not declared with `this: void` may cause unintentional scoping of `this` when separated from its object.
+Consider using an arrow function or explicitly `.bind()`ing the method to avoid calling the method with an unintended `this` value. 
+If a function does not access `this`, it can be annotated with `this: void`  @typescript-eslint/unbound-method
+
+Ô£û 9 problems (9 errors, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
