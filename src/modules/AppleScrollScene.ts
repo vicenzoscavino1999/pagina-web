@@ -48,6 +48,7 @@ export class AppleScrollScene {
 
         const sectionHeight = this.#section.offsetHeight;
         const windowHeight = window.innerHeight;
+        // The "active" scroll range is the section height minus one viewport
         const endOffset = sectionHeight - windowHeight;
 
         if (scrollYRelative < -windowHeight || scrollYRelative > endOffset + windowHeight) return;
@@ -62,11 +63,15 @@ export class AppleScrollScene {
         scrollProgress = clamp(scrollProgress, 0, 1);
 
         const { MAX_BLUR, MAX_OPACITY } = AppleScrollScene.CONSTANTS;
-        const blurValue = scrollProgress * MAX_BLUR;
-        const opacityValue = scrollProgress * MAX_OPACITY;
+
+        // Blur and overlay build up during the first 60% of scroll
+        const darkenProgress = clamp(scrollProgress / 0.6, 0, 1);
+        const blurValue = darkenProgress * MAX_BLUR;
+        const overlayOpacity = darkenProgress * MAX_OPACITY;
 
         this.#section.style.setProperty('--apple-blur', `${blurValue}px`);
-        this.#section.style.setProperty('--apple-opacity', `${opacityValue}`);
+        // Updated CSS variable name to match new stylesheet
+        this.#section.style.setProperty('--apple-overlay-opacity', `${overlayOpacity}`);
 
         this.#updateTextVisibility(scrollProgress);
     }
@@ -75,8 +80,10 @@ export class AppleScrollScene {
         const heading = document.getElementById('apple-heading');
         const subheading = document.getElementById('apple-subheading');
 
-        const isVisible = progress > 0.1;
-        const isSubVisible = progress > 0.2;
+        // Text only appears AFTER the image has darkened enough (>40% scroll)
+        // This creates the Apple effect: image first, then text emerges from darkness
+        const isVisible = progress > 0.4;
+        const isSubVisible = progress > 0.52;
 
         if (heading) heading.classList.toggle('apple-text-visible', isVisible);
         if (subheading) subheading.classList.toggle('apple-text-visible', isSubVisible);
