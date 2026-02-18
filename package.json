@@ -10,9 +10,9 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "test:ui": "vitest --ui",
-        "lint": "eslint src --ext .ts",
-        "lint:fix": "eslint src --ext .ts --fix",
-        "format": "prettier --write src/**/*.ts",
+        "lint": "eslint src tests --ext .ts --max-warnings=0",
+        "lint:fix": "eslint src tests --ext .ts --fix",
+        "format": "prettier --write .",
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {

@@ -9,38 +9,53 @@ import { EventBus } from './utils/events';
 import { debounce } from './utils/math';
 import { qsa } from './utils/dom';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', (): void => {
+    // --- Navbar ---
     const navbarEl = document.getElementById('navbar');
-    // Using simple modules, we can keep references if needed, but for now just init
     const navbar = navbarEl ? new NavbarController(navbarEl) : null;
 
-    const scrollReveal = new ScrollReveal();
-    scrollReveal.init();
+    // --- Scroll Reveal ---
+    const revealEls = document.querySelectorAll('.reveal');
+    const scrollReveal = revealEls.length > 0 ? new ScrollReveal() : null;
+    scrollReveal?.init();
 
-    const parallax = new ParallaxEngine({ mobileBreakpoint: 768 });
+    // --- Parallax ---
+    const parallaxEls = document.querySelectorAll('.parallax-img');
+    const parallax = parallaxEls.length > 0 ? new ParallaxEngine({ mobileBreakpoint: 768 }) : null;
 
-    const trackingFormEl = document.getElementById('tracking-form');
+    // --- Tracking Form ---
+    const trackingFormEl = document.querySelector<HTMLFormElement>('#tracking-form');
     const tracking = trackingFormEl ? new TrackingForm(trackingFormEl) : null;
 
-    const appleScene = new AppleScrollScene({ mobileBreakpoint: 768 });
-    const ticker = new Ticker();
-    const counters = new CounterAnimation();
+    // --- Apple Scroll Scene ---
+    const appleSectionEl = document.getElementById('apple-section');
+    const appleScene = appleSectionEl ? new AppleScrollScene({ mobileBreakpoint: 768 }) : null;
+
+    // --- Ticker ---
+    const tickerContainerEl = document.getElementById('ticker-container');
+    const ticker = tickerContainerEl ? new Ticker() : null;
+
+    // --- Counter Animation ---
+    const counterEls = document.querySelectorAll('.counter');
+    const counters = counterEls.length > 0 ? new CounterAnimation() : null;
 
     // Register Parallax Elements
-    qsa('.parallax-img').forEach(img => {
-        if (img.parentElement) {
-            parallax.register(img.parentElement, { speed: 0.15 });
-        }
-    });
+    if (parallax) {
+        qsa('.parallax-img').forEach(img => {
+            if (img.parentElement) {
+                parallax.register(img.parentElement, { speed: 0.15 });
+            }
+        });
+    }
 
     // Initialize Ticker
-    ticker.init();
+    ticker?.init();
 
     // Global Scroll Listener
     let ticking = false;
-    window.addEventListener('scroll', () => {
+    window.addEventListener('scroll', (): void => {
         if (!ticking) {
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame((): void => {
                 EventBus.emit('scroll', { y: window.scrollY });
                 ticking = false;
             });
@@ -49,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     // Global Resize Listener
-    window.addEventListener('resize', debounce(() => {
+    window.addEventListener('resize', debounce((): void => {
         EventBus.emit('resize', {
             width: window.innerWidth,
             height: window.innerHeight
@@ -63,13 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Cleanup
-    window.addEventListener('beforeunload', () => {
+    window.addEventListener('beforeunload', (): void => {
         navbar?.destroy();
-        parallax.destroy();
+        parallax?.destroy();
         tracking?.destroy();
-        appleScene.destroy();
-        ticker.destroy();
-        counters.destroy();
-        scrollReveal.destroy();
+        appleScene?.destroy();
+        ticker?.destroy();
+        counters?.destroy();
+        scrollReveal?.destroy();
     });
 });

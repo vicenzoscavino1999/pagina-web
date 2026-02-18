@@ -4,3 +4,15 @@ dist/
 .env.local
 *.tsbuildinfo
 coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

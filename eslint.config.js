@@ -6,7 +6,7 @@ import prettier from "eslint-config-prettier";
 export default [
     js.configs.recommended,
     {
-        files: ["src/**/*.ts"],
+        files: ["src/**/*.ts", "tests/**/*.ts"],
         languageOptions: {
             parser: tsParser,
             parserOptions: {
@@ -30,6 +30,8 @@ export default [
             "class-methods-use-this": "off",
             "@typescript-eslint/class-methods-use-this": "off",
             "no-undef": "off",
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": "error",
             "@typescript-eslint/no-confusing-void-expression": ["error", { "ignoreArrowShorthand": true }]
         }
     },

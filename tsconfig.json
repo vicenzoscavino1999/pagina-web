@@ -1,5 +1,9 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "types": [
+            "vite/client"
+        ],
         "target": "ES2022",
         "module": "ESNext",
         "moduleResolution": "Bundler",
