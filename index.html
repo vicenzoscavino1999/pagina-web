@@ -3,28 +3,33 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO & Open Graph -->
-    <title>GlobalLogistics | Envíos Rápidos y Seguros</title>
+    <title>GlobalLogistics | Envíos Rápidos en Lima</title>
     <meta name="description"
-        content="Soluciones logísticas globales. Rastreo en tiempo real, envíos aéreos, marítimos y terrestres. Infraestructura de última generación.">
+        content="Envíos rápidos desde tu campus universitario. Recogemos en UPC, UPN, UTEC y más. Tracking en tiempo real y entrega la misma tarde.">
     <meta name="theme-color" content="#0284c7">
+    <link rel="canonical" href="https://globallogistics.demo">
 
-    <meta property="og:title" content="GlobalLogistics | Envíos Rápidos y Seguros" />
+    <meta property="og:title" content="GlobalLogistics | Envíos Universitarios en Lima" />
     <meta property="og:description"
-        content="Cotiza y rastrea tu envío en segundos. Conectamos tu negocio con el mundo." />
+        content="Envíos rápidos desde tu campus. Coordinamos el retiro en tu aula y entregamos hoy mismo." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://globallogistics.demo" />
     <meta property="og:image"
         content="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80" />
 
-    <!-- 
-        ADVERTENCIA DE PRODUCCIÓN:
-        Este CDN es solo para desarrollo/preview. 
-        En producción, instalar Tailwind vía CLI y usar PurgeCSS.
-    -->
-    <!-- Tailwind CDN Removed via migration -->
+    <!-- PWA — iOS specific -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="GlobalLogistics">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <!-- Prevent iOS text-size-adjust -->
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- PWA — Android / Chrome -->
+    <link rel="manifest" href="/manifest.webmanifest">
 
     <!-- Fuentes y Iconos -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -235,7 +240,389 @@
         </div>
     </section>
 
-    <!-- Partners Ticker Corrected -->
+    <!-- ========================================================
+         SECTION: TRUCK SCROLL ANIMATION
+         A delivery truck drives across Lima as you scroll down
+    ======================================================== -->
+    <section id="truck-scene" aria-label="Tu paquete en camino">
+        <div id="truck-sticky">
+
+            <!-- Sky gradient background -->
+            <div class="ts-sky">
+                <!-- Animated clouds -->
+                <div class="ts-cloud ts-cloud--1"></div>
+                <div class="ts-cloud ts-cloud--2"></div>
+                <div class="ts-cloud ts-cloud--3"></div>
+                <!-- Sun / glow -->
+                <div class="ts-sun"></div>
+            </div>
+
+            <!-- Lima city skyline (CSS buildings) -->
+            <div class="ts-cityscape" aria-hidden="true">
+                <div class="ts-building ts-b1"></div>
+                <div class="ts-building ts-b2"></div>
+                <div class="ts-building ts-b3"></div>
+                <div class="ts-building ts-b4"></div>
+                <div class="ts-building ts-b5"></div>
+                <div class="ts-building ts-b6"></div>
+                <div class="ts-building ts-b7"></div>
+                <div class="ts-building ts-b8"></div>
+            </div>
+
+            <!-- Road -->
+            <div class="ts-road-wrap">
+                <div class="ts-road">
+                    <!-- Dashed center line -->
+                    <div class="ts-road-dashes"></div>
+                    <!-- Waypoint pins on the road -->
+                    <div class="ts-waypoints">
+                        <div class="ts-waypoint" style="left:16%">
+                            <div class="wp-pole"></div>
+                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div class="wp-label">UPC<br><span>San Isidro</span></div>
+                        </div>
+                        <div class="ts-waypoint" style="left:38%">
+                            <div class="wp-pole"></div>
+                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div class="wp-label">UPN<br><span>Miraflores</span></div>
+                        </div>
+                        <div class="ts-waypoint" style="left:60%">
+                            <div class="wp-pole"></div>
+                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div class="wp-label">UTEC<br><span>Barranco</span></div>
+                        </div>
+                        <div class="ts-waypoint ts-waypoint--home" style="left:85%">
+                            <div class="wp-pole"></div>
+                            <div class="wp-pin wp-pin--home"><i class="fa-solid fa-house"></i></div>
+                            <div class="wp-label">Tu<br><span>domicilio</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- THE TRUCK -->
+            <div id="delivery-truck" aria-hidden="true">
+                <div class="truck-body">
+                    <!-- Cargo box -->
+                    <div class="truck-cargo">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+                    <!-- Truck cab icon -->
+                    <i class="fa-solid fa-truck-fast truck-icon"></i>
+                    <!-- Speed lines -->
+                    <div class="truck-speed-lines">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay: status + headline + progress -->
+            <div class="ts-overlay">
+                <div class="ts-overlay-inner">
+                    <div id="ts-status" class="ts-badge">Recogido en campus</div>
+                    <h2 class="ts-headline">De la universidad<br>a tu puerta.</h2>
+                    <p class="ts-sub">En tiempo récord, con tracking en vivo.</p>
+                    <div class="ts-progress-track">
+                        <div class="ts-progress-labels">
+                            <span><i class="fa-solid fa-graduation-cap"></i> Campus</span>
+                            <span><i class="fa-solid fa-house"></i> Destino</span>
+                        </div>
+                        <div class="ts-progress-bar">
+                            <div id="ts-progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="ts-scroll-cue">
+                <span>Sigue scrolleando</span>
+                <div class="ts-scroll-arrow">
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+            </div>
+
+        </div><!-- /truck-sticky -->
+    </section><!-- /truck-scene -->
+
+    <!-- ========================================================
+         SECTION: UNIVERSITY PARTNERS — Sticky Feature List
+         Apple "Why Apple Watch" style: left list highlights, right mockup changes
+    ======================================================== -->
+    <section id="university-features" aria-label="Por qué elegirnos para tu universidad">
+        <div class="uf-container">
+            <div class="uf-left">
+                <div class="uf-header reveal">
+                    <span class="uf-label">Hecho para universitarios</span>
+                    <h2 class="uf-title">Todo lo que necesitas<br>para enviar en Lima.</h2>
+                </div>
+                <div class="uf-list">
+                    <div class="feature-item" data-index="0">
+                        <div class="fi-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="fi-text">
+                            <h3 class="fi-title">Retiro en campus</h3>
+                            <p class="fi-desc">Coordinamos el retiro en UPC, UPN, UTEC, Pacífico y más. Sin salir del
+                                aula.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item" data-index="1">
+                        <div class="fi-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="fi-text">
+                            <h3 class="fi-title">Seguro incluido</h3>
+                            <p class="fi-desc">Hasta S/. 500 de cobertura por pérdida o daño en cada envío.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item" data-index="2">
+                        <div class="fi-icon"><i class="fa-solid fa-bell"></i></div>
+                        <div class="fi-text">
+                            <h3 class="fi-title">Alertas instantáneas</h3>
+                            <p class="fi-desc">WhatsApp en cada etapa: retiro, en ruta y entrega con foto.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item" data-index="3">
+                        <div class="fi-icon"><i class="fa-solid fa-credit-card"></i></div>
+                        <div class="fi-text">
+                            <h3 class="fi-title">Pago flexible</h3>
+                            <p class="fi-desc">Yape, Plin, tarjeta o efectivo. Facturamos con RUC.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uf-right">
+                <div class="uf-mockup-wrapper">
+                    <div class="mockup-screen mockup-screen--visible" id="ms-0">
+                        <div class="ms-inner ms-campus">
+                            <div class="ms-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div class="ms-chip">UPC · UPN · UTEC · Pacífico</div>
+                            <p class="ms-text">Retiro coordinado<br>desde tu aula</p>
+                            <div class="ms-badge-row">
+                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> UPC San Isidro
+                                </div>
+                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> UPN Miraflores
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen" id="ms-1">
+                        <div class="ms-inner ms-shield">
+                            <div class="ms-shield-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <p class="ms-text ms-text--light">Seguro incluido</p>
+                            <div class="ms-coverage">
+                                <div class="ms-bar">
+                                    <div class="ms-bar-fill" style="width:100%"></div>
+                                </div>
+                                <span>Cobertura: S/. 500</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen" id="ms-2">
+                        <div class="ms-inner ms-notify">
+                            <div class="ms-notify-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                            <div class="ms-notification">
+                                <div class="notif-row"><span class="notif-dot done"></span><span>Paquete recogido
+                                        ✓</span></div>
+                                <div class="notif-row"><span class="notif-dot active pulse"></span><span>En
+                                        camino...</span></div>
+                                <div class="notif-row dimmed"><span class="notif-dot"></span><span>Entrega
+                                        confirmada</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mockup-screen" id="ms-3">
+                        <div class="ms-inner ms-payment">
+                            <div class="ms-payment-row">
+                                <div class="pay-method active"><i class="fa-solid fa-mobile-alt"></i> Yape</div>
+                                <div class="pay-method"><i class="fa-solid fa-mobile-alt"></i> Plin</div>
+                                <div class="pay-method"><i class="fa-solid fa-credit-card"></i> Tarjeta</div>
+                                <div class="pay-method"><i class="fa-solid fa-money-bill"></i> Efectivo</div>
+                            </div>
+                            <div class="ms-receipt">
+                                <div class="receipt-row"><span>Envío express</span><span>S/. 12.00</span></div>
+                                <div class="receipt-row"><span>Seguro</span><span class="text-green-500">Gratis</span>
+                                </div>
+                                <div class="receipt-row receipt-total"><span>Total</span><span>S/. 12.00</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- /university-features -->
+
+    <!-- ========================================================
+         SECTION: HORIZONTAL FEATURE CAROUSEL
+         Apple Watch-style: scroll vertically → slides move horizontally
+    ======================================================== -->
+    <section id="features-carousel" aria-label="Características del servicio universitario">
+        <div id="carousel-sticky">
+
+            <!-- Background gradient -->
+            <div class="carousel-bg"></div>
+
+            <!-- Slides track -->
+            <div id="carousel-track">
+
+                <!-- Slide 1: Retiro en campus -->
+                <div class="carousel-slide" id="slide-1">
+                    <div class="carousel-content">
+                        <div class="slide-icon-wrap">
+                            <div class="slide-icon">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="slide-icon-ring"></div>
+                        </div>
+                        <div class="slide-label">Para universitarios</div>
+                        <h2 class="slide-title">Retiro directo<br>en tu campus.</h2>
+                        <p class="slide-body">Pasamos por UPC, UPN, Laureate y más. Coordinas desde la app, nosotros
+                            recogemos tu paquete sin que salgas del aula.</p>
+                        <div class="slide-universities">
+                            <span class="uni-badge"><i class="fa-solid fa-school"></i> UPC</span>
+                            <span class="uni-badge"><i class="fa-solid fa-school"></i> UPN</span>
+                            <span class="uni-badge"><i class="fa-solid fa-school"></i> Laureate</span>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <div class="phone-mockup">
+                            <div class="phone-screen screen-pickup">
+                                <div class="pm-header">
+                                    <span class="pm-dot green"></span>
+                                    <span class="pm-title">Nuevo Retiro</span>
+                                </div>
+                                <div class="pm-map">
+                                    <div class="pm-pin bounce">
+                                        <i class="fa-solid fa-location-dot text-brand-500"></i>
+                                    </div>
+                                    <div class="pm-map-grid"></div>
+                                    <div class="pm-campus-label">UPC San Isidro</div>
+                                </div>
+                                <div class="pm-cta">Confirmar retiro →</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Tracking en tiempo real -->
+                <div class="carousel-slide" id="slide-2">
+                    <div class="carousel-content">
+                        <div class="slide-icon-wrap">
+                            <div class="slide-icon slide-icon--blue">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                            </div>
+                            <div class="slide-icon-ring ring--blue"></div>
+                        </div>
+                        <div class="slide-label">Siempre conectado</div>
+                        <h2 class="slide-title">Tracking en<br>tiempo real.</h2>
+                        <p class="slide-body">Tu paquete transmite su ubicación exacta cada 30 segundos. GPS satelital
+                            con precisión de 10 metros en toda Lima Metropolitana.</p>
+                        <div class="slide-stat-row">
+                            <div class="slide-stat">
+                                <span class="slide-stat-num">30s</span>
+                                <span class="slide-stat-label">Actualización GPS</span>
+                            </div>
+                            <div class="slide-stat">
+                                <span class="slide-stat-num">10m</span>
+                                <span class="slide-stat-label">Precisión satelital</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <div class="phone-mockup">
+                            <div class="phone-screen screen-tracking">
+                                <div class="pm-header">
+                                    <span class="pm-dot blue"></span>
+                                    <span class="pm-title">En camino</span>
+                                </div>
+                                <div class="track-route">
+                                    <div class="route-line">
+                                        <div class="route-dot route-dot--done"></div>
+                                        <div class="route-segment done"></div>
+                                        <div class="route-dot route-dot--active pulse"></div>
+                                        <div class="route-segment pending"></div>
+                                        <div class="route-dot route-dot--pending"></div>
+                                    </div>
+                                    <div class="route-labels">
+                                        <span>UPC Campus</span>
+                                        <span class="active-label">En ruta</span>
+                                        <span>Tu dirección</span>
+                                    </div>
+                                </div>
+                                <div class="pm-eta">Llegada estimada: <strong>12 min</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3: Entrega misma tarde -->
+                <div class="carousel-slide" id="slide-3">
+                    <div class="carousel-content">
+                        <div class="slide-icon-wrap">
+                            <div class="slide-icon slide-icon--green">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div class="slide-icon-ring ring--green"></div>
+                        </div>
+                        <div class="slide-label">Velocidad express</div>
+                        <h2 class="slide-title">Entrega la<br>misma tarde.</h2>
+                        <p class="slide-body">Enviado antes de las 2pm = entregado hoy. Perfecto para tareas, materiales
+                            de estudio o equipos electrónicos urgentes.</p>
+                        <div class="slide-timer">
+                            <div class="timer-circle">
+                                <i class="fa-regular fa-clock"></i>
+                                <span>2:00 PM</span>
+                            </div>
+                            <div class="timer-arrow">→</div>
+                            <div class="timer-circle timer-circle--green">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Hoy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-visual">
+                        <div class="phone-mockup">
+                            <div class="phone-screen screen-delivered">
+                                <div class="pm-header">
+                                    <span class="pm-dot green"></span>
+                                    <span class="pm-title">¡Entregado!</span>
+                                </div>
+                                <div class="delivered-check">
+                                    <div class="check-circle">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                    </div>
+                                    <p class="delivered-msg">Firmado por el destinatario</p>
+                                    <p class="delivered-time">Hoy, 4:38 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /carousel-track -->
+
+            <!-- Navigation Controls -->
+            <div class="carousel-controls">
+                <!-- Prev button -->
+                <button id="carousel-prev" class="carousel-nav-btn btn--disabled" aria-label="Anterior">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <!-- Dot indicators -->
+                <div class="carousel-dots" role="tablist" aria-label="Diapositivas">
+                    <span class="carousel-dot carousel-dot--active" data-slide="0" role="tab" aria-label="Slide 1"
+                        tabindex="0"></span>
+                    <span class="carousel-dot" data-slide="1" role="tab" aria-label="Slide 2" tabindex="0"></span>
+                    <span class="carousel-dot" data-slide="2" role="tab" aria-label="Slide 3" tabindex="0"></span>
+                </div>
+
+                <!-- Next button -->
+                <button id="carousel-next" class="carousel-nav-btn" aria-label="Siguiente">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+        </div><!-- /carousel-sticky -->
+    </section><!-- /features-carousel -->
+
+
     <div class="bg-white border-b border-slate-100 py-8 overflow-hidden relative">
         <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10"></div>
         <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10"></div>

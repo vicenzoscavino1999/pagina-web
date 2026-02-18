@@ -5,6 +5,9 @@ import { AppleScrollScene } from './modules/AppleScrollScene';
 import { Ticker } from './modules/Ticker';
 import { CounterAnimation } from './modules/CounterAnimation';
 import { ScrollReveal } from './modules/ScrollReveal';
+import { HorizontalCarousel } from './modules/HorizontalCarousel';
+import { StickyFeatureList } from './modules/StickyFeatureList';
+import { TruckScrollScene } from './modules/TruckScrollScene';
 import { EventBus } from './utils/events';
 import { debounce } from './utils/math';
 import { qsa } from './utils/dom';
@@ -30,6 +33,18 @@ document.addEventListener('DOMContentLoaded', (): void => {
     // --- Apple Scroll Scene ---
     const appleSectionEl = document.getElementById('apple-section');
     const appleScene = appleSectionEl ? new AppleScrollScene({ mobileBreakpoint: 768 }) : null;
+
+    // --- Horizontal Carousel ---
+    const carouselEl = document.getElementById('features-carousel');
+    const carousel = carouselEl ? new HorizontalCarousel() : null;
+
+    // --- Sticky Feature List ---
+    const universityFeaturesEl = document.getElementById('university-features');
+    const stickyFeatures = universityFeaturesEl ? new StickyFeatureList() : null;
+
+    // --- Truck Scroll Scene ---
+    const truckSceneEl = document.getElementById('truck-scene');
+    const truckScene = truckSceneEl ? new TruckScrollScene() : null;
 
     // --- Ticker ---
     const tickerContainerEl = document.getElementById('ticker-container');
@@ -83,6 +98,9 @@ document.addEventListener('DOMContentLoaded', (): void => {
         parallax?.destroy();
         tracking?.destroy();
         appleScene?.destroy();
+        carousel?.destroy();
+        stickyFeatures?.destroy();
+        truckScene?.destroy();
         ticker?.destroy();
         counters?.destroy();
         scrollReveal?.destroy();

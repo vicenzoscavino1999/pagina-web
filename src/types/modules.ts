@@ -19,3 +19,11 @@ export interface CounterOptions {
 export interface AppleScrollOptions {
     mobileBreakpoint?: number;
 }
+
+export interface HorizontalCarouselOptions {
+    mobileBreakpoint?: number;
+}
+
+export interface StickyFeatureListOptions {
+    mobileBreakpoint?: number;
+}
