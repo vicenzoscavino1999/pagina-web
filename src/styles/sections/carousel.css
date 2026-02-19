@@ -26,11 +26,16 @@
     pointer-events: none;
 }
 
-/* ---- Carousel content entrance animations ---- */
-@keyframes cs-slide-in-right {
+/* =====================================================
+   CAROUSEL CONTENT ENTRANCE ANIMATIONS
+   Direction-aware: forward = right-to-left, backward = left-to-right
+   Each text/visual child fades+slides in with a stagger
+===================================================== */
+
+@keyframes cs-from-right {
     from {
         opacity: 0;
-        transform: translateX(40px);
+        transform: translateX(56px);
     }
 
     to {
@@ -39,10 +44,10 @@
     }
 }
 
-@keyframes cs-slide-in-left {
+@keyframes cs-from-left {
     from {
         opacity: 0;
-        transform: translateX(-40px);
+        transform: translateX(-56px);
     }
 
     to {
@@ -51,82 +56,77 @@
     }
 }
 
-/* Default state: content in inactive slides is invisible */
-.carousel-content,
-.slide-visual {
+/* ---- Default: all content pieces are hidden until slide is active ---- */
+.carousel-slide .slide-icon-wrap,
+.carousel-slide .slide-label,
+.carousel-slide .slide-title,
+.carousel-slide .slide-body,
+.carousel-slide .slide-universities,
+.carousel-slide .slide-stat-row,
+.carousel-slide .slide-timer,
+.carousel-slide .slide-visual {
     opacity: 0;
 }
 
-/* When slide becomes active (going FORWARD → content comes from right) */
-.slide--active .carousel-content {
-    animation: cs-slide-in-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+/* ---- FORWARD transition (→): content slides in from the right ---- */
+.slide--active .slide-icon-wrap {
+    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
 }
 
-.slide--active .slide-visual {
-    animation: cs-slide-in-right 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+.slide--active .slide-label {
+    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 
-/* When going BACKWARD ← override direction with JS class */
-.slide--enter-left .carousel-content {
-    animation: cs-slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.slide--active .slide-title {
+    animation: cs-from-right 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards;
 }
 
-.slide--enter-left .slide-visual {
-    animation: cs-slide-in-left 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+.slide--active .slide-body {
+    animation: cs-from-right 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
 }
 
-/* Stagger individual text children within carousel-content */
-.slide--active .slide-icon-wrap,
-.slide--enter-left .slide-icon-wrap {
-    animation-delay: 0s;
-}
-
-.slide--active .slide-label,
-.slide--enter-left .slide-label {
-    animation-delay: 0.06s;
-}
-
-.slide--active .slide-title,
-.slide--enter-left .slide-title {
-    animation-delay: 0.12s;
-}
-
-.slide--active .slide-body,
-.slide--enter-left .slide-body {
-    animation-delay: 0.18s;
-}
-
-.slide--active .slide-universities,
-.slide--active .slide-stat-row,
-.slide--active .slide-timer,
-.slide--enter-left .slide-universities,
-.slide--enter-left .slide-stat-row,
-.slide--enter-left .slide-timer {
-    animation-delay: 0.24s;
-}
-
-/* Also animate the stagger children directly */
-.slide--active .slide-icon-wrap,
-.slide--active .slide-label,
-.slide--active .slide-title,
-.slide--active .slide-body,
 .slide--active .slide-universities,
 .slide--active .slide-stat-row,
 .slide--active .slide-timer {
-    opacity: 0;
-    animation: cs-slide-in-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
 }
 
-.slide--enter-left .slide-icon-wrap,
-.slide--enter-left .slide-label,
-.slide--enter-left .slide-title,
-.slide--enter-left .slide-body,
+/* Phone/visual slides in from the LEFT (opposite side = they meet in the middle) */
+.slide--active .slide-visual {
+    animation: cs-from-left 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards;
+}
+
+/* ---- BACKWARD transition (←): content slides in from the left ---- */
+.slide--enter-left .slide-icon-wrap {
+    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+}
+
+.slide--enter-left .slide-label {
+    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+}
+
+.slide--enter-left .slide-title {
+    animation: cs-from-left 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards;
+}
+
+.slide--enter-left .slide-body {
+    animation: cs-from-left 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+}
+
 .slide--enter-left .slide-universities,
 .slide--enter-left .slide-stat-row,
 .slide--enter-left .slide-timer {
-    opacity: 0;
-    animation: cs-slide-in-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
 }
+
+/* Phone slides in from the right when going backward */
+.slide--enter-left .slide-visual {
+    animation: cs-from-right 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards;
+}
+
+
+
+
 
 #carousel-track {
     display: flex;
