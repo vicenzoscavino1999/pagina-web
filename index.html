@@ -346,33 +346,27 @@
     </section><!-- /truck-scene -->
 
     <!-- ========================================================
-         CAMPUS STRIP — Mobile-only horizontal pill scroller
-         Shows which universities we serve (above the features)
+         FEATURE NAV STRIP — Mobile-only: shows current feature name
+         + prev/next arrow navigation synced to the feature list scroll
     ======================================================== -->
-    <div id="uf-campus-strip" aria-label="Universidades donde operamos">
-        <div class="uf-strip-inner">
-            <div class="uf-strip-label">Operamos en</div>
-            <div class="uf-strip-scroll" role="list">
-                <button class="uf-campus-pill uf-campus-pill--active" data-campus="0" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> UPC
-                </button>
-                <button class="uf-campus-pill" data-campus="1" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> UPN
-                </button>
-                <button class="uf-campus-pill" data-campus="2" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> UTEC
-                </button>
-                <button class="uf-campus-pill" data-campus="3" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> Pacífico
-                </button>
-                <button class="uf-campus-pill" data-campus="4" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> PUCP
-                </button>
-                <button class="uf-campus-pill" data-campus="5" role="listitem">
-                    <i class="fa-solid fa-graduation-cap"></i> USIL
-                </button>
+    <div id="uf-feature-nav" aria-label="Características del servicio">
+        <button id="uf-nav-prev" class="uf-nav-arrow" aria-label="Anterior">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="uf-nav-center">
+            <div id="uf-nav-label" class="uf-nav-label">Retiro en campus</div>
+            <div class="uf-nav-dots" role="tablist">
+                <button class="uf-nav-dot uf-nav-dot--active" data-index="0" aria-label="Retiro en campus"></button>
+                <button class="uf-nav-dot" data-index="1" aria-label="Seguro incluido"></button>
+                <button class="uf-nav-dot" data-index="2" aria-label="Alertas instantáneas"></button>
+                <button class="uf-nav-dot" data-index="3" aria-label="Pago flexible"></button>
             </div>
         </div>
+
+        <button id="uf-nav-next" class="uf-nav-arrow" aria-label="Siguiente">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
     </div>
 
     <!-- ========================================================

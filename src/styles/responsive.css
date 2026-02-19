@@ -283,10 +283,11 @@
         justify-content: center;
     }
 
-    /* --- CAMPUS STRIP — show on mobile --- */
-    #uf-campus-strip {
-        display: block;
+    /* --- FEATURE NAV STRIP — show on mobile --- */
+    #uf-feature-nav {
+        display: flex;
     }
+
 
     /* --- UNIVERSITY FEATURES --- turn off scroll-sticky layout */
     #university-features {
