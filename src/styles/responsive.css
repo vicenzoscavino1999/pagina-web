@@ -305,6 +305,12 @@
         min-height: 0 !important;
     }
 
+    /* Hide the feature list on mobile — shown via the nav strip above instead */
+    .uf-list {
+        display: none !important;
+    }
+
+
     .uf-left {
         order: 2;
     }
