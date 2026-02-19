@@ -70,58 +70,58 @@
 
 /* ---- FORWARD transition (→): content slides in from the right ---- */
 .slide--active .slide-icon-wrap {
-    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+    animation: cs-from-right 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
 }
 
 .slide--active .slide-label {
-    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+    animation: cs-from-right 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
 }
 
 .slide--active .slide-title {
-    animation: cs-from-right 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards;
+    animation: cs-from-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards;
 }
 
 .slide--active .slide-body {
-    animation: cs-from-right 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+    animation: cs-from-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
 }
 
 .slide--active .slide-universities,
 .slide--active .slide-stat-row,
 .slide--active .slide-timer {
-    animation: cs-from-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+    animation: cs-from-right 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
 }
 
 /* Phone/visual slides in from the LEFT (opposite side = they meet in the middle) */
 .slide--active .slide-visual {
-    animation: cs-from-left 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards;
+    animation: cs-from-left 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.14s forwards;
 }
 
 /* ---- BACKWARD transition (←): content slides in from the left ---- */
 .slide--enter-left .slide-icon-wrap {
-    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+    animation: cs-from-left 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
 }
 
 .slide--enter-left .slide-label {
-    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
+    animation: cs-from-left 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.22s forwards;
 }
 
 .slide--enter-left .slide-title {
-    animation: cs-from-left 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards;
+    animation: cs-from-left 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards;
 }
 
 .slide--enter-left .slide-body {
-    animation: cs-from-left 0.60s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+    animation: cs-from-left 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.48s forwards;
 }
 
 .slide--enter-left .slide-universities,
 .slide--enter-left .slide-stat-row,
 .slide--enter-left .slide-timer {
-    animation: cs-from-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.32s forwards;
+    animation: cs-from-left 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.62s forwards;
 }
 
 /* Phone slides in from the right when going backward */
 .slide--enter-left .slide-visual {
-    animation: cs-from-right 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards;
+    animation: cs-from-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.14s forwards;
 }
 
 
@@ -132,7 +132,7 @@
     display: flex;
     width: 100%;
     flex: 1;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
     user-select: none;
     cursor: grab;
