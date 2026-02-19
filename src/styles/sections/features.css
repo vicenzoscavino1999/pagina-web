@@ -146,6 +146,20 @@
     background: #0284c7;
 }
 
+/* Visibility: hide nav when section is out of view */
+#uf-feature-nav {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(-8px);
+}
+
+#uf-feature-nav.uf-nav--visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
 
 
 #university-features {

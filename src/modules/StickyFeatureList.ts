@@ -68,6 +68,20 @@ export class StickyFeatureList {
             });
         });
 
+        // Hide the nav bar when the university-features section is not in view
+        const featureNav = document.getElementById('uf-feature-nav');
+        if (featureNav && this.#section) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        featureNav.classList.toggle('uf-nav--visible', entry.isIntersecting);
+                    });
+                },
+                { threshold: 0, rootMargin: '0px 0px -50px 0px' }
+            );
+            observer.observe(this.#section);
+        }
+
         // Activate first item by default
         this.#activate(0, false);
 
