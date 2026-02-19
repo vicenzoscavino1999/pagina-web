@@ -1,0 +1,90 @@
+/* =====================================================
+   COMPONENTS — Tracking form, timeline, FAQ accordion,
+   loader, payment cards
+===================================================== */
+
+/* Loader spinner */
+.loader {
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #f97316;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Tracking timeline */
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    padding-bottom: 1.5rem;
+    border-left: 2px solid #e2e8f0;
+}
+
+.timeline-item:last-child {
+    border-left: 2px solid transparent;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -0.4rem;
+    top: 0;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: #cbd5e1;
+}
+
+.timeline-item.completed .timeline-dot {
+    background: #0ea5e9;
+    box-shadow: 0 0 0 4px #e0f2fe;
+}
+
+.timeline-item.current .timeline-dot {
+    background: #f97316;
+    box-shadow: 0 0 0 4px #ffedd5;
+    animation: pulse 2s infinite;
+}
+
+/* FAQ Accordion */
+details>summary {
+    list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] summary~* {
+    animation: sweep .2s ease-in-out;
+}
+
+@keyframes sweep {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+details>summary i {
+    transition: transform 0.2s;
+}
+
+details[open]>summary i {
+    transform: rotate(180deg);
+}

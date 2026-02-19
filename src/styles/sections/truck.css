@@ -1,0 +1,633 @@
+/* =====================================================
+   TRUCK SCROLL SCENE
+   Scroll-driven delivery truck moving across Lima
+===================================================== */
+#truck-scene {
+    height: 300vh;
+    /* scroll room for the truck to travel */
+    position: relative;
+}
+
+#truck-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---- SKY ---- */
+.ts-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            #0f2c4c 0%,
+            #1a4a78 25%,
+            #2e73b4 55%,
+            #f4a942 80%,
+            #f97316 95%,
+            #ea580c 100%);
+}
+
+/* Sun glow */
+.ts-sun {
+    position: absolute;
+    right: 12%;
+    top: 18%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff7c0 0%, #fbbf24 40%, rgba(251, 191, 36, 0) 75%);
+    box-shadow: 0 0 60px 30px rgba(251, 191, 36, 0.35);
+}
+
+/* Clouds */
+.ts-cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50px;
+}
+
+.ts-cloud::before,
+.ts-cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.ts-cloud--1 {
+    width: 180px;
+    height: 36px;
+    top: 14%;
+    left: 8%;
+    animation: drift-cloud 28s linear infinite;
+}
+
+.ts-cloud--1::before {
+    width: 80px;
+    height: 60px;
+    top: -32px;
+    left: 20px;
+}
+
+.ts-cloud--1::after {
+    width: 60px;
+    height: 48px;
+    top: -24px;
+    left: 80px;
+}
+
+.ts-cloud--2 {
+    width: 120px;
+    height: 28px;
+    top: 22%;
+    left: 55%;
+    opacity: 0.7;
+    animation: drift-cloud 40s linear infinite 8s;
+}
+
+.ts-cloud--2::before {
+    width: 56px;
+    height: 44px;
+    top: -24px;
+    left: 16px;
+}
+
+.ts-cloud--2::after {
+    width: 44px;
+    height: 36px;
+    top: -18px;
+    left: 56px;
+}
+
+.ts-cloud--3 {
+    width: 100px;
+    height: 22px;
+    top: 10%;
+    left: 75%;
+    opacity: 0.5;
+    animation: drift-cloud 55s linear infinite 4s;
+}
+
+.ts-cloud--3::before {
+    width: 48px;
+    height: 38px;
+    top: -20px;
+    left: 12px;
+}
+
+@keyframes drift-cloud {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-120vw);
+    }
+}
+
+/* ---- CITY SKYLINE (CSS buildings) ---- */
+.ts-cityscape {
+    position: absolute;
+    bottom: 28%;
+    /* sit above the road */
+    left: 0;
+    right: 0;
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.ts-building {
+    position: absolute;
+    bottom: 0;
+    background: #0d1f3a;
+}
+
+/* Add windows as pseudo-elements */
+.ts-building::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 220, 80, 0.25) 10px,
+            rgba(255, 220, 80, 0.25) 13px),
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 16px,
+            rgba(255, 220, 80, 0.2) 16px,
+            rgba(255, 220, 80, 0.2) 19px);
+}
+
+/* Building sizes and positions */
+.ts-b1 {
+    left: 2%;
+    width: 52px;
+    height: 180px;
+    border-radius: 4px 4px 0 0;
+}
+
+.ts-b2 {
+    left: 6%;
+    width: 40px;
+    height: 130px;
+}
+
+.ts-b3 {
+    left: 12%;
+    width: 66px;
+    height: 200px;
+    border-radius: 6px 6px 0 0;
+}
+
+.ts-b4 {
+    left: 20%;
+    width: 44px;
+    height: 150px;
+}
+
+.ts-b5 {
+    left: 60%;
+    width: 58px;
+    height: 190px;
+    border-radius: 4px 4px 0 0;
+}
+
+.ts-b6 {
+    left: 67%;
+    width: 38px;
+    height: 120px;
+}
+
+.ts-b7 {
+    left: 74%;
+    width: 70px;
+    height: 210px;
+    border-radius: 6px 6px 0 0;
+}
+
+.ts-b8 {
+    left: 82%;
+    width: 48px;
+    height: 145px;
+}
+
+/* ---- ROAD ---- */
+.ts-road-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 28%;
+    /* ~28% of viewport height */
+}
+
+.ts-road {
+    position: absolute;
+    inset: 0;
+    background: #1c2233;
+    border-top: 3px solid #374151;
+}
+
+/* Animated dashed center line */
+.ts-road-dashes {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-image: repeating-linear-gradient(90deg,
+            #fbbf24 0px,
+            #fbbf24 40px,
+            transparent 40px,
+            transparent 80px);
+    animation: dash-move 0.8s linear infinite;
+}
+
+@keyframes dash-move {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -80px 0;
+    }
+}
+
+/* ---- WAYPOINTS ---- */
+.ts-waypoints {
+    position: absolute;
+    inset: 0;
+}
+
+.ts-waypoint {
+    position: absolute;
+    top: -90px;
+    /* sits above the road surface */
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.25;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.ts-waypoint.wp--active {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.wp-pole {
+    width: 2px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.wp-pin {
+    width: 36px;
+    height: 36px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    background: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: background 0.4s ease;
+}
+
+.wp-pin i {
+    transform: rotate(45deg);
+    color: white;
+    font-size: 0.85rem;
+}
+
+.wp-pin--home {
+    background: #22c55e;
+}
+
+.wp-label {
+    margin-top: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.wp-label span {
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* Flash ring when waypoint activates */
+.ts-waypoint.wp--active .wp-pin::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    animation: wp-ring 0.6s ease-out forwards;
+}
+
+@keyframes wp-ring {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(1.8);
+    }
+}
+
+/* ---- THE TRUCK ---- */
+#delivery-truck {
+    position: absolute;
+    /* vertical: sits on the road surface */
+    bottom: calc(28% + 2px);
+    left: -5vw;
+    /* JS moves this */
+    transition: left 0.12s linear;
+    will-change: left;
+    z-index: 10;
+}
+
+.truck-body {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+}
+
+.truck-icon {
+    font-size: clamp(80px, 10vw, 120px);
+    color: #1d4ed8;
+    filter:
+        drop-shadow(0 -2px 0 #fff) drop-shadow(4px 6px 12px rgba(0, 0, 0, 0.5));
+    animation: truck-bounce 0.25s ease-in-out infinite alternate;
+}
+
+@keyframes truck-bounce {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-3px);
+    }
+}
+
+/* Cargo box floating above truck */
+.truck-cargo {
+    position: absolute;
+    top: -32px;
+    left: 8px;
+    background: #fbbf24;
+    border-radius: 6px;
+    width: 40px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #78350f;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: cargo-bob 0.25s ease-in-out infinite alternate;
+}
+
+@keyframes cargo-bob {
+    from {
+        transform: translateY(0) rotate(-2deg);
+    }
+
+    to {
+        transform: translateY(-4px) rotate(2deg);
+    }
+}
+
+/* Speed lines to the left of the truck */
+.truck-speed-lines {
+    position: absolute;
+    left: -60px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.truck-speed-lines span {
+    display: block;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6));
+    animation: speed-line 0.4s linear infinite;
+}
+
+.truck-speed-lines span:nth-child(1) {
+    width: 50px;
+    animation-delay: 0s;
+}
+
+.truck-speed-lines span:nth-child(2) {
+    width: 35px;
+    animation-delay: 0.13s;
+}
+
+.truck-speed-lines span:nth-child(3) {
+    width: 20px;
+    animation-delay: 0.25s;
+}
+
+@keyframes speed-line {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+/* Arrived state */
+.truck--arrived .truck-icon {
+    color: #22c55e;
+}
+
+.truck--arrived .truck-speed-lines {
+    display: none;
+}
+
+.truck--arrived .truck-cargo {
+    animation: none;
+    transform: translateY(-2px) rotate(0deg);
+}
+
+/* ---- OVERLAY (text + progress) ---- */
+.ts-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 28%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 6vw;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.ts-overlay-inner {
+    max-width: 400px;
+}
+
+.ts-badge {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    background: rgba(37, 99, 235, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    transition: background 0.3s ease;
+}
+
+.ts-badge--flash {
+    animation: badge-flash 0.4s ease;
+}
+
+@keyframes badge-flash {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+        background: rgba(16, 185, 129, 0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.ts-headline {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 0.75rem;
+}
+
+.ts-sub {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ts-progress-track {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    max-width: 320px;
+}
+
+.ts-progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.ts-progress-labels i {
+    margin-right: 4px;
+}
+
+.ts-progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+#ts-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #3b82f6, #22c55e);
+    border-radius: 100px;
+    transition: width 0.15s linear;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+}
+
+/* ---- SCROLL CUE ---- */
+.ts-scroll-cue {
+    position: absolute;
+    bottom: calc(28% + 20px);
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.ts-scroll-arrow {
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+    animation: cue-bounce 1.4s ease-in-out infinite;
+}
+
+@keyframes cue-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(4px);
+    }
+}
