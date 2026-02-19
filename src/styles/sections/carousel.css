@@ -26,15 +26,118 @@
     pointer-events: none;
 }
 
+/* ---- Carousel content entrance animations ---- */
+@keyframes cs-slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes cs-slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Default state: content in inactive slides is invisible */
+.carousel-content,
+.slide-visual {
+    opacity: 0;
+}
+
+/* When slide becomes active (going FORWARD → content comes from right) */
+.slide--active .carousel-content {
+    animation: cs-slide-in-left 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.slide--active .slide-visual {
+    animation: cs-slide-in-right 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+}
+
+/* When going BACKWARD ← override direction with JS class */
+.slide--enter-left .carousel-content {
+    animation: cs-slide-in-right 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.slide--enter-left .slide-visual {
+    animation: cs-slide-in-left 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.08s forwards;
+}
+
+/* Stagger individual text children within carousel-content */
+.slide--active .slide-icon-wrap,
+.slide--enter-left .slide-icon-wrap {
+    animation-delay: 0s;
+}
+
+.slide--active .slide-label,
+.slide--enter-left .slide-label {
+    animation-delay: 0.06s;
+}
+
+.slide--active .slide-title,
+.slide--enter-left .slide-title {
+    animation-delay: 0.12s;
+}
+
+.slide--active .slide-body,
+.slide--enter-left .slide-body {
+    animation-delay: 0.18s;
+}
+
+.slide--active .slide-universities,
+.slide--active .slide-stat-row,
+.slide--active .slide-timer,
+.slide--enter-left .slide-universities,
+.slide--enter-left .slide-stat-row,
+.slide--enter-left .slide-timer {
+    animation-delay: 0.24s;
+}
+
+/* Also animate the stagger children directly */
+.slide--active .slide-icon-wrap,
+.slide--active .slide-label,
+.slide--active .slide-title,
+.slide--active .slide-body,
+.slide--active .slide-universities,
+.slide--active .slide-stat-row,
+.slide--active .slide-timer {
+    opacity: 0;
+    animation: cs-slide-in-left 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.slide--enter-left .slide-icon-wrap,
+.slide--enter-left .slide-label,
+.slide--enter-left .slide-title,
+.slide--enter-left .slide-body,
+.slide--enter-left .slide-universities,
+.slide--enter-left .slide-stat-row,
+.slide--enter-left .slide-timer {
+    opacity: 0;
+    animation: cs-slide-in-right 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 #carousel-track {
     display: flex;
     width: 100%;
     flex: 1;
-    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform;
     user-select: none;
     cursor: grab;
 }
+
 
 #carousel-track:active {
     cursor: grabbing;

@@ -11,9 +11,8 @@ export class HorizontalCarousel {
     #totalSlides: number = 0;
     #startX: number = 0;
     #isDragging: boolean = false;
-    #dragThreshold: number = 60; // px to trigger slide change
+    #dragThreshold: number = 60;
 
-    // Event handlers kept as refs for removal on destroy
     #handlePrev: () => void;
     #handleNext: () => void;
     #handleTouchStart: (e: TouchEvent) => void;
@@ -41,7 +40,6 @@ export class HorizontalCarousel {
             return;
         }
 
-        // Bind handler references
         this.#handlePrev = (): void => this.#goTo(this.#currentIndex - 1);
         this.#handleNext = (): void => this.#goTo(this.#currentIndex + 1);
         this.#handleTouchStart = (e: TouchEvent): void => {
@@ -73,46 +71,44 @@ export class HorizontalCarousel {
             this.#isDragging = false;
         };
 
-        // Attach events
         this.#prevBtn?.addEventListener('click', this.#handlePrev);
         this.#nextBtn?.addEventListener('click', this.#handleNext);
-
-        // Touch swipe on the section
         this.#section.addEventListener('touchstart', this.#handleTouchStart, { passive: true });
         this.#section.addEventListener('touchend', this.#handleTouchEnd, { passive: true });
-
-        // Mouse drag on the track
         this.#track.addEventListener('mousedown', this.#handleMouseDown);
         window.addEventListener('mouseup', this.#handleMouseUp);
 
-        // Dot click navigation
         this.#dots.forEach((dot, i) => {
             dot.addEventListener('click', (): void => this.#goTo(i));
         });
 
-        // Init to first slide
         this.#goTo(0);
     }
 
     #goTo(index: number): void {
+        const prevIndex = this.#currentIndex;
         this.#currentIndex = clamp(index, 0, this.#totalSlides - 1);
+        const goingForward = this.#currentIndex >= prevIndex;
 
-        // Translate track
         if (this.#track) {
             this.#track.style.transform = `translateX(-${this.#currentIndex * 100}%)`;
         }
 
-        // Update dots
         this.#dots.forEach((dot, i) => {
             dot.classList.toggle('carousel-dot--active', i === this.#currentIndex);
         });
 
-        // Update slide visibility
+        // Animate slide content with direction-aware entrance class
         this.#slides.forEach((slide, i) => {
-            slide.classList.toggle('slide--active', i === this.#currentIndex);
+            slide.classList.remove('slide--active', 'slide--enter-left');
+
+            if (i === this.#currentIndex) {
+                // Force reflow so animation re-triggers
+                void slide.offsetHeight;
+                slide.classList.add(goingForward ? 'slide--active' : 'slide--enter-left');
+            }
         });
 
-        // Update button states
         if (this.#prevBtn) {
             this.#prevBtn.classList.toggle('btn--disabled', this.#currentIndex === 0);
         }
