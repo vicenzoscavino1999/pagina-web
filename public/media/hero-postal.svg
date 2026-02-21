@@ -1,0 +1,56 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fondo de mensajeria Postal Express">
+  <defs>
+    <linearGradient id="heroBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b2e4f"/>
+      <stop offset="55%" stop-color="#0e4f7b"/>
+      <stop offset="100%" stop-color="#0a6c9f"/>
+    </linearGradient>
+    <pattern id="heroGrid" width="56" height="56" patternUnits="userSpaceOnUse">
+      <path d="M56 0H0V56" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="heroCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#heroBg)"/>
+  <rect width="1920" height="1080" fill="url(#heroGrid)"/>
+
+  <circle cx="1600" cy="190" r="220" fill="#38bdf8" fill-opacity="0.18"/>
+  <circle cx="230" cy="850" r="280" fill="#0ea5e9" fill-opacity="0.2"/>
+  <circle cx="1140" cy="930" r="210" fill="#14b8a6" fill-opacity="0.14"/>
+
+  <path d="M170 730C410 560 630 500 810 540C1010 584 1150 750 1360 716C1500 692 1630 598 1760 430"
+        fill="none" stroke="#f8fafc" stroke-opacity="0.75" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 18"/>
+
+  <g transform="translate(330 600)">
+    <rect x="0" y="0" width="154" height="96" rx="16" fill="url(#heroCard)" stroke="#f1f5f9" stroke-opacity="0.55"/>
+    <path d="M18 28H136V70H18V28Z" fill="#f8fafc" fill-opacity="0.92"/>
+    <path d="M18 28L77 58L136 28" fill="none" stroke="#1e3a5f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g transform="translate(820 615)">
+    <rect x="0" y="0" width="174" height="112" rx="18" fill="url(#heroCard)" stroke="#f1f5f9" stroke-opacity="0.55"/>
+    <rect x="30" y="30" width="114" height="56" rx="8" fill="#f8fafc" fill-opacity="0.9"/>
+    <path d="M87 30V86" stroke="#0f172a" stroke-opacity="0.7" stroke-width="4"/>
+    <path d="M30 58H144" stroke="#0f172a" stroke-opacity="0.7" stroke-width="4"/>
+  </g>
+
+  <g transform="translate(1250 560)">
+    <rect x="0" y="34" width="230" height="72" rx="14" fill="#f8fafc" fill-opacity="0.92"/>
+    <rect x="16" y="16" width="106" height="66" rx="12" fill="#f8fafc" fill-opacity="0.96"/>
+    <rect x="126" y="46" width="88" height="42" rx="10" fill="#f8fafc" fill-opacity="0.96"/>
+    <circle cx="52" cy="114" r="16" fill="#0f172a"/>
+    <circle cx="172" cy="114" r="16" fill="#0f172a"/>
+    <circle cx="52" cy="114" r="7" fill="#94a3b8"/>
+    <circle cx="172" cy="114" r="7" fill="#94a3b8"/>
+  </g>
+
+  <g fill="#f8fafc" fill-opacity="0.9">
+    <circle cx="168" cy="730" r="16"/>
+    <circle cx="798" cy="548" r="16"/>
+    <circle cx="1360" cy="716" r="16"/>
+    <circle cx="1760" cy="430" r="16"/>
+  </g>
+</svg>

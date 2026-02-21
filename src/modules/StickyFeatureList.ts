@@ -1,13 +1,6 @@
-import { EventBus } from '../utils/events';
+﻿import { EventBus } from '../utils/events';
 import { clamp } from '../utils/math';
-
-// Labels for each feature item (must match order of .feature-item in HTML)
-const FEATURE_LABELS = [
-    'Retiro en campus',
-    'Seguro incluido',
-    'Alertas instantáneas',
-    'Pago flexible',
-];
+import { SITE_CONTENT } from '../content/siteContent';
 
 export class StickyFeatureList {
     #section: HTMLElement | null;
@@ -17,12 +10,16 @@ export class StickyFeatureList {
     #prevIndex: number = 0;
     #unsubscribeScroll: () => void;
     #clickHandlers: Array<() => void> = [];
+    #visibilityObserver: IntersectionObserver | null = null;
 
     // Mobile feature nav strip elements
     #navLabel: HTMLElement | null;
     #navDots: NodeListOf<HTMLElement>;
     #navPrev: HTMLElement | null;
     #navNext: HTMLElement | null;
+    #navPrevHandler: (() => void) | null = null;
+    #navNextHandler: (() => void) | null = null;
+    #navDotHandlers: Array<{ dot: HTMLElement; handler: () => void }> = [];
 
     constructor() {
         this.#section = document.getElementById('university-features');
@@ -50,28 +47,33 @@ export class StickyFeatureList {
         });
 
         // Wire up mobile nav: prev/next arrows
-        this.#navPrev?.addEventListener('click', () => {
+        this.#navPrevHandler = (): void => {
             this.#activate(this.#currentIndex - 1, true);
             this.#scrollToFeature(this.#currentIndex);
-        });
-        this.#navNext?.addEventListener('click', () => {
+        };
+        this.#navPrev?.addEventListener('click', this.#navPrevHandler);
+
+        this.#navNextHandler = (): void => {
             this.#activate(this.#currentIndex + 1, true);
             this.#scrollToFeature(this.#currentIndex);
-        });
+        };
+        this.#navNext?.addEventListener('click', this.#navNextHandler);
 
         // Wire up mobile nav: dots
         this.#navDots.forEach((dot) => {
             const idx = parseInt(dot.dataset['index'] ?? '0', 10);
-            dot.addEventListener('click', () => {
+            const handler = (): void => {
                 this.#activate(idx, true);
                 this.#scrollToFeature(idx);
-            });
+            };
+            this.#navDotHandlers.push({ dot, handler });
+            dot.addEventListener('click', handler);
         });
 
         // Hide the nav bar when the university-features section is not in view
         const featureNav = document.getElementById('uf-feature-nav');
-        if (featureNav && this.#section) {
-            const observer = new IntersectionObserver(
+        if (featureNav) {
+            this.#visibilityObserver = new IntersectionObserver(
                 (entries) => {
                     entries.forEach((entry) => {
                         featureNav.classList.toggle('uf-nav--visible', entry.isIntersecting);
@@ -79,14 +81,14 @@ export class StickyFeatureList {
                 },
                 { threshold: 0, rootMargin: '0px 0px -50px 0px' }
             );
-            observer.observe(this.#section);
+            this.#visibilityObserver.observe(this.#section);
         }
 
         // Activate first item by default
         this.#activate(0, false);
 
         // Subscribe to scroll for auto-advance
-        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }: { y: number }): void => {
+        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }): void => {
             this.#onScroll(y);
         });
     }
@@ -143,7 +145,7 @@ export class StickyFeatureList {
         if (this.#navLabel) {
             this.#navLabel.classList.remove('uf-nav-label--fade');
             void this.#navLabel.offsetHeight; // reflow
-            this.#navLabel.textContent = FEATURE_LABELS[idx] ?? '';
+            this.#navLabel.textContent = SITE_CONTENT.features.items[idx]?.title ?? '';
             this.#navLabel.classList.add('uf-nav-label--fade');
         }
 
@@ -198,9 +200,22 @@ export class StickyFeatureList {
 
     destroy(): void {
         this.#unsubscribeScroll();
+        this.#visibilityObserver?.disconnect();
+        if (this.#navPrev && this.#navPrevHandler) {
+            this.#navPrev.removeEventListener('click', this.#navPrevHandler);
+        }
+        if (this.#navNext && this.#navNextHandler) {
+            this.#navNext.removeEventListener('click', this.#navNextHandler);
+        }
+        this.#navDotHandlers.forEach(({ dot, handler }) => {
+            dot.removeEventListener('click', handler);
+        });
+
         this.#items.forEach((item, i) => {
             const handler = this.#clickHandlers[i];
             if (handler) item.removeEventListener('click', handler);
         });
     }
 }
+
+

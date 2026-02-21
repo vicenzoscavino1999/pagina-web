@@ -16,8 +16,8 @@ export class ParallaxEngine {
         this.update = this.update.bind(this);
         this.recalculate = this.recalculate.bind(this);
 
-        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }: { y: number }) => { this.update(y); });
-        this.#unsubscribeResize = EventBus.on('resize', ({ width }: { width: number }) => {
+        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }) => { this.update(y); });
+        this.#unsubscribeResize = EventBus.on('resize', ({ width }) => {
             this.#isMobile = width < this.#mobileBreakpoint;
             this.recalculate();
         });

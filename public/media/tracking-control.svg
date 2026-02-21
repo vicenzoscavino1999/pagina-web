@@ -1,0 +1,48 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fondo de tracking y control">
+  <defs>
+    <linearGradient id="trackBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="45%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <pattern id="trackGrid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0V64" fill="none" stroke="#38bdf8" stroke-opacity="0.14" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="nodeFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#trackBg)"/>
+  <rect width="1920" height="1080" fill="url(#trackGrid)"/>
+
+  <circle cx="1680" cy="160" r="180" fill="#0891b2" fill-opacity="0.16"/>
+  <circle cx="220" cy="960" r="240" fill="#0284c7" fill-opacity="0.14"/>
+
+  <rect x="250" y="250" width="1420" height="580" rx="36" fill="#0b1223" fill-opacity="0.72" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="2"/>
+  <rect x="320" y="330" width="1280" height="100" rx="16" fill="#111c35" stroke="#38bdf8" stroke-opacity="0.25"/>
+  <rect x="320" y="470" width="640" height="270" rx="22" fill="#111c35" stroke="#38bdf8" stroke-opacity="0.2"/>
+  <rect x="990" y="470" width="610" height="270" rx="22" fill="#111c35" stroke="#38bdf8" stroke-opacity="0.2"/>
+
+  <path d="M420 380H740L880 520H1140L1310 640H1540" fill="none" stroke="#67e8f9" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <g>
+    <circle cx="420" cy="380" r="16" fill="url(#nodeFill)"/>
+    <circle cx="740" cy="380" r="16" fill="url(#nodeFill)"/>
+    <circle cx="880" cy="520" r="16" fill="url(#nodeFill)"/>
+    <circle cx="1140" cy="520" r="16" fill="url(#nodeFill)"/>
+    <circle cx="1310" cy="640" r="16" fill="url(#nodeFill)"/>
+    <circle cx="1540" cy="640" r="16" fill="url(#nodeFill)"/>
+  </g>
+
+  <g fill="#e2e8f0" fill-opacity="0.9">
+    <rect x="380" y="540" width="230" height="22" rx="8"/>
+    <rect x="380" y="585" width="320" height="22" rx="8"/>
+    <rect x="380" y="630" width="280" height="22" rx="8"/>
+
+    <rect x="1050" y="540" width="200" height="22" rx="8"/>
+    <rect x="1050" y="585" width="420" height="22" rx="8"/>
+    <rect x="1050" y="630" width="360" height="22" rx="8"/>
+  </g>
+</svg>

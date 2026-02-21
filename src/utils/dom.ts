@@ -1,7 +1,7 @@
 /**
  * Select a single element.
  */
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export function qs<T extends Element = HTMLElement>(selector: string, scope: ParentNode = document): T | null {
     return scope.querySelector<T>(selector);
 }
@@ -9,7 +9,6 @@ export function qs<T extends Element = HTMLElement>(selector: string, scope: Par
 /**
  * Select multiple elements.
  */
-//
 export function qsa<T extends Element = HTMLElement>(selector: string, scope: ParentNode = document): T[] {
     return Array.from(scope.querySelectorAll<T>(selector));
 }

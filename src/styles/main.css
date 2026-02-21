@@ -15,9 +15,11 @@
 
 /* 3. Section-Specific Styles */
 @import "./sections/apple.css";
+@import "./sections/apple-minimal.css";
 @import "./sections/carousel.css";
 @import "./sections/features.css";
 @import "./sections/truck.css";
+@import "./sections/landing.css";
 
 /* 4. Responsive Overrides (Must assume specificity over above) */
 @import "./responsive.css";

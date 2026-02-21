@@ -1,0 +1,49 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fondo cinematografico de logistica">
+  <defs>
+    <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#02070f"/>
+      <stop offset="36%" stop-color="#06192f"/>
+      <stop offset="66%" stop-color="#0a2b4b"/>
+      <stop offset="100%" stop-color="#0b1628"/>
+    </linearGradient>
+    <radialGradient id="heroGlow" cx="52%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="truckGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#heroSky)"/>
+  <rect width="1920" height="1080" fill="url(#heroGlow)"/>
+
+  <path d="M0 470L230 360L420 410L620 280L870 340L1080 250L1340 360L1540 300L1920 420V1080H0V470Z" fill="#08172a" fill-opacity="0.86"/>
+  <path d="M0 560L180 500L420 560L650 470L890 570L1140 500L1400 590L1700 530L1920 620V1080H0V560Z" fill="#0a203a" fill-opacity="0.86"/>
+  <path d="M0 650L240 620L460 680L760 620L1000 700L1260 640L1520 710L1760 670L1920 710V1080H0V650Z" fill="#0b2947" fill-opacity="0.8"/>
+
+  <rect x="0" y="770" width="1920" height="310" fill="url(#roadGrad)"/>
+  <path d="M0 820C260 780 550 760 850 785C1180 812 1460 884 1920 880V1080H0V820Z" fill="#0b1222" fill-opacity="0.86"/>
+
+  <path d="M1180 840C1320 884 1480 900 1680 876C1800 862 1880 820 1920 790V760C1840 814 1730 842 1610 842C1460 840 1320 810 1180 770V840Z" fill="#111827" fill-opacity="0.84"/>
+
+  <g transform="translate(1460 690)">
+    <rect x="0" y="70" width="280" height="118" rx="18" fill="url(#truckGrad)"/>
+    <rect x="200" y="18" width="150" height="170" rx="22" fill="url(#truckGrad)"/>
+    <rect x="26" y="102" width="108" height="40" rx="10" fill="#94a3b8" fill-opacity="0.72"/>
+    <rect x="146" y="102" width="108" height="40" rx="10" fill="#94a3b8" fill-opacity="0.72"/>
+    <rect x="224" y="44" width="52" height="52" rx="8" fill="#cbd5e1"/>
+    <rect x="286" y="44" width="52" height="52" rx="8" fill="#cbd5e1"/>
+    <circle cx="70" cy="210" r="28" fill="#0f172a"/>
+    <circle cx="228" cy="210" r="28" fill="#0f172a"/>
+    <circle cx="70" cy="210" r="12" fill="#94a3b8"/>
+    <circle cx="228" cy="210" r="12" fill="#94a3b8"/>
+  </g>
+
+  <path d="M0 878C200 868 340 878 510 924C720 980 880 1014 1090 1004C1260 996 1460 930 1600 904C1710 884 1810 886 1920 912" fill="none" stroke="#e2e8f0" stroke-opacity="0.28" stroke-width="8" stroke-linecap="round" stroke-dasharray="16 14"/>
+</svg>

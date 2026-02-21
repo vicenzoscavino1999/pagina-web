@@ -11,27 +11,36 @@ export const lerp = (start: number, end: number, t: number): number => start * (
 /**
  * Debounces a function execution.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debounce = <T extends (...args: any[]) => any>(func: T, wait: number): ((...args: Parameters<T>) => void) => {
-    let timeout: ReturnType<typeof setTimeout>;
-    return (...args: Parameters<T>) => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => { func(...args); }, wait);
+export const debounce = <TArgs extends unknown[]>(
+    func: (...args: TArgs) => void,
+    wait: number
+): ((...args: TArgs) => void) => {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    return (...args: TArgs): void => {
+        if (timeout !== null) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            func(...args);
+        }, wait);
     };
 };
 
 /**
  * Throttles a function execution.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const throttle = <T extends (...args: any[]) => any>(func: T, limit: number): ((...args: Parameters<T>) => void) => {
-    let inThrottle: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return function (this: any, ...args: Parameters<T>) {
+export const throttle = <TArgs extends unknown[]>(
+    func: (...args: TArgs) => void,
+    limit: number
+): ((...args: TArgs) => void) => {
+    let inThrottle = false;
+    return (...args: TArgs): void => {
         if (!inThrottle) {
-            func.apply(this, args);
+            func(...args);
             inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+            setTimeout(() => {
+                inThrottle = false;
+            }, limit);
         }
-    }
-}
+    };
+};

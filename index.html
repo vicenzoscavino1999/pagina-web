@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -6,24 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- SEO & Open Graph -->
-    <title>GlobalLogistics | Envíos Rápidos en Lima</title>
+    <title>Postal Express SAC | Mensajeria y Servicios Postales</title>
     <meta name="description"
-        content="Envíos rápidos desde tu campus universitario. Recogemos en UPC, UPN, UTEC y más. Tracking en tiempo real y entrega la misma tarde.">
+        content="Postal Express SAC con 15 anos de experiencia en mensajeria, tramite documentario, distribucion de documentos valorados, paqueteria y carga en Lima, Callao y Provincias.">
     <meta name="theme-color" content="#0284c7">
-    <link rel="canonical" href="https://globallogistics.demo">
+    <link rel="canonical" href="https://postalexpress.demo">
 
-    <meta property="og:title" content="GlobalLogistics | Envíos Universitarios en Lima" />
+    <meta property="og:title" content="Postal Express SAC | Mensajeria y Servicios Postales" />
     <meta property="og:description"
-        content="Envíos rápidos desde tu campus. Coordinamos el retiro en tu aula y entregamos hoy mismo." />
+        content="Servicio local y nacional con tracking desde el recojo hasta la entrega final." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://globallogistics.demo" />
-    <meta property="og:image"
-        content="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1200&q=80" />
+    <meta property="og:url" content="https://postalexpress.demo" />
+    <meta property="og:image" content="/media/hero-warehouse.png" />
 
     <!-- PWA — iOS specific -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GlobalLogistics">
+    <meta name="apple-mobile-web-app-title" content="Postal Express">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <!-- Prevent iOS text-size-adjust -->
     <meta name="format-detection" content="telephone=no">
@@ -32,7 +31,9 @@
     <link rel="manifest" href="/manifest.webmanifest">
 
     <!-- Fuentes y Iconos -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -53,31 +54,31 @@
                     </div>
                     <div class="leading-none">
                         <span class="block font-extrabold text-2xl tracking-tighter drop-shadow-md"
-                            id="logo-text">GLOBAL</span>
+                            id="logo-text">POSTAL</span>
                         <span
-                            class="block font-bold text-[10px] text-accent-500 tracking-[0.2em] uppercase">Logistics</span>
+                            class="block font-bold text-[10px] text-accent-500 tracking-[0.2em] uppercase" id="logo-subtext">Express SAC</span>
                     </div>
                 </a>
 
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="javascript:void(0)"
-                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Envíos
+                    <a href="#servicios" id="nav-services-link"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Servicios
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="#tracking-widget"
-                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Rastreo
+                    <a href="#tracking-widget" id="nav-tracking-link"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Tracking
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="#servicios"
-                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Soluciones
+                    <a href="#servicios" id="nav-coverage-link"
+                        class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Cobertura
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="/login"
-                        class="bg-white text-brand-900 hover:bg-accent-500 hover:text-white px-6 py-2.5 rounded font-bold transition-all shadow-lg hover:shadow-accent-500/30 text-sm transform hover:-translate-y-0.5">Area
-                        Clientes</a>
+                    <a href="tel:+51996983530" id="nav-contract-link"
+                        class="bg-white text-brand-900 hover:bg-accent-500 hover:text-white px-6 py-2.5 rounded font-bold transition-all shadow-lg hover:shadow-accent-500/30 text-sm transform hover:-translate-y-0.5">Contratos:
+                        996983530</a>
                 </div>
 
                 <div class="md:hidden">
@@ -92,126 +93,104 @@
         <div id="mobile-menu"
             class="hidden absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl md:hidden h-screen z-40">
             <div class="flex flex-col p-6 space-y-6 text-lg">
-                <a href="javascript:void(0)"
-                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Envíos</a>
-                <a href="#tracking-widget"
-                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Rastreo</a>
-                <a href="#servicios"
-                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Soluciones</a>
-                <a href="/login"
-                    class="bg-brand-900 text-white text-center py-4 rounded-xl font-bold shadow-lg mt-4">Area
-                    Clientes</a>
+                <a href="#servicios" id="mobile-services-link"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Servicios</a>
+                <a href="#tracking-widget" id="mobile-tracking-link"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Tracking</a>
+                <a href="#servicios" id="mobile-coverage-link"
+                    class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Cobertura</a>
+                <a href="tel:+51996983530" id="mobile-contract-link"
+                    class="bg-brand-900 text-white text-center py-4 rounded-xl font-bold shadow-lg mt-4">Contratos:
+                    996983530</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="hero-section" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <!-- LCP Optimization: fetchpriority high, sync decoding -->
             <img id="hero-bg"
-                src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1920&q=80"
-                width="1920" height="1080" alt="Logistics Network"
+                src="/media/hero-warehouse.png"
+                width="1920" height="1080" alt="Operacion logistica en almacen con unidad de reparto"
                 class="w-full h-[120%] object-cover absolute top-0 left-0 will-change-transform" fetchpriority="high"
                 decoding="sync">
             <div class="absolute inset-0 hero-overlay"></div>
         </div>
 
-        <div
+        <div id="hero-layout"
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid lg:grid-cols-12 gap-12 items-center">
-            <div class="lg:col-span-7 text-white reveal">
+            <div id="hero-copy" class="lg:col-span-7 text-white">
                 <div
                     class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6 rounded-full">
-                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> Operando globalmente 24/7
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> <span id="hero-badge-text">Postal Express SAC</span>
                 </div>
-                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 drop-shadow-lg">
-                    Mueve tu mundo <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600">sin
-                        límites.</span>
+                <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 drop-shadow-lg">
+                    <span id="hero-title-main">Logistica corporativa.</span> <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600" id="hero-title-sub">Redefinida.</span>
                 </h1>
-                <p class="text-xl text-slate-200 mb-10 max-w-xl leading-relaxed font-light drop-shadow">
-                    Infraestructura logística de última generación para empresas que no pueden detenerse.
+                <p class="text-xl text-slate-200 mb-10 max-w-xl leading-relaxed font-light drop-shadow" id="hero-description">
+                    15 anos de experiencia entregando seguridad, control y confianza en Lima, Callao y Provincias.
                 </p>
                 <div class="flex flex-wrap gap-4">
                     <!-- Botones placeholder con type="button" y disabled para evitar confusión -->
                     <button type="button"
                         class="bg-accent-600 hover:bg-accent-700 text-white px-8 py-4 rounded font-bold transition shadow-lg shadow-accent-600/30 transform hover:-translate-y-1 flex items-center gap-2"
                         onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})">
-                        Cotizar Ahora <i class="fa-solid fa-arrow-right"></i>
+                        <span id="hero-primary-cta-text">Solicitar servicio</span> <i class="fa-solid fa-arrow-right"></i>
                     </button>
-                    <button type="button"
-                        class="px-8 py-4 rounded font-bold text-white border border-white/30 hover:bg-white/10 transition backdrop-blur-sm flex items-center gap-2"
-                        disabled title="Video no disponible en demo">
-                        <i class="fa-solid fa-play-circle text-xl"></i> Ver Video
-                    </button>
+                    <a href="tel:+51996983530" id="hero-contract-link"
+                        class="px-8 py-4 rounded font-bold text-white border border-white/30 hover:bg-white/10 transition backdrop-blur-sm flex items-center gap-2">
+                        <i class="fa-solid fa-phone text-xl"></i> <span id="hero-contract-text">Contratos: 996983530</span>
+                    </a>
                 </div>
             </div>
 
             <!-- Widget de Rastreo -->
             <div id="tracking-widget"
-                class="lg:col-span-5 bg-white p-8 rounded-2xl shadow-2xl reveal border-t-4 border-accent-500 relative overflow-hidden group">
+                class="lg:col-span-5 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-accent-500 relative overflow-hidden group">
                 <div
                     class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-50 rounded-full blur-3xl opacity-50 group-hover:scale-150 transition-transform duration-1000 ease-in-out">
                 </div>
 
-                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10">Rastrear Envío</h3>
-                <p class="text-slate-500 text-sm mb-6 relative z-10">Visualiza el estado de tu paquete en tiempo real.
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10" id="tracking-title">Tracking Postal Express</h3>
+                <p class="text-slate-500 text-sm mb-6 relative z-10" id="tracking-subtitle">Seguimiento de documentos, paqueteria, carnets y diplomas desde el recojo hasta la entrega.
                 </p>
 
                 <form id="tracking-form" class="space-y-4 relative z-10">
                     <div>
-                        <label for="tracking-input" class="sr-only">Número de guía</label>
+                        <label for="tracking-input" class="sr-only">Numero de guia</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <i class="fa-solid fa-magnifying-glass text-brand-400"></i>
                             </div>
                             <input type="text" id="tracking-input"
                                 class="block w-full pl-11 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 placeholder-slate-400 font-mono uppercase tracking-wide transition-all shadow-inner focus:outline-none focus-visible:outline-none"
-                                placeholder="Ejem: TRACK-123" required>
+                                placeholder="Ejem: PE-2024-001" required>
                         </div>
                     </div>
                     <button type="submit" id="tracking-btn"
                         class="w-full bg-brand-900 hover:bg-brand-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-900/30 flex justify-center items-center gap-3">
-                        <span>RASTREAR</span> <i class="fa-solid fa-chevron-right text-xs"></i>
+                        <span id="tracking-submit-text">RASTREAR</span> <i class="fa-solid fa-chevron-right text-xs"></i>
                     </button>
                 </form>
 
                 <div id="tracking-result" class="hidden mt-6 pt-6 border-t border-slate-100 relative z-10">
                     <div class="flex justify-between items-center mb-4">
                         <div>
-                            <p class="text-xs text-slate-400 uppercase font-bold">Guía</p>
+                            <p class="text-xs text-slate-400 uppercase font-bold" id="tracking-result-guide-label">Guia</p>
                             <p class="text-brand-900 font-mono font-bold" id="result-id">TRACK-123</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-xs text-slate-400 uppercase font-bold">Estimado</p>
+                            <p class="text-xs text-slate-400 uppercase font-bold" id="tracking-result-estimated-label">Estimado</p>
                             <p class="text-green-600 font-bold" id="result-date">Calculando...</p>
                         </div>
                     </div>
-                    <div class="space-y-0 mt-4">
-                        <div class="timeline-item completed">
-                            <span class="timeline-dot"></span>
-                            <p class="text-sm font-bold text-slate-800">Recolectado</p>
-                            <p class="text-xs text-slate-500">Madrid, ES - 10:00 AM</p>
-                        </div>
-                        <div class="timeline-item completed">
-                            <span class="timeline-dot"></span>
-                            <p class="text-sm font-bold text-slate-800">En Centro de Distribución</p>
-                            <p class="text-xs text-slate-500">Madrid, Hub Central - 14:30 PM</p>
-                        </div>
-                        <div class="timeline-item current">
-                            <span class="timeline-dot"></span>
-                            <p class="text-sm font-bold text-accent-600">En Tránsito Internacional</p>
-                            <p class="text-xs text-slate-500">Vuelo IB6403 - En curso</p>
-                        </div>
-                        <div class="timeline-item">
-                            <span class="timeline-dot"></span>
-                            <p class="text-sm font-bold text-slate-400">Entrega</p>
-                            <p class="text-xs text-slate-400">Pendiente</p>
-                        </div>
+                    <div class="space-y-0 mt-4" id="tracking-timeline">
+                        <!-- Injected by ContentHydrator -->
                     </div>
                     <button type="button" id="reset-tracking-btn"
-                        class="mt-4 text-xs text-slate-400 hover:text-brand-600 underline w-full text-center">Nueva
-                        búsqueda</button>
+                        class="mt-4 text-xs text-slate-400 hover:text-brand-600 underline w-full text-center"><span id="tracking-reset-text">Nueva busqueda</span></button>
                 </div>
             </div>
         </div>
@@ -221,19 +200,18 @@
     <section id="apple-section" aria-label="Tecnología de rastreo">
         <div id="apple-sticky-container">
             <img id="apple-bg-image"
-                src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1920&q=90"
-                width="1920" height="1080" alt="Cargo ship at sea" decoding="async">
+                src="/media/furgoneta-hero.jpg"
+                width="1920" height="1080" alt="Unidad de reparto en operacion logistica nocturna" decoding="async">
             <div id="apple-overlay"></div>
 
             <div class="relative z-10 max-w-5xl px-6 text-center">
                 <!-- Se ha eliminado aria-hidden dinámico. El contenido es visible o está en opacidad 0, pero accesible en el DOM -->
                 <h2 id="apple-heading" class="apple-text-reveal text-5xl md:text-8xl font-bold tracking-tight mb-6">
-                    Conectividad <br> Inteligente.
+                    Control <br> Integrado.
                 </h2>
                 <p id="apple-subheading"
                     class="apple-text-reveal text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                    Tu carga monitoreada por satélite en cada kilómetro del océano. Precisión absoluta cuando más
-                    importa.
+                    El seguimiento inicia cuando recojemos en la sede del cliente y culmina con la entrega al destinatario.
                 </p>
             </div>
         </div>
@@ -274,27 +252,8 @@
                     <!-- Dashed center line -->
                     <div class="ts-road-dashes"></div>
                     <!-- Waypoint pins on the road -->
-                    <div class="ts-waypoints">
-                        <div class="ts-waypoint" style="left:16%">
-                            <div class="wp-pole"></div>
-                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
-                            <div class="wp-label">UPC<br><span>San Isidro</span></div>
-                        </div>
-                        <div class="ts-waypoint" style="left:38%">
-                            <div class="wp-pole"></div>
-                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
-                            <div class="wp-label">UPN<br><span>Miraflores</span></div>
-                        </div>
-                        <div class="ts-waypoint" style="left:60%">
-                            <div class="wp-pole"></div>
-                            <div class="wp-pin"><i class="fa-solid fa-graduation-cap"></i></div>
-                            <div class="wp-label">UTEC<br><span>Barranco</span></div>
-                        </div>
-                        <div class="ts-waypoint ts-waypoint--home" style="left:85%">
-                            <div class="wp-pole"></div>
-                            <div class="wp-pin wp-pin--home"><i class="fa-solid fa-house"></i></div>
-                            <div class="wp-label">Tu<br><span>domicilio</span></div>
-                        </div>
+                    <div class="ts-waypoints" id="truck-waypoints">
+                        <!-- Injected by ContentHydrator -->
                     </div>
                 </div>
             </div>
@@ -318,13 +277,13 @@
             <!-- Overlay: status + headline + progress -->
             <div class="ts-overlay">
                 <div class="ts-overlay-inner">
-                    <div id="ts-status" class="ts-badge">Recogido en campus</div>
-                    <h2 class="ts-headline">De la universidad<br>a tu puerta.</h2>
-                    <p class="ts-sub">En tiempo récord, con tracking en vivo.</p>
+                    <div id="ts-status" class="ts-badge">Recojo registrado</div>
+                    <h2 class="ts-headline" id="truck-headline">Del recojo<br>a la entrega.</h2>
+                    <p class="ts-sub" id="truck-subheading">Control operativo con 03 visitas y cargo estandar.</p>
                     <div class="ts-progress-track">
                         <div class="ts-progress-labels">
-                            <span><i class="fa-solid fa-graduation-cap"></i> Campus</span>
-                            <span><i class="fa-solid fa-house"></i> Destino</span>
+                            <span><i class="fa-solid fa-building"></i> <span id="truck-origin-label">Origen</span></span>
+                            <span><i class="fa-solid fa-house"></i> <span id="truck-destination-label">Destino</span></span>
                         </div>
                         <div class="ts-progress-bar">
                             <div id="ts-progress-fill"></div>
@@ -335,7 +294,7 @@
 
             <!-- Scroll indicator -->
             <div class="ts-scroll-cue">
-                <span>Sigue scrolleando</span>
+                <span id="truck-scroll-cue-text">Sigue scrolleando</span>
                 <div class="ts-scroll-arrow">
                     <i class="fa-solid fa-chevron-down"></i>
                 </div>
@@ -354,12 +313,9 @@
         </button>
 
         <div class="uf-nav-center">
-            <div id="uf-nav-label" class="uf-nav-label">Retiro en campus</div>
-            <div class="uf-nav-dots" role="tablist">
-                <button class="uf-nav-dot uf-nav-dot--active" data-index="0" aria-label="Retiro en campus"></button>
-                <button class="uf-nav-dot" data-index="1" aria-label="Seguro incluido"></button>
-                <button class="uf-nav-dot" data-index="2" aria-label="Alertas instantáneas"></button>
-                <button class="uf-nav-dot" data-index="3" aria-label="Pago flexible"></button>
+            <div id="uf-nav-label" class="uf-nav-label">Recojo y distribucion</div>
+            <div class="uf-nav-dots" role="tablist" id="uf-nav-dots">
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
 
@@ -372,56 +328,28 @@
          SECTION: UNIVERSITY PARTNERS — Sticky Feature List
          Apple "Why Apple Watch" style: left list highlights, right mockup changes
     ======================================================== -->
-    <section id="university-features" aria-label="Por qué elegirnos para tu universidad">
+    <section id="university-features" aria-label="Por que elegir Postal Express">
         <div class="uf-container">
             <div class="uf-left">
                 <div class="uf-header reveal">
-                    <span class="uf-label">Hecho para universitarios</span>
-                    <h2 class="uf-title">Todo lo que necesitas<br>para enviar en Lima.</h2>
+                    <span class="uf-label" id="uf-company-label">Postal Express SAC</span>
+                    <h2 class="uf-title" id="uf-title">Mensajeria y logistica<br>local y provincias.</h2>
                 </div>
-                <div class="uf-list">
-                    <div class="feature-item" data-index="0">
-                        <div class="fi-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                        <div class="fi-text">
-                            <h3 class="fi-title">Retiro en campus</h3>
-                            <p class="fi-desc">Coordinamos el retiro en UPC, UPN, UTEC, Pacífico y más. Sin salir del
-                                aula.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item" data-index="1">
-                        <div class="fi-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                        <div class="fi-text">
-                            <h3 class="fi-title">Seguro incluido</h3>
-                            <p class="fi-desc">Hasta S/. 500 de cobertura por pérdida o daño en cada envío.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item" data-index="2">
-                        <div class="fi-icon"><i class="fa-solid fa-bell"></i></div>
-                        <div class="fi-text">
-                            <h3 class="fi-title">Alertas instantáneas</h3>
-                            <p class="fi-desc">WhatsApp en cada etapa: retiro, en ruta y entrega con foto.</p>
-                        </div>
-                    </div>
-                    <div class="feature-item" data-index="3">
-                        <div class="fi-icon"><i class="fa-solid fa-credit-card"></i></div>
-                        <div class="fi-text">
-                            <h3 class="fi-title">Pago flexible</h3>
-                            <p class="fi-desc">Yape, Plin, tarjeta o efectivo. Facturamos con RUC.</p>
-                        </div>
-                    </div>
+                <div class="uf-list" id="uf-feature-list">
+                    <!-- Injected by ContentHydrator -->
                 </div>
             </div>
             <div class="uf-right">
                 <div class="uf-mockup-wrapper">
                     <div class="mockup-screen mockup-screen--visible" id="ms-0">
                         <div class="ms-inner ms-campus">
-                            <div class="ms-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                            <div class="ms-chip">UPC · UPN · UTEC · Pacífico</div>
-                            <p class="ms-text">Retiro coordinado<br>desde tu aula</p>
+                            <div class="ms-icon"><i class="fa-solid fa-truck"></i></div>
+                            <div class="ms-chip" id="uf-mockup-chip">Lima · Callao · Provincias</div>
+                            <p class="ms-text" id="uf-mockup-pickup-text">Recojo programado<br>y ruta asignada</p>
                             <div class="ms-badge-row">
-                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> UPC San Isidro
+                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> <span id="uf-mockup-pickup-tag-one">Minivan y autos</span>
                                 </div>
-                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> UPN Miraflores
+                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> <span id="uf-mockup-pickup-tag-two">Motorizados</span>
                                 </div>
                             </div>
                         </div>
@@ -429,12 +357,12 @@
                     <div class="mockup-screen" id="ms-1">
                         <div class="ms-inner ms-shield">
                             <div class="ms-shield-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                            <p class="ms-text ms-text--light">Seguro incluido</p>
+                            <p class="ms-text ms-text--light" id="uf-mockup-shield-text">Custodia documentaria</p>
                             <div class="ms-coverage">
                                 <div class="ms-bar">
                                     <div class="ms-bar-fill" style="width:100%"></div>
                                 </div>
-                                <span>Cobertura: S/. 500</span>
+                                <span id="uf-mockup-shield-coverage">Estantes metalicos bajo llave</span>
                             </div>
                         </div>
                     </div>
@@ -442,28 +370,24 @@
                         <div class="ms-inner ms-notify">
                             <div class="ms-notify-icon"><i class="fa-brands fa-whatsapp"></i></div>
                             <div class="ms-notification">
-                                <div class="notif-row"><span class="notif-dot done"></span><span>Paquete recogido
-                                        ✓</span></div>
-                                <div class="notif-row"><span class="notif-dot active pulse"></span><span>En
-                                        camino...</span></div>
-                                <div class="notif-row dimmed"><span class="notif-dot"></span><span>Entrega
-                                        confirmada</span></div>
+                                <div class="notif-row"><span class="notif-dot done"></span><span id="uf-mockup-notif-one">Recojo confirmado</span></div>
+                                <div class="notif-row"><span class="notif-dot active pulse"></span><span id="uf-mockup-notif-two">Distribucion en curso</span></div>
+                                <div class="notif-row dimmed"><span class="notif-dot"></span><span id="uf-mockup-notif-three">Entrega o devolucion</span></div>
                             </div>
                         </div>
                     </div>
                     <div class="mockup-screen" id="ms-3">
                         <div class="ms-inner ms-payment">
                             <div class="ms-payment-row">
-                                <div class="pay-method active"><i class="fa-solid fa-mobile-alt"></i> Yape</div>
-                                <div class="pay-method"><i class="fa-solid fa-mobile-alt"></i> Plin</div>
-                                <div class="pay-method"><i class="fa-solid fa-credit-card"></i> Tarjeta</div>
-                                <div class="pay-method"><i class="fa-solid fa-money-bill"></i> Efectivo</div>
+                                <div class="pay-method active"><i class="fa-solid fa-clipboard-check"></i> <span id="uf-mockup-method-one">Recojo</span></div>
+                                <div class="pay-method"><i class="fa-solid fa-box-open"></i> <span id="uf-mockup-method-two">Habilitacion</span></div>
+                                <div class="pay-method"><i class="fa-solid fa-truck-fast"></i> <span id="uf-mockup-method-three">Distribucion</span></div>
+                                <div class="pay-method"><i class="fa-solid fa-circle-check"></i> <span id="uf-mockup-method-four">Entrega</span></div>
                             </div>
                             <div class="ms-receipt">
-                                <div class="receipt-row"><span>Envío express</span><span>S/. 12.00</span></div>
-                                <div class="receipt-row"><span>Seguro</span><span class="text-green-500">Gratis</span>
-                                </div>
-                                <div class="receipt-row receipt-total"><span>Total</span><span>S/. 12.00</span></div>
+                                <div class="receipt-row"><span id="uf-mockup-receipt-one-label">Reporte parcial</span><span id="uf-mockup-receipt-one-value">Cada 48 h</span></div>
+                                <div class="receipt-row"><span id="uf-mockup-receipt-two-label">Entrega de cargos</span><span id="uf-mockup-receipt-two-value">24 h</span></div>
+                                <div class="receipt-row receipt-total"><span id="uf-mockup-receipt-three-label">Visitas incluidas</span><span id="uf-mockup-receipt-three-value">03</span></div>
                             </div>
                         </div>
                     </div>
@@ -476,7 +400,7 @@
          SECTION: HORIZONTAL FEATURE CAROUSEL
          Apple Watch-style: scroll vertically → slides move horizontally
     ======================================================== -->
-    <section id="features-carousel" aria-label="Características del servicio universitario">
+    <section id="features-carousel" aria-label="Caracteristicas del servicio universitario">
         <div id="carousel-sticky">
 
             <!-- Background gradient -->
@@ -485,23 +409,22 @@
             <!-- Slides track -->
             <div id="carousel-track">
 
-                <!-- Slide 1: Retiro en campus -->
+                <!-- Slide 1: Recojo y habilitacion -->
                 <div class="carousel-slide" id="slide-1">
                     <div class="carousel-content">
                         <div class="slide-icon-wrap">
                             <div class="slide-icon">
-                                <i class="fa-solid fa-graduation-cap"></i>
+                                <i class="fa-solid fa-clipboard-check"></i>
                             </div>
                             <div class="slide-icon-ring"></div>
                         </div>
-                        <div class="slide-label">Para universitarios</div>
-                        <h2 class="slide-title">Retiro directo<br>en tu campus.</h2>
-                        <p class="slide-body">Pasamos por UPC, UPN, Laureate y más. Coordinas desde la app, nosotros
-                            recogemos tu paquete sin que salgas del aula.</p>
+                        <div class="slide-label" id="carousel-slide-1-label">Operacion local</div>
+                        <h2 class="slide-title" id="carousel-slide-1-title">Recojo y<br>habilitacion documental.</h2>
+                        <p class="slide-body" id="carousel-slide-1-body">Recogemos en las instalaciones del cliente y preparamos documentos con ensobrado, etiquetado, embolsado y cargo.</p>
                         <div class="slide-universities">
-                            <span class="uni-badge"><i class="fa-solid fa-school"></i> UPC</span>
-                            <span class="uni-badge"><i class="fa-solid fa-school"></i> UPN</span>
-                            <span class="uni-badge"><i class="fa-solid fa-school"></i> Laureate</span>
+                            <span class="uni-badge"><i class="fa-solid fa-file-lines"></i> <span id="carousel-slide-1-badge-one">Documentos</span></span>
+                            <span class="uni-badge"><i class="fa-solid fa-scroll"></i> <span id="carousel-slide-1-badge-two">Diplomas</span></span>
+                            <span class="uni-badge"><i class="fa-solid fa-id-card"></i> <span id="carousel-slide-1-badge-three">Carnets</span></span>
                         </div>
                     </div>
                     <div class="slide-visual">
@@ -509,16 +432,16 @@
                             <div class="phone-screen screen-pickup">
                                 <div class="pm-header">
                                     <span class="pm-dot green"></span>
-                                    <span class="pm-title">Nuevo Retiro</span>
+                                    <span class="pm-title" id="carousel-slide-1-phone-title">Orden de servicio</span>
                                 </div>
                                 <div class="pm-map">
                                     <div class="pm-pin bounce">
                                         <i class="fa-solid fa-location-dot text-brand-500"></i>
                                     </div>
                                     <div class="pm-map-grid"></div>
-                                    <div class="pm-campus-label">UPC San Isidro</div>
+                                    <div class="pm-campus-label" id="carousel-slide-1-phone-label">Recojo en cliente</div>
                                 </div>
-                                <div class="pm-cta">Confirmar retiro →</div>
+                                <div class="pm-cta" id="carousel-slide-1-phone-cta">Iniciar habilitacion →</div>
                             </div>
                         </div>
                     </div>
@@ -533,18 +456,17 @@
                             </div>
                             <div class="slide-icon-ring ring--blue"></div>
                         </div>
-                        <div class="slide-label">Siempre conectado</div>
-                        <h2 class="slide-title">Tracking en<br>tiempo real.</h2>
-                        <p class="slide-body">Tu paquete transmite su ubicación exacta cada 30 segundos. GPS satelital
-                            con precisión de 10 metros en toda Lima Metropolitana.</p>
+                        <div class="slide-label" id="carousel-slide-2-label">Control integrado</div>
+                        <h2 class="slide-title" id="carousel-slide-2-title">Tracking de<br>principio a fin.</h2>
+                        <p class="slide-body" id="carousel-slide-2-body">El seguimiento inicia desde el recojo y termina en la entrega al titular o apoderado autorizado, con reportes de control.</p>
                         <div class="slide-stat-row">
                             <div class="slide-stat">
-                                <span class="slide-stat-num">30s</span>
-                                <span class="slide-stat-label">Actualización GPS</span>
+                                <span class="slide-stat-num">48h</span>
+                                <span class="slide-stat-label" id="carousel-slide-2-stat-one-label">Reporte parcial</span>
                             </div>
                             <div class="slide-stat">
-                                <span class="slide-stat-num">10m</span>
-                                <span class="slide-stat-label">Precisión satelital</span>
+                                <span class="slide-stat-num">24h</span>
+                                <span class="slide-stat-label" id="carousel-slide-2-stat-two-label">Entrega de cargos</span>
                             </div>
                         </div>
                     </div>
@@ -553,7 +475,7 @@
                             <div class="phone-screen screen-tracking">
                                 <div class="pm-header">
                                     <span class="pm-dot blue"></span>
-                                    <span class="pm-title">En camino</span>
+                                    <span class="pm-title" id="carousel-slide-2-phone-title">En camino</span>
                                 </div>
                                 <div class="track-route">
                                     <div class="route-line">
@@ -564,18 +486,18 @@
                                         <div class="route-dot route-dot--pending"></div>
                                     </div>
                                     <div class="route-labels">
-                                        <span>UPC Campus</span>
-                                        <span class="active-label">En ruta</span>
-                                        <span>Tu dirección</span>
+                                        <span id="carousel-slide-2-route-one">Recojo</span>
+                                        <span class="active-label" id="carousel-slide-2-route-two">En ruta</span>
+                                        <span id="carousel-slide-2-route-three">Entrega</span>
                                     </div>
                                 </div>
-                                <div class="pm-eta">Llegada estimada: <strong>12 min</strong></div>
+                                <div class="pm-eta"><span id="carousel-slide-2-eta-prefix">Reporte parcial:</span> <strong id="carousel-slide-2-eta-value">Cada 48 h</strong></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 3: Entrega misma tarde -->
+                <!-- Slide 3: Cobertura -->
                 <div class="carousel-slide" id="slide-3">
                     <div class="carousel-content">
                         <div class="slide-icon-wrap">
@@ -584,19 +506,18 @@
                             </div>
                             <div class="slide-icon-ring ring--green"></div>
                         </div>
-                        <div class="slide-label">Velocidad express</div>
-                        <h2 class="slide-title">Entrega la<br>misma tarde.</h2>
-                        <p class="slide-body">Enviado antes de las 2pm = entregado hoy. Perfecto para tareas, materiales
-                            de estudio o equipos electrónicos urgentes.</p>
+                        <div class="slide-label" id="carousel-slide-3-label">Cobertura nacional</div>
+                        <h2 class="slide-title" id="carousel-slide-3-title">Distribucion local<br>y provincias.</h2>
+                        <p class="slide-body" id="carousel-slide-3-body">Tiempo de distribucion local de 1 a 4 dias. El flujo a sedes se programa segun pedidos y la distribucion a domicilios es diaria.</p>
                         <div class="slide-timer">
                             <div class="timer-circle">
                                 <i class="fa-regular fa-clock"></i>
-                                <span>2:00 PM</span>
+                                <span id="carousel-slide-3-timer-one">1 a 4 dias</span>
                             </div>
                             <div class="timer-arrow">→</div>
                             <div class="timer-circle timer-circle--green">
                                 <i class="fa-solid fa-check"></i>
-                                <span>Hoy</span>
+                                <span id="carousel-slide-3-timer-two">Servicio diario</span>
                             </div>
                         </div>
                     </div>
@@ -605,14 +526,14 @@
                             <div class="phone-screen screen-delivered">
                                 <div class="pm-header">
                                     <span class="pm-dot green"></span>
-                                    <span class="pm-title">¡Entregado!</span>
+                                    <span class="pm-title" id="carousel-slide-3-phone-title">Entrega final</span>
                                 </div>
                                 <div class="delivered-check">
                                     <div class="check-circle">
                                         <i class="fa-solid fa-circle-check"></i>
                                     </div>
-                                    <p class="delivered-msg">Firmado por el destinatario</p>
-                                    <p class="delivered-time">Hoy, 4:38 PM</p>
+                                    <p class="delivered-msg" id="carousel-slide-3-delivered-message">Titular o apoderado autorizado</p>
+                                    <p class="delivered-time" id="carousel-slide-3-delivered-time">Cargo entregado en 24 h</p>
                                 </div>
                             </div>
                         </div>
@@ -658,11 +579,7 @@
     <!-- Template para Ticker (Para clonar en JS) -->
     <template id="ticker-content">
         <div class="text-2xl font-bold text-slate-300 flex gap-16 items-center pr-16">
-            <span class="flex items-center gap-2"><i class="fa-brands fa-dhl text-4xl"></i> DHL Partner</span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-fedex text-3xl"></i> FedEx Connect</span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-plane-up text-3xl"></i> LATAM Cargo</span>
-            <span class="flex items-center gap-2"><i class="fa-solid fa-ship text-3xl"></i> MAERSK Line</span>
-            <span class="flex items-center gap-2"><i class="fa-brands fa-amazon text-3xl"></i> Amazon Logistics</span>
+            <!-- Injected by ContentHydrator -->
         </div>
     </template>
 
@@ -670,80 +587,19 @@
     <section id="servicios" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <h2 class="text-accent-500 font-bold tracking-widest uppercase text-sm mb-3">Nuestras Soluciones</h2>
-                <p class="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight">Transporte adaptado a tus
-                    necesidades</p>
+                <h2 class="text-accent-500 font-bold tracking-widest uppercase text-sm mb-3" id="services-eyebrow">Nuestros Servicios</h2>
+                <p class="text-3xl font-extrabold text-slate-900 sm:text-4xl tracking-tight" id="services-title">Soluciones para documentos, paqueteria y carga</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div
-                    class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform">
-                    <div class="h-64 relative parallax-wrapper">
-                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
-                            width="800" height="500" alt="Avión de carga" class="parallax-img" loading="lazy">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
-                        </div>
-                        <div
-                            class="absolute bottom-4 left-4 bg-brand-600 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
-                            Express</div>
-                    </div>
-                    <div class="p-8 relative">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
-                            Carga Aérea</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Envíos urgentes con prioridad de
-                            embarque. Conectividad directa con los principales hubs aeroportuarios.</p>
-                        <span
-                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
-                            detalles <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </div>
+            <div class="grid md:grid-cols-3 gap-8" id="services-grid">
+                <!-- Injected by ContentHydrator -->
+            </div>
 
-                <div class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform"
-                    style="transition-delay: 100ms;">
-                    <div class="h-64 relative parallax-wrapper">
-                        <img src="https://images.unsplash.com/photo-1577702312572-5bb9fbca732d?auto=format&fit=crop&w=800&q=80"
-                            width="800" height="500" alt="Barco carguero" class="parallax-img" loading="lazy">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
-                        </div>
-                        <div
-                            class="absolute bottom-4 left-4 bg-slate-800 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
-                            Económico</div>
-                    </div>
-                    <div class="p-8 relative">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
-                            Carga Marítima</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Soluciones FCL y LCL. Gestión integral de
-                            aduanas y documentación internacional.</p>
-                        <span
-                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
-                            detalles <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </div>
-
-                <div class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform"
-                    style="transition-delay: 200ms;">
-                    <div class="h-64 relative parallax-wrapper">
-                        <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=800&q=80"
-                            width="800" height="500" alt="Camión de carga" class="parallax-img" loading="lazy">
-                        <div
-                            class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500">
-                        </div>
-                        <div
-                            class="absolute bottom-4 left-4 bg-accent-500 text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">
-                            Nacional</div>
-                    </div>
-                    <div class="p-8 relative">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">
-                            Terrestre</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">Flota moderna monitoreada por GPS.
-                            Servicios de carga completa (FTL) y paquetería (LTL).</p>
-                        <span
-                            class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">Ver
-                            detalles <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </div>
+            <div class="mt-14" id="service-characteristics-block">
+                <h3 class="text-2xl font-bold text-slate-900 mb-6 reveal" id="service-characteristics-title">Caracteristicas del servicio</h3>
+                <ul class="grid md:grid-cols-2 gap-4" id="service-characteristics-list">
+                    <!-- Injected by ContentHydrator -->
+                </ul>
             </div>
         </div>
     </section>
@@ -751,40 +607,11 @@
     <!-- Cómo Funciona -->
     <section class="py-24 bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-16 reveal">Tu envío en 3 pasos simples</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-16 reveal" id="flow-title">Flujo de servicio Postal Express</h2>
 
-            <div class="grid md:grid-cols-3 gap-12 relative">
+            <div class="grid md:grid-cols-3 gap-12 relative" id="flow-steps">
                 <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-slate-100 z-0"></div>
-
-                <div class="reveal relative z-10">
-                    <div
-                        class="w-24 h-24 bg-white border-4 border-brand-50 rounded-full flex items-center justify-center text-brand-600 text-3xl mx-auto mb-6 shadow-xl">
-                        <i class="fa-solid fa-calculator"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">1. Cotiza en línea</h3>
-                    <p class="text-slate-500 text-sm">Obtén tarifas instantáneas para tus envíos nacionales e
-                        internacionales sin compromiso.</p>
-                </div>
-
-                <div class="reveal relative z-10" style="transition-delay: 100ms;">
-                    <div
-                        class="w-24 h-24 bg-brand-600 border-4 border-brand-200 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6 shadow-xl ring-4 ring-brand-50">
-                        <i class="fa-solid fa-dolly"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. Recolección</h3>
-                    <p class="text-slate-500 text-sm">Nuestras unidades pasan por tu domicilio o almacén. Etiquetado y
-                        documentación incluida.</p>
-                </div>
-
-                <div class="reveal relative z-10" style="transition-delay: 200ms;">
-                    <div
-                        class="w-24 h-24 bg-white border-4 border-green-50 rounded-full flex items-center justify-center text-green-500 text-3xl mx-auto mb-6 shadow-xl">
-                        <i class="fa-solid fa-flag-checkered"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Entrega Segura</h3>
-                    <p class="text-slate-500 text-sm">Entregamos en la puerta del destinatario con firma digital y
-                        confirmación fotográfica.</p>
-                </div>
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
     </section>
@@ -793,34 +620,15 @@
     <section class="py-24 text-white relative overflow-hidden" id="stats-section" style="background-color: #0c4a6e;">
         <div class="absolute inset-0 overflow-hidden">
             <img id="stats-bg"
-                src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1920&q=80"
-                width="1920" height="1080" alt="Background"
+                src="/media/stats-cinematic.svg"
+                width="1920" height="1080" alt="Fondo cinematografico de metricas logisticas"
                 class="w-full h-[150%] object-cover absolute top-0 left-0 opacity-10 mix-blend-overlay will-change-transform"
                 decoding="async">
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10">
-                <div class="reveal p-4">
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="15"
-                        data-suffix="M+">0</div>
-                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Millones de Paquetes</div>
-                </div>
-                <div class="reveal p-4">
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="220"
-                        data-suffix="+">0</div>
-                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Países Cubiertos</div>
-                </div>
-                <div class="reveal p-4">
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 counter" data-target="1200"
-                        data-suffix="+">0</div>
-                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Vehículos</div>
-                </div>
-                <div class="reveal p-4">
-                    <div class="text-4xl md:text-5xl font-bold text-white mb-2 flex justify-center gap-1"><span
-                            class="counter" data-target="99" data-suffix="%">0</span></div>
-                    <div class="text-sm text-accent-400 font-bold uppercase tracking-wider">Entregas a Tiempo</div>
-                </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/10" id="stats-grid">
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
     </section>
@@ -829,55 +637,12 @@
     <section class="py-24 bg-slate-50" id="contacto">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 reveal">
-                <h2 class="text-3xl font-extrabold text-slate-900">Preguntas Frecuentes</h2>
-                <p class="text-slate-500 mt-2">Resolvemos tus dudas antes de enviar.</p>
+                <h2 class="text-3xl font-extrabold text-slate-900" id="contact-title">Informacion del servicio</h2>
+                <p class="text-slate-500 mt-2"><span id="contact-subtitle-prefix">Contratos y coordinaciones:</span> <a href="tel:+51996983530" class="text-brand-700 font-bold" id="contact-contract-link">996983530</a></p>
             </div>
 
-            <div class="space-y-4">
-                <details
-                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
-                    <summary
-                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
-                        <span>¿Cómo calculan el peso volumétrico?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
-                        </span>
-                    </summary>
-                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
-                        El peso volumétrico se calcula multiplicando largo x ancho x alto (en cm) y dividiéndolo entre
-                        5000. Cobramos el mayor entre el peso real y el volumétrico, estándar en la industria.
-                    </div>
-                </details>
-
-                <details
-                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
-                    <summary
-                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
-                        <span>¿Ofrecen seguro para mercancía valiosa?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
-                        </span>
-                    </summary>
-                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
-                        Sí, ofrecemos un seguro opcional que cubre hasta el 110% del valor declarado de la factura
-                        comercial ante pérdida total o daños visibles durante el transporte.
-                    </div>
-                </details>
-
-                <details
-                    class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 reveal cursor-pointer">
-                    <summary
-                        class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-slate-900">
-                        <span>¿Cuáles son los tiempos de entrega internacionales?</span>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fa-solid fa-chevron-down text-brand-600"></i>
-                        </span>
-                    </summary>
-                    <div class="text-slate-500 px-6 pb-6 text-sm leading-relaxed border-t border-slate-50 pt-4">
-                        Depende del servicio: Express (24-48 horas a capitales principales), Estándar Aéreo (3-5 días) y
-                        Marítimo (15-45 días según el puerto de destino).
-                    </div>
-                </details>
+            <div class="space-y-4" id="faq-list">
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
     </section>
@@ -890,68 +655,56 @@
                     <div class="flex items-center gap-2 mb-6">
                         <div class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center text-white"><i
                                 class="fa-solid fa-box-open"></i></div>
-                        <span class="font-bold text-xl text-white">GLOBAL</span>
+                        <span class="font-bold text-xl text-white" id="footer-brand-name">POSTAL EXPRESS</span>
                     </div>
-                    <p class="mb-6 leading-relaxed">Conectando mercados, impulsando negocios. La red logística más
-                        fiable para tus operaciones críticas.</p>
-                    <div class="flex gap-4">
-                        <a href="javascript:void(0)"
-                            class="w-10 h-10 bg-slate-900 flex items-center justify-center rounded-full hover:bg-brand-600 hover:text-white transition"><i
-                                class="fa-brands fa-linkedin-in"></i></a>
-                        <a href="javascript:void(0)"
-                            class="w-10 h-10 bg-slate-900 flex items-center justify-center rounded-full hover:bg-brand-600 hover:text-white transition"><i
-                                class="fa-brands fa-twitter"></i></a>
-                    </div>
+                    <p class="mb-6 leading-relaxed" id="footer-intro">Nos es grato presentar nuestra empresa Postal Express SAC, con 15 anos de experiencia en mensajeria y servicios postales.</p>
+                    <a href="https://wa.me/51996983530" target="_blank" rel="noopener noreferrer" id="footer-whatsapp-link"
+                        class="inline-flex items-center gap-2 bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500 transition font-bold">
+                        <i class="fa-brands fa-whatsapp"></i> <span id="footer-whatsapp-text">WhatsApp 996983530</span>
+                    </a>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Empresa</h4>
-                    <ul class="space-y-3">
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Sobre Nosotros</a></li>
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Sostenibilidad</a></li>
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Carreras</a></li>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-company-heading">Empresa</h4>
+                    <ul class="space-y-3" id="footer-company-list">
+                        <li class="hover:text-white transition">Postal Express SAC</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Soporte</h4>
-                    <ul class="space-y-3">
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Centro de Ayuda</a></li>
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Reclamos</a></li>
-                        <li><a href="javascript:void(0)" class="hover:text-white transition">Objetos Prohibidos</a></li>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-coverage-heading">Cobertura</h4>
+                    <ul class="space-y-3" id="footer-coverage-list">
+                        <li class="hover:text-white transition">Lima y Callao</li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6">Newsletter</h4>
-                    <p class="mb-4 text-xs">Recibe actualizaciones de mercado y ofertas.</p>
-                    <form onsubmit="event.preventDefault();" class="flex">
-                        <input type="email" placeholder="Email"
-                            class="bg-slate-900 text-white px-4 py-2 rounded-l-lg w-full focus:outline-none focus:ring-1 focus:ring-brand-500 border border-slate-800"
-                            aria-label="Email para newsletter">
-                        <button type="submit"
-                            class="bg-brand-600 px-4 py-2 rounded-r-lg text-white hover:bg-brand-500 transition"
-                            aria-label="Suscribirse"><i class="fa-solid fa-paper-plane"></i></button>
-                    </form>
+                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-contracts-heading">Contratos</h4>
+                    <p class="mb-4 text-xs" id="footer-contracts-description">Atencion comercial y coordinaciones de servicio.</p>
+                    <a href="tel:+51996983530" id="footer-contract-link"
+                        class="inline-flex items-center gap-2 bg-brand-600 px-4 py-2 rounded-lg text-white hover:bg-brand-500 transition font-bold"
+                        aria-label="Llamar a contratos">
+                        <i class="fa-solid fa-phone"></i> <span id="footer-contract-text">996983530</span>
+                    </a>
                 </div>
             </div>
             <div
                 class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p>&copy; 2026 Global Logistics Inc.</p>
-                <div class="flex gap-6">
-                    <a href="javascript:void(0)" class="hover:text-white">Privacidad</a>
-                    <a href="javascript:void(0)" class="hover:text-white">Cookies</a>
-                    <a href="javascript:void(0)" class="hover:text-white">Términos</a>
+                <p id="footer-copyright">&copy; 2026 Postal Express SAC.</p>
+                <div class="flex gap-6" id="footer-signoff">
+                    <span>Atentamente</span>
+                    <span>Jose Mejia Tejada</span>
+                    <span>Gerente General</span>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Chat Soporte -->
-    <a href="javascript:void(0)"
+    <a href="https://wa.me/51996983530" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-link"
         class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl z-50 transition transform hover:scale-110 flex items-center gap-2 group"
         aria-label="Chat de soporte">
         <i class="fa-brands fa-whatsapp text-2xl"></i>
-        <span
+        <span id="floating-whatsapp-text"
             class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-bold">Chat
-            Soporte</span>
+            996983530</span>
     </a>
 
     <!-- LÓGICA DE APLICACIÓN ARQUITECTURA (MODULAR TYPESCRIPT) -->
@@ -959,3 +712,4 @@
 </body>
 
 </html>
+

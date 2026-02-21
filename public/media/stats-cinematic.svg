@@ -1,0 +1,32 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fondo de metricas logisticas">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="52%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <radialGradient id="leftGlow" cx="20%" cy="40%" r="46%">
+      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#14b8a6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rightGlow" cx="80%" cy="70%" r="44%">
+      <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#bg)"/>
+  <rect width="1920" height="1080" fill="url(#leftGlow)"/>
+  <rect width="1920" height="1080" fill="url(#rightGlow)"/>
+
+  <g fill="none" stroke="#38bdf8" stroke-opacity="0.16" stroke-width="2">
+    <path d="M120 840L470 620L760 700L1110 500L1470 620L1820 420"/>
+    <path d="M120 930L420 760L740 820L1090 640L1420 740L1820 580"/>
+  </g>
+
+  <g fill="#e2e8f0" fill-opacity="0.06">
+    <rect x="180" y="240" width="360" height="580" rx="30"/>
+    <rect x="580" y="190" width="360" height="630" rx="30"/>
+    <rect x="980" y="280" width="360" height="540" rx="30"/>
+    <rect x="1380" y="220" width="360" height="600" rx="30"/>
+  </g>
+</svg>

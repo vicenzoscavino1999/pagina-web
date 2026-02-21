@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+﻿import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
 
@@ -9,9 +9,9 @@ export default defineConfig({
             registerType: 'autoUpdate',
             includeAssets: ['favicon.svg', 'icons/*.svg', 'icons/*.png'],
             manifest: {
-                name: 'GlobalLogistics — Envíos Universitarios',
-                short_name: 'GlobalLogistics',
-                description: 'Envíos rápidos desde tu campus universitario. UPC, UPN, UTEC y más.',
+                name: 'Postal Express SAC - Mensajeria y Servicios Postales',
+                short_name: 'Postal Express',
+                description: 'Mensajeria, tramite documentario, distribucion y paqueteria en Lima, Callao y Provincias.',
                 theme_color: '#0284c7',
                 background_color: '#ffffff',
                 display: 'standalone',
@@ -35,6 +35,7 @@ export default defineConfig({
                 categories: ['logistics', 'shopping', 'utilities'],
             },
             workbox: {
+                maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
                 runtimeCaching: [
                     {
@@ -84,3 +85,4 @@ export default defineConfig({
         },
     },
 });
+

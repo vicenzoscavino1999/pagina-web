@@ -1,0 +1,103 @@
+/* =====================================================
+   LANDING POLISH - Hero, services, stats, FAQ finishing
+===================================================== */
+#tracking-widget {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.96) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow:
+        0 28px 56px rgba(3, 29, 58, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.72) inset;
+}
+
+#tracking-widget::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0284c7 0%, #22c55e 55%, #f59e0b 100%);
+    opacity: 0.75;
+}
+
+#tracking-input {
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+#tracking-input:focus {
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+}
+
+#servicios {
+    background:
+        radial-gradient(circle at 12% -10%, rgba(14, 116, 144, 0.13), transparent 36%),
+        radial-gradient(circle at 92% 8%, rgba(245, 158, 11, 0.13), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #eff5fa 100%);
+}
+
+#services-grid>div {
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+#services-grid>div:hover {
+    box-shadow: 0 24px 44px rgba(14, 116, 144, 0.22);
+}
+
+#service-characteristics-list li {
+    border: 1px solid rgba(125, 211, 252, 0.34);
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+
+#flow-steps>.reveal {
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 1.1rem;
+    padding: 1.25rem 1rem 1.35rem;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+}
+
+#stats-section {
+    background-color: #083756 !important;
+}
+
+#stats-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(4, 38, 61, 0.86) 0%, rgba(8, 66, 98, 0.58) 52%, rgba(12, 86, 116, 0.72) 100%);
+    z-index: 1;
+}
+
+#stats-section .max-w-7xl {
+    z-index: 2;
+}
+
+#contacto {
+    background:
+        linear-gradient(180deg, #f4f8fc 0%, #edf3f8 100%),
+        radial-gradient(circle at 84% 15%, rgba(2, 132, 199, 0.08), transparent 35%);
+    position: relative;
+}
+
+#faq-list details {
+    border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+#faq-list details:hover {
+    border-color: rgba(56, 189, 248, 0.45);
+}
+
+#floating-whatsapp-link {
+    box-shadow:
+        0 16px 34px rgba(3, 105, 61, 0.36),
+        0 0 0 6px rgba(34, 197, 94, 0.12);
+}
+
+@media (max-width: 768px) {
+    #tracking-widget {
+        margin-top: 0.5rem;
+    }
+
+    #flow-steps>.reveal {
+        padding: 1rem;
+    }
+}

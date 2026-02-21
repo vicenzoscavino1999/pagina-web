@@ -12,8 +12,9 @@ export class AppleScrollScene {
     #unsubscribeResize: () => void;
 
     static CONSTANTS = {
-        MAX_BLUR: 20,
-        MAX_OPACITY: 0.9
+        MAX_BLUR: 16,
+        MAX_OPACITY: 0.72,
+        MAX_SCALE_DELTA: 0.08
     };
 
     constructor({ mobileBreakpoint = 768 }: AppleScrollOptions = {}) {
@@ -33,8 +34,8 @@ export class AppleScrollScene {
 
         this.update = this.update.bind(this);
 
-        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }: { y: number }): void => { this.update(y); });
-        this.#unsubscribeResize = EventBus.on('resize', ({ width }: { width: number }): void => {
+        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }): void => { this.update(y); });
+        this.#unsubscribeResize = EventBus.on('resize', ({ width }): void => {
             this.#isMobile = width < this.#mobileBreakpoint;
         });
     }
@@ -62,16 +63,18 @@ export class AppleScrollScene {
 
         scrollProgress = clamp(scrollProgress, 0, 1);
 
-        const { MAX_BLUR, MAX_OPACITY } = AppleScrollScene.CONSTANTS;
+        const { MAX_BLUR, MAX_OPACITY, MAX_SCALE_DELTA } = AppleScrollScene.CONSTANTS;
 
         // Blur and overlay build up during the first 60% of scroll
         const darkenProgress = clamp(scrollProgress / 0.6, 0, 1);
         const blurValue = darkenProgress * MAX_BLUR;
         const overlayOpacity = darkenProgress * MAX_OPACITY;
+        const scaleValue = 1.04 + darkenProgress * MAX_SCALE_DELTA;
 
         this.#section.style.setProperty('--apple-blur', `${blurValue}px`);
         // Updated CSS variable name to match new stylesheet
         this.#section.style.setProperty('--apple-overlay-opacity', `${overlayOpacity}`);
+        this.#section.style.setProperty('--apple-scale', `${scaleValue}`);
 
         this.#updateTextVisibility(scrollProgress);
     }
@@ -82,8 +85,8 @@ export class AppleScrollScene {
 
         // Text only appears AFTER the image has darkened enough (>40% scroll)
         // This creates the Apple effect: image first, then text emerges from darkness
-        const isVisible = progress > 0.4;
-        const isSubVisible = progress > 0.52;
+        const isVisible = progress > 0.32;
+        const isSubVisible = progress > 0.44;
 
         if (heading) heading.classList.toggle('apple-text-visible', isVisible);
         if (subheading) subheading.classList.toggle('apple-text-visible', isSubVisible);

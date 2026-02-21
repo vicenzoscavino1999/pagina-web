@@ -5,16 +5,23 @@ import { EventBus } from '../utils/events';
 export class TrackingForm {
     #form: HTMLFormElement | null;
     #abortController: AbortController | null = null;
+    #submitHandler: (e: Event) => void;
+    #resetBtn: HTMLElement | null = null;
+    #resetHandler: (() => void) | null = null;
     static #TRACKING_REGEX = /^[A-Z0-9-]{4,20}$/;
 
     constructor(formElement: HTMLElement | null) {
+        this.#submitHandler = (): void => { };
         if (!formElement || !(formElement instanceof HTMLFormElement)) {
             console.warn('[TrackingForm] Form not found');
             this.#form = null;
             return;
         }
         this.#form = formElement;
-        this.#form.addEventListener('submit', (e) => { void this.#handleSubmit(e); });
+        this.#submitHandler = (e: Event): void => {
+            void this.#handleSubmit(e);
+        };
+        this.#form.addEventListener('submit', this.#submitHandler);
     }
 
     static #validate(value: string): boolean {
@@ -94,17 +101,36 @@ export class TrackingForm {
         trackingResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
         const resetBtn = document.getElementById('reset-tracking-btn');
-        if (resetBtn) {
-            resetBtn.onclick = (): void => {
-                trackingResult.classList.add('hidden');
-                this.#form?.reset();
-            };
+        this.#bindResetButton(resetBtn, trackingResult);
+    }
+
+    #bindResetButton(resetBtn: HTMLElement | null, trackingResult: HTMLElement): void {
+        if (!resetBtn) return;
+
+        if (this.#resetBtn && this.#resetHandler) {
+            this.#resetBtn.removeEventListener('click', this.#resetHandler);
         }
+
+        this.#resetBtn = resetBtn;
+        this.#resetHandler = (): void => {
+            trackingResult.classList.add('hidden');
+            this.#form?.reset();
+        };
+
+        this.#resetBtn.addEventListener('click', this.#resetHandler);
     }
 
     destroy(): void {
         this.#abortController?.abort();
+        if (this.#form) {
+            this.#form.removeEventListener('submit', this.#submitHandler);
+        }
+        if (this.#resetBtn && this.#resetHandler) {
+            this.#resetBtn.removeEventListener('click', this.#resetHandler);
+        }
         this.#form = null;
+        this.#resetBtn = null;
+        this.#resetHandler = null;
     }
 }
 

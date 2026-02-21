@@ -1,108 +1,35 @@
-import { NavbarController } from './modules/NavbarController';
-import { ParallaxEngine } from './modules/ParallaxEngine';
-import { TrackingForm } from './modules/TrackingForm';
-import { AppleScrollScene } from './modules/AppleScrollScene';
-import { Ticker } from './modules/Ticker';
-import { CounterAnimation } from './modules/CounterAnimation';
-import { ScrollReveal } from './modules/ScrollReveal';
-import { HorizontalCarousel } from './modules/HorizontalCarousel';
-import { StickyFeatureList } from './modules/StickyFeatureList';
-import { TruckScrollScene } from './modules/TruckScrollScene';
-import { EventBus } from './utils/events';
-import { debounce } from './utils/math';
-import { qsa } from './utils/dom';
+import { App } from './app/App';
 
-document.addEventListener('DOMContentLoaded', (): void => {
-    // --- Navbar ---
-    const navbarEl = document.getElementById('navbar');
-    const navbar = navbarEl ? new NavbarController(navbarEl) : null;
+const clearStalePwaCachesInDev = (): void => {
+    if (!import.meta.env.DEV) return;
+    if (!('serviceWorker' in navigator)) return;
+    if (!('caches' in window)) return;
 
-    // --- Scroll Reveal ---
-    const revealEls = document.querySelectorAll('.reveal');
-    const scrollReveal = revealEls.length > 0 ? new ScrollReveal() : null;
-    scrollReveal?.init();
-
-    // --- Parallax ---
-    const parallaxEls = document.querySelectorAll('.parallax-img');
-    const parallax = parallaxEls.length > 0 ? new ParallaxEngine({ mobileBreakpoint: 768 }) : null;
-
-    // --- Tracking Form ---
-    const trackingFormEl = document.querySelector<HTMLFormElement>('#tracking-form');
-    const tracking = trackingFormEl ? new TrackingForm(trackingFormEl) : null;
-
-    // --- Apple Scroll Scene ---
-    const appleSectionEl = document.getElementById('apple-section');
-    const appleScene = appleSectionEl ? new AppleScrollScene({ mobileBreakpoint: 768 }) : null;
-
-    // --- Horizontal Carousel ---
-    const carouselEl = document.getElementById('features-carousel');
-    const carousel = carouselEl ? new HorizontalCarousel() : null;
-
-    // --- Sticky Feature List ---
-    const universityFeaturesEl = document.getElementById('university-features');
-    const stickyFeatures = universityFeaturesEl ? new StickyFeatureList() : null;
-
-    // --- Truck Scroll Scene ---
-    const truckSceneEl = document.getElementById('truck-scene');
-    const truckScene = truckSceneEl ? new TruckScrollScene() : null;
-
-    // --- Ticker ---
-    const tickerContainerEl = document.getElementById('ticker-container');
-    const ticker = tickerContainerEl ? new Ticker() : null;
-
-    // --- Counter Animation ---
-    const counterEls = document.querySelectorAll('.counter');
-    const counters = counterEls.length > 0 ? new CounterAnimation() : null;
-
-    // Register Parallax Elements
-    if (parallax) {
-        qsa('.parallax-img').forEach(img => {
-            if (img.parentElement) {
-                parallax.register(img.parentElement, { speed: 0.15 });
-            }
-        });
-    }
-
-    // Initialize Ticker
-    ticker?.init();
-
-    // Global Scroll Listener
-    let ticking = false;
-    window.addEventListener('scroll', (): void => {
-        if (!ticking) {
-            window.requestAnimationFrame((): void => {
-                EventBus.emit('scroll', { y: window.scrollY });
-                ticking = false;
+    window.addEventListener(
+        'load',
+        () => {
+            void navigator.serviceWorker.getRegistrations().then((registrations) => {
+                registrations.forEach((registration) => {
+                    void registration.unregister();
+                });
             });
-            ticking = true;
-        }
-    }, { passive: true });
 
-    // Global Resize Listener
-    window.addEventListener('resize', debounce((): void => {
-        EventBus.emit('resize', {
-            width: window.innerWidth,
-            height: window.innerHeight
-        });
-    }, 150));
+            void caches.keys().then((keys) => {
+                keys.forEach((key) => {
+                    void caches.delete(key);
+                });
+            });
+        },
+        { once: true }
+    );
+};
 
-    // Initial trigger
-    EventBus.emit('resize', {
-        width: window.innerWidth,
-        height: window.innerHeight
-    });
+clearStalePwaCachesInDev();
 
-    // Cleanup
-    window.addEventListener('beforeunload', (): void => {
-        navbar?.destroy();
-        parallax?.destroy();
-        tracking?.destroy();
-        appleScene?.destroy();
-        carousel?.destroy();
-        stickyFeatures?.destroy();
-        truckScene?.destroy();
-        ticker?.destroy();
-        counters?.destroy();
-        scrollReveal?.destroy();
-    });
-});
+const app = new App();
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => app.init(), { once: true });
+} else {
+    app.init();
+}

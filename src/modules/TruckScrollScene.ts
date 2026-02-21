@@ -1,5 +1,6 @@
-import { EventBus } from '../utils/events';
+﻿import { EventBus } from '../utils/events';
 import { clamp } from '../utils/math';
+import { SITE_CONTENT } from '../content/siteContent';
 
 interface Waypoint {
     el: HTMLElement;
@@ -14,12 +15,7 @@ export class TruckScrollScene {
     #waypoints: Waypoint[] = [];
     #unsubscribeScroll: () => void;
 
-    private static readonly STATUSES = [
-        'Recogido en campus',
-        'En tránsito',
-        'Casi en destino',
-        '¡Entregado!',
-    ];
+    private static readonly STATUSES = SITE_CONTENT.truck.statuses;
 
     constructor() {
         this.#section = document.getElementById('truck-scene');
@@ -40,7 +36,7 @@ export class TruckScrollScene {
             this.#waypoints.push({ el, position });
         });
 
-        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }: { y: number }): void => {
+        this.#unsubscribeScroll = EventBus.on('scroll', ({ y }): void => {
             this.#update(y);
         });
 
@@ -105,3 +101,5 @@ export class TruckScrollScene {
         this.#unsubscribeScroll();
     }
 }
+
+

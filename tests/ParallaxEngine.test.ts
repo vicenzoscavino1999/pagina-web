@@ -1,92 +1,72 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ParallaxEngine } from '@modules/ParallaxEngine';
-// import { EventBus } from '@utils/events';
 
 describe('ParallaxEngine', () => {
-    // let container: HTMLElement;
     let element: HTMLElement;
 
-    beforeEach(() => {
-        document.body.innerHTML = `<div id="parallax-container"><div id="parallax-el"></div></div>`;
-        // container = document.getElementById('parallax-container') as HTMLElement;
-        element = document.getElementById('parallax-el') as HTMLElement;
-
-        // Mock getBoundingClientRect
+    const mockRect = (top: number): void => {
         vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
-            top: 500,
+            top,
             height: 200,
-            bottom: 700,
+            bottom: top + 200,
             left: 0,
             right: 100,
             width: 100,
             x: 0,
-            y: 500,
-            toJSON: () => { }
+            y: top,
+            toJSON: () => { },
         });
+    };
 
-        // Mock window dimensions
-        Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 800 });
-        Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1024 });
-        Object.defineProperty(window, 'scrollY', { writable: true, configurable: true, value: 0 });
+    beforeEach(() => {
+        document.body.innerHTML = '<div id="parallax-el"></div>';
+        element = document.getElementById('parallax-el') as HTMLElement;
+
+        Object.defineProperty(window, 'innerHeight', { configurable: true, value: 800 });
+        Object.defineProperty(window, 'innerWidth', { configurable: true, value: 1024 });
+        Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+
+        mockRect(500);
     });
 
-    it('registra elementos y calcula offset inicial', () => {
-        const engine = new ParallaxEngine();
-        engine.register(element);
-
-        // No hay manera pública de ver #entries. 
-        // Pero podemos verificar si 'update' modifica el estilo
-        engine.update(0);
-        // data.offsetTop = 500
-        // viewportHeight = 800
-        // update(0): 
-        // inView check: scrollY(0) < 500+200 (700) && 0+800(800) > 500 -> true
-        // currentRectTop = 500 - 0 = 500
-        // offset = (500 - 400) * 0.15 = 100 * 0.15 = 15
-
-        expect(element.style.getPropertyValue('--parallax-y')).toBe('15px');
+    afterEach(() => {
+        vi.restoreAllMocks();
     });
 
     it('no actualiza transforms en mobile', () => {
-        Object.defineProperty(window, 'innerWidth', { value: 375 });
+        Object.defineProperty(window, 'innerWidth', { configurable: true, value: 375 });
+
         const engine = new ParallaxEngine({ mobileBreakpoint: 768 });
         engine.register(element);
-
         engine.update(100);
 
-        // Should not have style set if mobile
-        // Wait, register calculates initial values but update applies style.
-        // If register is called, style is NOT applied yet. update() applies it.
-        // So style should be empty string
         expect(element.style.getPropertyValue('--parallax-y')).toBe('');
+        engine.destroy();
     });
 
-    it('recalculate actualiza offsets tras resize', () => {
+    it('recalculate() actualiza offsetTop correctamente', () => {
         const engine = new ParallaxEngine();
         engine.register(element);
 
-        // Change element position
-        vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
-            top: 600, height: 200, bottom: 800, left: 0, right: 100, width: 100, x: 0, y: 600, toJSON: () => { }
-        });
-
+        mockRect(600);
         engine.recalculate();
-
-        // Now calling update with scroll 0
-        // offsetTop = 600
-        // offset = (600 - 400) * 0.15 = 200 * 0.15 = 30
         engine.update(0);
 
         expect(element.style.getPropertyValue('--parallax-y')).toBe('30px');
+        engine.destroy();
     });
 
-    it('destroy limpia listeners', () => {
+    it('destroy() limpia todas las entradas', () => {
         const engine = new ParallaxEngine();
         engine.register(element);
 
-        // We can spy on EventBus.off?
-        // But EventBus receives a function reference.
-        // We can just call destroy and ensure no errors.
-        expect(() => engine.destroy()).not.toThrow();
+        engine.update(0);
+        expect(element.style.getPropertyValue('--parallax-y')).toBe('15px');
+
+        engine.destroy();
+        element.style.removeProperty('--parallax-y');
+
+        engine.update(0);
+        expect(element.style.getPropertyValue('--parallax-y')).toBe('');
     });
 });

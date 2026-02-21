@@ -1,72 +1,76 @@
-# GlobalLogistics — Landing Page
+﻿# Postal Express SAC - Frontend Landing
 
-![CI](https://github.com/TU_USUARIO/delivery-web-page/actions/workflows/ci.yml/badge.svg)
-
-## 🚀 Stack Técnico
-- **Vite 5** + **TypeScript 5** (strict mode)
-- **Tailwind CSS v4** (CLI, sin CDN)
-- **Vitest 2** (unit tests)
+## Stack
+- Vite 5 + TypeScript 5 (strict)
+- Tailwind CSS v4
+- Zod (validacion de contenido)
+- Vitest 2 (unit tests)
+- Playwright (E2E smoke)
 - ESLint + Prettier
 - GitHub Actions CI
 
-## 📁 Estructura del Proyecto
-```
+## Scope
+Proyecto frontend puro (sin backend productivo). El widget de tracking usa una simulacion local en `src/modules/TrackingForm.ts`.
+Todo el copy de negocio visible se centraliza en `src/content/siteContent.ts` y se inyecta via `src/modules/ContentHydrator.ts`.
+
+## Estructura
+```text
 src/
-├── modules/  → Módulos de UI con responsabilidad única
-├── types/    → Contratos TypeScript centralizados
-├── utils/    → Helpers reutilizables (EventBus, math, dom)
-└── styles/   → CSS con Tailwind
-tests/        → Unit tests con Vitest
-.github/      → CI pipeline
+  app/       Bootstrap y orquestacion de lifecycle
+  modules/   Componentes de comportamiento UI
+  content/   Fuente central de contenido de negocio
+  utils/     Helpers compartidos (EventBus, dom, math)
+  types/     Contratos TypeScript
+  styles/    Estilos globales y por seccion
+tests/       Tests unitarios
+e2e/         Tests E2E smoke (Playwright)
+  visual.spec.ts-snapshots/ Baselines para regresion visual
+.github/     Pipeline CI
 ```
 
-## 🏗️ Arquitectura
-El proyecto utiliza una arquitectura modular basada en clases TypeScript independientes.
-- **EventBus pattern:** Desacoplamiento de componentes mediante eventos (`scroll`, `resize`, `tracking:submit`, `tracking:success`).
-- **Private class fields:** Encapsulamiento estricto con `#field`.
-- **Performance:** Uso de `AbortController` para cancelar fetch requests y `IntersectionObserver` para animaciones eficientes.
-- **CSS:** Variables CSS controladas por JavaScript para efectos de parallax y animaciones.
+## Calidad
+- TypeScript estricto (`tsconfig.json`)
+- Lint estricto (`eslint.config.js`)
+- Tests unitarios en capas criticas:
+  - `tests/App.test.ts`
+  - `tests/EventBus.test.ts`
+  - `tests/ContentHydrator.test.ts`
+  - `tests/SiteContentSchema.test.ts`
+  - `tests/TrackingForm.test.ts`
+  - `tests/ParallaxEngine.test.ts`
 
-## ⚙️ Scripts
+## Scripts
+- `npm run dev`: servidor de desarrollo
+- `npm run build`: typecheck + build de produccion
+- `npm run preview`: preview del build
+- `npm run typecheck`: validacion TypeScript
+- `npm run lint`: analisis estatico
+- `npm run test`: tests unitarios
+- `npm run test:coverage`: tests con cobertura
+- `npm run e2e`: tests E2E smoke (chromium)
+- `npm run e2e:install`: instala browser de Playwright
+- `npm run e2e:visual:update`: actualiza snapshots base de regresion visual
+- `npm run lhci`: ejecuta Lighthouse CI con presupuesto
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run dev` | Inicia servidor de desarrollo |
-| `npm run build` | Compila para producción (TypeScript + Vite) |
-| `npm run preview` | Previsualiza el build de producción |
-| `npm run test` | Ejecuta los tests unitarios con Vitest |
-| `npm run typecheck` | Validaciones de tipos TypeScript |
-| `npm run lint` | Análisis estático con ESLint |
-| `npm run format` | Formatea código con Prettier |
+## Lighthouse Budget Actual
+- Performance >= 75
+- Accessibility >= 90
+- Best Practices >= 90
+- SEO >= 95
 
-## 🧪 Tests
-El proyecto cuenta con una suite de tests robusta (13 tests):
-- **EventBus (3):** Verifica emisión, recepción y cancelación de eventos.
-- **TrackingForm (6):** Valida lógica de formulario, sanitización, mocks de fetch y manejo de errores.
-- **ParallaxEngine (4):** Prueba cálculos de movimiento y optimización móvil.
+Siguiente escalon recomendado (cuando se estabilice el score en CI):
+- Performance >= 80
+- Accessibility >= 92
+- Best Practices >= 95
+- SEO >= 98
 
-## 🔧 Setup
-
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/TU_USUARIO/delivery-web-page.git
-   cd delivery-web-page
-   ```
-
-2. Instalar dependencias:
-   ```bash
-   npm install
-   ```
-
-3. Iniciar entorno local:
-   ```bash
-   npm run dev
-   ```
-
-## 📦 Build de Producción
-
-Para generar los archivos optimizados en `dist/`:
-
-```bash
-npm run build
-```
+## CI
+Pipeline en `.github/workflows/ci.yml`:
+1. `npm ci`
+2. `npm run typecheck`
+3. `npm run lint`
+4. `npm run test:coverage`
+5. `npm run build`
+6. `npx playwright install --with-deps chromium`
+7. `npm run e2e`
+8. `npm run lhci`

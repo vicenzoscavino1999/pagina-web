@@ -1,24 +1,34 @@
-import type { EventHandler } from '../types';
+import type { AppEvents, EventHandler, EventName } from '../types';
 
 
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class EventBus {
-    static #listeners = new Map<string, Set<EventHandler>>();
+    static #listeners = new Map<EventName, Set<EventHandler>>();
 
-    static on(event: string, handler: EventHandler): () => void {
-        if (!this.#listeners.has(event)) {
-            this.#listeners.set(event, new Set());
-        }
-        this.#listeners.get(event)!.add(handler);
+    static on<K extends EventName>(event: K, handler: EventHandler<K>): () => void {
+        const listeners = this.#listeners.get(event) ?? new Set<EventHandler>();
+        listeners.add(handler as EventHandler);
+        this.#listeners.set(event, listeners);
         return () => this.off(event, handler);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    static emit(event: string, payload: any): void {
-        this.#listeners.get(event)?.forEach(fn => { fn(payload); });
+    static emit<K extends EventName>(event: K, payload: AppEvents[K]): void {
+        this.#listeners.get(event)?.forEach((fn) => {
+            (fn as EventHandler<K>)(payload);
+        });
     }
 
-    static off(event: string, handler: EventHandler): void {
-        this.#listeners.get(event)?.delete(handler);
+    static off<K extends EventName>(event: K, handler: EventHandler<K>): void {
+        const listeners = this.#listeners.get(event);
+        if (!listeners) return;
+
+        listeners.delete(handler as EventHandler);
+        if (listeners.size === 0) {
+            this.#listeners.delete(event);
+        }
+    }
+
+    static clear(): void {
+        this.#listeners.clear();
     }
 }

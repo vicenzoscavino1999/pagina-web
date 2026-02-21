@@ -8,14 +8,23 @@
         "build": "tsc --noEmit && vite build",
         "preview": "vite preview",
         "test": "vitest run",
+        "test:coverage": "vitest run --coverage",
         "test:watch": "vitest",
         "test:ui": "vitest --ui",
+        "e2e": "playwright test",
+        "e2e:headed": "playwright test --headed",
+        "e2e:ui": "playwright test --ui",
+        "e2e:install": "playwright install chromium",
+        "e2e:visual:update": "playwright test e2e/visual.spec.ts --update-snapshots",
+        "lhci": "lhci autorun --config=./lighthouserc.json",
         "lint": "eslint src tests --ext .ts --max-warnings=0",
         "lint:fix": "eslint src tests --ext .ts --fix",
         "format": "prettier --write .",
         "typecheck": "tsc --noEmit"
     },
     "devDependencies": {
+        "@lhci/cli": "^0.15.1",
+        "@playwright/test": "^1.58.2",
         "@tailwindcss/cli": "^4.2.0",
         "@tailwindcss/postcss": "^4.2.0",
         "@types/node": "^25.2.3",
@@ -34,5 +43,8 @@
         "vite": "^5.0.0",
         "vite-plugin-pwa": "^1.2.0",
         "vitest": "^2.1.8"
+    },
+    "dependencies": {
+        "zod": "^4.3.6"
     }
 }

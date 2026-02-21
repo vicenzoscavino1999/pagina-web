@@ -19,6 +19,7 @@ export class HorizontalCarousel {
     #handleTouchEnd: (e: TouchEvent) => void;
     #handleMouseDown: (e: MouseEvent) => void;
     #handleMouseUp: (e: MouseEvent) => void;
+    #dotHandlers: Array<{ dot: HTMLElement; handler: () => void }> = [];
 
     constructor() {
         this.#section = document.getElementById('features-carousel');
@@ -79,7 +80,9 @@ export class HorizontalCarousel {
         window.addEventListener('mouseup', this.#handleMouseUp);
 
         this.#dots.forEach((dot, i) => {
-            dot.addEventListener('click', (): void => this.#goTo(i));
+            const handler = (): void => this.#goTo(i);
+            this.#dotHandlers.push({ dot, handler });
+            dot.addEventListener('click', handler);
         });
 
         this.#goTo(0);
@@ -124,5 +127,8 @@ export class HorizontalCarousel {
         this.#section?.removeEventListener('touchend', this.#handleTouchEnd);
         this.#track?.removeEventListener('mousedown', this.#handleMouseDown);
         window.removeEventListener('mouseup', this.#handleMouseUp);
+        this.#dotHandlers.forEach(({ dot, handler }) => {
+            dot.removeEventListener('click', handler);
+        });
     }
 }

@@ -1,0 +1,25 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Servicio de documentos valorados">
+  <defs>
+    <linearGradient id="valueBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="45%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="shieldFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#14b8a6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#valueBg)"/>
+  <circle cx="120" cy="120" r="85" fill="#f8fafc" fill-opacity="0.09"/>
+  <circle cx="700" cy="420" r="120" fill="#f8fafc" fill-opacity="0.08"/>
+
+  <rect x="120" y="90" width="330" height="320" rx="22" fill="#f8fafc" fill-opacity="0.92"/>
+  <rect x="160" y="130" width="220" height="20" rx="8" fill="#0f172a" fill-opacity="0.75"/>
+  <rect x="160" y="168" width="250" height="14" rx="6" fill="#334155" fill-opacity="0.45"/>
+  <rect x="160" y="198" width="220" height="14" rx="6" fill="#334155" fill-opacity="0.38"/>
+  <path d="M200 274L262 314L378 228" fill="none" stroke="#0ea5e9" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M550 130L640 166V256C640 315 604 364 550 390C496 364 460 315 460 256V166L550 130Z" fill="url(#shieldFill)"/>
+  <path d="M512 252L540 282L592 226" fill="none" stroke="#ecfeff" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

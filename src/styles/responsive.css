@@ -128,7 +128,7 @@
     }
 
     #apple-bg-image {
-        filter: none !important;
+        filter: brightness(0.86) saturate(1.02) !important;
     }
 
     /* --- TRUCK SCENE --- */
