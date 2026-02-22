@@ -308,17 +308,57 @@ export class ContentHydrator {
         const container = document.getElementById('services-grid');
         if (!container) return;
 
+        const scenePresets = [
+            {
+                kind: 'docs',
+                primaryIcon: 'fa-solid fa-file-lines',
+                secondaryIcon: 'fa-solid fa-pen',
+                tertiaryIcon: 'fa-solid fa-circle-check',
+            },
+            {
+                kind: 'valued',
+                primaryIcon: 'fa-solid fa-shield-halved',
+                secondaryIcon: 'fa-solid fa-certificate',
+                tertiaryIcon: 'fa-solid fa-lock',
+            },
+            {
+                kind: 'parcel',
+                primaryIcon: 'fa-solid fa-truck-fast',
+                secondaryIcon: 'fa-solid fa-box-open',
+                tertiaryIcon: 'fa-solid fa-location-dot',
+            },
+        ] as const;
+
+        const fallbackScenePreset = {
+            kind: 'docs',
+            primaryIcon: 'fa-solid fa-file-lines',
+            secondaryIcon: 'fa-solid fa-pen',
+            tertiaryIcon: 'fa-solid fa-circle-check',
+        } as const;
+
         const cardsHtml = this.#content.services.cards
             .map((card, index) => {
                 const delay = index > 0 ? ` style="transition-delay: ${index * 100}ms;"` : '';
+                const preset = scenePresets[index] ?? fallbackScenePreset;
+                const imageLoading = index === 0 ? 'eager' : 'lazy';
                 return `
-                <div class="reveal group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-500 overflow-hidden cursor-pointer hover:-translate-y-2 transform transition-transform"${delay}>
-                    <div class="h-64 relative parallax-wrapper">
-                        <img src="${card.imageSrc}" width="800" height="500" alt="${card.imageAlt}" class="parallax-img" loading="eager">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
-                        <div class="absolute bottom-4 left-4 ${card.badgeClass} text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">${card.badge}</div>
+                <div class="reveal group service-card service-card--${preset.kind}" data-service-card data-service-kind="${preset.kind}"${delay}>
+                    <div class="service-card-media parallax-wrapper">
+                        <img src="${card.imageSrc}" width="800" height="500" alt="${card.imageAlt}" class="parallax-img service-card-bg" loading="${imageLoading}">
+                        <div class="service-card-veil"></div>
+
+                        <div class="service-scene" aria-hidden="true">
+                            <span class="service-orb service-orb--one"></span>
+                            <span class="service-orb service-orb--two"></span>
+                            <span class="service-route" data-service-depth="0.2"></span>
+                            <span class="service-icon-chip service-icon-chip--primary" data-service-depth="0.55"><i class="${preset.primaryIcon}"></i></span>
+                            <span class="service-icon-chip service-icon-chip--secondary" data-service-depth="0.38"><i class="${preset.secondaryIcon}"></i></span>
+                            <span class="service-icon-chip service-icon-chip--tertiary" data-service-depth="0.72"><i class="${preset.tertiaryIcon}"></i></span>
+                        </div>
+
+                        <div class="service-badge absolute bottom-4 left-4 ${card.badgeClass} text-white px-3 py-1 text-xs font-bold uppercase rounded shadow z-10">${card.badge}</div>
                     </div>
-                    <div class="p-8 relative">
+                    <div class="service-card-body p-8 relative">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-brand-600 transition-colors">${card.title}</h3>
                         <p class="text-slate-500 text-sm leading-relaxed mb-6">${card.description}</p>
                         <span class="text-brand-600 font-bold text-sm uppercase tracking-wide flex items-center gap-2 group-hover:gap-4 transition-[gap]">${card.cta} <i class="fa-solid fa-arrow-right"></i></span>

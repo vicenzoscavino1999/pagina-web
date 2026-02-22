@@ -13,6 +13,8 @@ import { HorizontalCarousel } from '../modules/HorizontalCarousel';
 import { StickyFeatureList } from '../modules/StickyFeatureList';
 import { TruckScrollScene } from '../modules/TruckScrollScene';
 import { ContentHydrator } from '../modules/ContentHydrator';
+import { HeroCinematicEffects } from '../modules/HeroCinematicEffects';
+import { ServiceCardMotion } from '../modules/ServiceCardMotion';
 
 export class App {
     #modules: AppModule[] = [];
@@ -28,6 +30,12 @@ export class App {
 
         const contentHydrator = new ContentHydrator();
         contentHydrator.init();
+
+        const heroSectionEl = document.getElementById('hero-section');
+        this.#mount(heroSectionEl ? new HeroCinematicEffects() : null);
+
+        const servicesGridEl = document.getElementById('services-grid');
+        this.#mount(servicesGridEl ? new ServiceCardMotion() : null);
 
         const navbarEl = document.getElementById('navbar');
         this.#mount(navbarEl ? new NavbarController(navbarEl) : null);
