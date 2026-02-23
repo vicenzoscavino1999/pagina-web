@@ -1,4 +1,5 @@
 import { EventBus } from '../utils/events';
+import { requireById, requireQs } from '../utils/dom';
 
 
 
@@ -18,6 +19,7 @@ export class TrackingForm {
             return;
         }
         this.#form = formElement;
+        this.#assertMarkupContract();
         this.#submitHandler = (e: Event): void => {
             void this.#handleSubmit(e);
         };
@@ -28,14 +30,25 @@ export class TrackingForm {
         return TrackingForm.#TRACKING_REGEX.test(value.toUpperCase());
     }
 
+    #assertMarkupContract(): void {
+        if (!this.#form) return;
+
+        requireQs('#tracking-input', this.#form, 'TrackingForm');
+        requireQs('#tracking-btn', this.#form, 'TrackingForm');
+        requireById('tracking-result', document, 'TrackingForm');
+        requireById('result-id', document, 'TrackingForm');
+        requireById('result-date', document, 'TrackingForm');
+        requireById('reset-tracking-btn', document, 'TrackingForm');
+    }
+
     async #handleSubmit(e: Event): Promise<void> {
         e.preventDefault();
         if (!this.#form) return;
 
-        const trackingInput = this.#form.querySelector<HTMLInputElement>('#tracking-input');
-        const trackingBtn = this.#form.querySelector<HTMLButtonElement>('#tracking-btn') as HTMLButtonElement;
+        const trackingInput = requireQs<HTMLInputElement>('#tracking-input', this.#form, 'TrackingForm');
+        const trackingBtn = requireQs<HTMLButtonElement>('#tracking-btn', this.#form, 'TrackingForm');
 
-        const raw = trackingInput?.value ?? '';
+        const raw = trackingInput.value;
         const clean = raw.replace(/[^A-Z0-9-]/gi, '').toUpperCase();
 
         if (!TrackingForm.#validate(clean)) {
@@ -73,7 +86,7 @@ export class TrackingForm {
             signal.addEventListener('abort', () => {
                 clearTimeout(id);
                 reject(new DOMException('Aborted', 'AbortError'));
-            });
+            }, { once: true });
         });
 
         if (signal.aborted) return;
@@ -83,11 +96,9 @@ export class TrackingForm {
     }
 
     #renderResult(trackingId: string): void {
-        const trackingResult = document.getElementById('tracking-result');
-        const resultId = document.getElementById('result-id');
-        const resultDate = document.getElementById('result-date');
-
-        if (!trackingResult || !resultId || !resultDate) return;
+        const trackingResult = requireById('tracking-result', document, 'TrackingForm');
+        const resultId = requireById('result-id', document, 'TrackingForm');
+        const resultDate = requireById('result-date', document, 'TrackingForm');
 
         const today = new Date();
         const tomorrow = new Date(today);
@@ -100,13 +111,11 @@ export class TrackingForm {
         trackingResult.classList.remove('hidden');
         trackingResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-        const resetBtn = document.getElementById('reset-tracking-btn');
+        const resetBtn = requireById('reset-tracking-btn', document, 'TrackingForm');
         this.#bindResetButton(resetBtn, trackingResult);
     }
 
-    #bindResetButton(resetBtn: HTMLElement | null, trackingResult: HTMLElement): void {
-        if (!resetBtn) return;
-
+    #bindResetButton(resetBtn: HTMLElement, trackingResult: HTMLElement): void {
         if (this.#resetBtn && this.#resetHandler) {
             this.#resetBtn.removeEventListener('click', this.#resetHandler);
         }

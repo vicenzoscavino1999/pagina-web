@@ -37,6 +37,7 @@ export default defineConfig({
             workbox: {
                 maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+                globIgnores: ['media/*.png'],
                 runtimeCaching: [
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com/,
@@ -65,6 +66,15 @@ export default defineConfig({
                         options: {
                             cacheName: 'cdnjs-cache',
                             expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 30 },
+                        },
+                    },
+                    {
+                        urlPattern: ({ request, url }) =>
+                            request.destination === 'image' && url.origin === self.location.origin,
+                        handler: 'StaleWhileRevalidate',
+                        options: {
+                            cacheName: 'local-images',
+                            expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 30 },
                         },
                     },
                 ],

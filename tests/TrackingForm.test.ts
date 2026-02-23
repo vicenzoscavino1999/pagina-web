@@ -1,6 +1,7 @@
 ﻿import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { TrackingForm } from '@modules/TrackingForm';
 import { EventBus } from '@utils/events';
+import { DomContractError } from '@utils/dom';
 
 describe('TrackingForm - validacion', () => {
     let form: HTMLFormElement;
@@ -90,4 +91,17 @@ describe('TrackingForm - validacion', () => {
         expect(resultContainer.classList.contains('hidden')).toBe(false);
         expect(resultId.innerText).toBe('AB-12');
     });
+    it('falla rapido si falta markup critico del tracking', () => {
+        document.body.innerHTML = `
+            <form id="tracking-form">
+                <input id="tracking-input" type="text" />
+            </form>
+        `;
+
+        const brokenForm = document.getElementById('tracking-form') as HTMLFormElement;
+
+        expect(() => new TrackingForm(brokenForm)).toThrow(DomContractError);
+        expect(() => new TrackingForm(brokenForm)).toThrow('[TrackingForm]');
+    });
 });
+

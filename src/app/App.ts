@@ -15,6 +15,7 @@ import { TruckScrollScene } from '../modules/TruckScrollScene';
 import { ContentHydrator } from '../modules/ContentHydrator';
 import { HeroCinematicEffects } from '../modules/HeroCinematicEffects';
 import { ServiceCardMotion } from '../modules/ServiceCardMotion';
+import { assertCriticalDomContract } from './DomContractValidator';
 
 export class App {
     #modules: AppModule[] = [];
@@ -26,6 +27,9 @@ export class App {
 
     init(): void {
         if (this.#isStarted) return;
+
+        // Fail fast if the static HTML contract was broken by manual edits.
+        assertCriticalDomContract();
         this.#isStarted = true;
 
         const contentHydrator = new ContentHydrator();

@@ -5,8 +5,31 @@ test.describe('Landing Smoke', () => {
         await page.goto('/');
 
         await expect(page.locator('#logo-text')).toHaveText('POSTAL');
-        await expect(page.locator('#hero-title-main')).toHaveText('Postal Express SAC');
+        await expect(page.locator('#hero-title-main')).toHaveText('Logística corporativa.');
         await expect(page.locator('#services-grid .parallax-img')).toHaveCount(3);
+    });
+
+    test('mantiene el contrato DOM de elementos criticos', async ({ page }) => {
+        await page.goto('/');
+
+        const criticalSelectors = [
+            '#navbar',
+            '#hero-section',
+            '#hero-title-main',
+            '#tracking-form',
+            '#tracking-input',
+            '#tracking-btn',
+            '#tracking-result',
+            '#servicios',
+            '#services-grid',
+            '#features-carousel',
+            '#contacto',
+            '#floating-whatsapp-link',
+        ];
+
+        for (const selector of criticalSelectors) {
+            await expect(page.locator(selector), `Missing critical selector: ${selector}`).toHaveCount(1);
+        }
     });
 
     test('links de contratos y whatsapp usan datos oficiales', async ({ page }) => {
