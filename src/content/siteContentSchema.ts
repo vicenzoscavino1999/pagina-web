@@ -48,6 +48,8 @@ const featureItemSchema = z.object({
 const flowStepSchema = z.object({
     iconClass: nonEmptyString,
     iconWrapperClass: nonEmptyString,
+    imageSrc: mediaSource,
+    imageAlt: nonEmptyString,
     title: nonEmptyString,
     description: nonEmptyString,
 });
