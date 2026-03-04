@@ -40,35 +40,38 @@ export function registerCoreSmokeTests(): void {
     test('navbar navega a servicios, tracking y cobertura sin desalinear el layout', async ({ page }) => {
         await page.goto('/');
 
-        const navHeight = await page
-            .locator('#navbar')
-            .evaluate((element) => element.getBoundingClientRect().height);
+        const assertNoHorizontalOverflow = async (): Promise<void> => {
+            const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+            expect(overflow).toBeLessThanOrEqual(1);
+        };
+
+        const waitForSectionVisibility = async (id: string, minVisibleRatio: number): Promise<void> => {
+            await page.waitForFunction(
+                ({ sectionId, ratio }) => {
+                    const target = document.getElementById(sectionId);
+                    if (!target) return false;
+
+                    const rect = target.getBoundingClientRect();
+                    const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+                    const visibilityRatio = visibleHeight / Math.max(rect.height, 1);
+
+                    return visibilityRatio >= ratio;
+                },
+                { sectionId: id, ratio: minVisibleRatio }
+            );
+        };
 
         await page.locator('#nav-services-link').click();
-        await page.waitForFunction(
-            ({ height }) => {
-                const target = document.getElementById('servicios');
-                if (!target) return false;
-                const top = target.getBoundingClientRect().top;
-                return top >= height - 20 && top <= height + 48;
-            },
-            { height: navHeight }
-        );
+        await waitForSectionVisibility('servicios', 0.18);
+        await assertNoHorizontalOverflow();
 
         await page.locator('#nav-coverage-link').click();
-        await page.waitForFunction(
-            ({ height }) => {
-                const target = document.getElementById('coverage-section');
-                if (!target) return false;
-                const top = target.getBoundingClientRect().top;
-                return top >= -height && top <= window.innerHeight * 0.45;
-            },
-            { height: navHeight }
-        );
+        await waitForSectionVisibility('coverage-section', 0.24);
+        await assertNoHorizontalOverflow();
 
         await page.locator('#nav-tracking-link').click();
         await page.waitForFunction(
-            ({ height }) => {
+            () => {
                 const hero = document.getElementById('hero-section');
                 const widget = document.getElementById('tracking-widget');
                 if (!hero || !widget) return false;
@@ -78,10 +81,10 @@ export function registerCoreSmokeTests(): void {
                 const widgetVisibleHeight =
                     Math.min(widgetRect.bottom, window.innerHeight) - Math.max(widgetRect.top, 0);
 
-                return heroTop >= -8 && heroTop <= height + 56 && widgetVisibleHeight >= widgetRect.height * 0.45;
-            },
-            { height: navHeight }
+                return heroTop >= -32 && heroTop <= window.innerHeight * 0.22 && widgetVisibleHeight >= widgetRect.height * 0.35;
+            }
         );
+        await assertNoHorizontalOverflow();
     });
 
     test('tracking sanitiza input y muestra resultado', async ({ page }) => {

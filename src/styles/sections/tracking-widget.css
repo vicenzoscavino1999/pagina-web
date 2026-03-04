@@ -19,6 +19,43 @@
     background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
 }
 
+#tracking-inline-status {
+    min-height: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: rgba(148, 163, 184, 0.9);
+    transition: color 220ms ease, opacity 220ms ease;
+}
+
+#tracking-form[data-tracking-state="idle"] #tracking-btn {
+    opacity: 0.72;
+    cursor: not-allowed;
+}
+
+#tracking-form[data-tracking-state="invalid"] #tracking-input {
+    border-color: rgba(248, 113, 113, 0.78);
+    box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.18);
+}
+
+#tracking-form[data-tracking-state="invalid"] #tracking-inline-status {
+    color: rgba(248, 113, 113, 0.95);
+}
+
+#tracking-form[data-tracking-state="ready"] #tracking-input,
+#tracking-form[data-tracking-state="success"] #tracking-input {
+    border-color: rgba(74, 222, 128, 0.72);
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.16);
+}
+
+#tracking-form[data-tracking-state="ready"] #tracking-inline-status,
+#tracking-form[data-tracking-state="success"] #tracking-inline-status {
+    color: rgba(110, 231, 183, 0.95);
+}
+
+#tracking-form[data-tracking-state="loading"] #tracking-inline-status {
+    color: rgba(125, 211, 252, 0.95);
+}
+
 #tracking-input:focus {
     box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
 }

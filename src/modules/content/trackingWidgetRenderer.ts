@@ -31,6 +31,9 @@ export function renderTrackingWidget(content: SiteContent, dom: ContentDomWriter
                     >
                 </div>
             </div>
+            <p id="tracking-inline-status" class="tracking-inline-status text-xs text-slate-400 -mt-2">
+                Ingresa tu guia para rastrear.
+            </p>
             <button
                 type="submit"
                 id="tracking-btn"
