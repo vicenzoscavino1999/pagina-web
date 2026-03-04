@@ -173,6 +173,63 @@ section {
     transform: translateY(-1px);
 }
 
+#tracking-proof {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.tracking-proof-pill {
+    display: grid;
+    gap: 0.1rem;
+    padding: 0.52rem 0.6rem;
+    border-radius: 0.78rem;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background:
+        linear-gradient(180deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.92) 100%),
+        radial-gradient(120px circle at 12% -32%, rgba(56, 189, 248, 0.22), transparent 74%);
+    box-shadow:
+        0 8px 16px rgba(15, 23, 42, 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.86) inset;
+}
+
+.tracking-proof-value {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: rgba(3, 105, 161, 0.98);
+    letter-spacing: 0.01em;
+}
+
+.tracking-proof-label {
+    font-size: 0.66rem;
+    color: rgba(71, 85, 105, 0.9);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#tracking-direct-contact {
+    line-height: 1.4;
+}
+
+.tracking-direct-contract-link {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.25rem;
+    color: rgba(3, 105, 161, 0.95);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: rgba(3, 105, 161, 0.4);
+    text-underline-offset: 2px;
+    transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.tracking-direct-contract-link:hover,
+.tracking-direct-contract-link:focus-visible {
+    color: rgba(2, 132, 199, 1);
+    text-decoration-color: rgba(2, 132, 199, 0.75);
+}
+
 #tracking-btn,
 #hero-primary-cta-link,
 #hero-contract-link,
@@ -315,6 +372,147 @@ section {
         linear-gradient(180deg, #f8fbff 0%, #edf3f9 100%);
 }
 
+#contact-cta-panel {
+    position: relative;
+}
+
+.contact-cta-shell {
+    border-radius: 1.3rem;
+    border: 1px solid rgba(125, 211, 252, 0.3);
+    background:
+        radial-gradient(560px circle at 0% 0%, rgba(125, 211, 252, 0.22), transparent 68%),
+        linear-gradient(165deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.95) 100%);
+    box-shadow:
+        0 24px 44px rgba(15, 23, 42, 0.1),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    padding: 1.05rem;
+    display: grid;
+    gap: 0.9rem;
+}
+
+.contact-cta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.contact-cta-card {
+    border-radius: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(241, 245, 249, 0.9) 100%);
+    box-shadow:
+        0 14px 28px rgba(15, 23, 42, 0.09),
+        0 1px 0 rgba(255, 255, 255, 0.9) inset;
+    padding: 0.95rem 1rem;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.contact-cta-icon-wrap {
+    width: 2.05rem;
+    height: 2.05rem;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0369a1;
+    background: linear-gradient(160deg, rgba(186, 230, 253, 0.75) 0%, rgba(224, 242, 254, 0.95) 100%);
+    border: 1px solid rgba(125, 211, 252, 0.55);
+}
+
+.contact-cta-icon-wrap--whatsapp {
+    color: #15803d;
+    background: linear-gradient(160deg, rgba(187, 247, 208, 0.78) 0%, rgba(220, 252, 231, 0.95) 100%);
+    border-color: rgba(74, 222, 128, 0.58);
+}
+
+.contact-cta-eyebrow {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: rgba(71, 85, 105, 0.9);
+}
+
+.contact-cta-title {
+    font-family: var(--font-display);
+    font-size: 1.03rem;
+    font-weight: 750;
+    line-height: 1.2;
+    color: rgba(2, 6, 23, 0.96);
+}
+
+.contact-cta-description {
+    font-size: 0.79rem;
+    color: rgba(71, 85, 105, 0.95);
+    line-height: 1.45;
+}
+
+.contact-cta-link {
+    min-height: 2.45rem;
+    border-radius: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    font-size: 0.81rem;
+    font-weight: 760;
+    letter-spacing: 0.015em;
+    transition: transform 180ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+
+.contact-cta-link:hover,
+.contact-cta-link:focus-visible {
+    transform: translateY(-1px);
+}
+
+.contact-cta-link--primary {
+    color: #fff;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+    box-shadow: 0 12px 24px rgba(3, 37, 65, 0.26);
+}
+
+.contact-cta-link--primary:hover,
+.contact-cta-link--primary:focus-visible {
+    box-shadow: 0 18px 32px rgba(3, 37, 65, 0.3);
+}
+
+.contact-cta-link--ghost {
+    color: #065f46;
+    border: 1px solid rgba(74, 222, 128, 0.52);
+    background: linear-gradient(135deg, rgba(220, 252, 231, 0.84) 0%, rgba(240, 253, 244, 0.95) 100%);
+}
+
+.contact-cta-link--ghost:hover,
+.contact-cta-link--ghost:focus-visible {
+    border-color: rgba(34, 197, 94, 0.74);
+    box-shadow: 0 12px 22px rgba(22, 163, 74, 0.2);
+}
+
+.contact-cta-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+}
+
+.contact-cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.38rem;
+    border-radius: 999px;
+    padding: 0.46rem 0.72rem;
+    border: 1px solid rgba(148, 163, 184, 0.28);
+    background: rgba(255, 255, 255, 0.72);
+    color: rgba(51, 65, 85, 0.92);
+    font-size: 0.72rem;
+    font-weight: 640;
+}
+
+.contact-cta-pill .app-icon {
+    color: rgba(2, 132, 199, 0.88);
+}
+
 #faq-list details {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(249, 251, 254, 0.96));
 }
@@ -405,6 +603,61 @@ section {
 
     #tracking-subtitle {
         font-size: 0.81rem !important;
+    }
+
+    #tracking-proof {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.35rem;
+    }
+
+    .tracking-proof-pill {
+        padding: 0.44rem 0.45rem;
+    }
+
+    .tracking-proof-value {
+        font-size: 0.74rem;
+    }
+
+    .tracking-proof-label {
+        font-size: 0.57rem;
+        letter-spacing: 0.03em;
+    }
+
+    #tracking-direct-contact {
+        font-size: 0.72rem;
+    }
+
+    .contact-cta-shell {
+        padding: 0.85rem;
+        gap: 0.7rem;
+    }
+
+    .contact-cta-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .contact-cta-card {
+        padding: 0.82rem 0.84rem;
+        gap: 0.45rem;
+    }
+
+    .contact-cta-title {
+        font-size: 0.95rem;
+    }
+
+    .contact-cta-description {
+        font-size: 0.75rem;
+    }
+
+    .contact-cta-link {
+        font-size: 0.75rem;
+        min-height: 2.25rem;
+    }
+
+    .contact-cta-pill {
+        font-size: 0.66rem;
+        padding: 0.4rem 0.58rem;
     }
 
     #floating-whatsapp-link {

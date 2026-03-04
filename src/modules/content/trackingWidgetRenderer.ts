@@ -1,13 +1,28 @@
 import type { SiteContent } from '../../content/siteContent';
 import { ContentDomWriter } from './domWriter';
 import { renderIconMarkup } from './iconMarkup';
-import { escapeAttribute, escapeHtml } from './sanitize';
+import { escapeAttribute, escapeHtml, sanitizeHref } from './sanitize';
 
 type TimelineState = SiteContent['tracking']['timeline'][number]['state'];
 
 export function renderTrackingWidget(content: SiteContent, dom: ContentDomWriter): void {
     const container = dom.getById('tracking-widget');
     if (!container) return;
+    const safePhoneHref = escapeAttribute(sanitizeHref(content.contact.phoneHref));
+    const trackingProofItems = [
+        {
+            value: content.features.mockup.receiptOneValue,
+            label: content.features.mockup.receiptOneLabel,
+        },
+        {
+            value: content.features.mockup.receiptTwoValue,
+            label: content.features.mockup.receiptTwoLabel,
+        },
+        {
+            value: content.features.mockup.receiptThreeValue,
+            label: content.features.mockup.receiptThreeLabel,
+        },
+    ];
 
     container.innerHTML = `
         <div
@@ -15,6 +30,18 @@ export function renderTrackingWidget(content: SiteContent, dom: ContentDomWriter
         ></div>
         <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10" id="tracking-title">${escapeHtml(content.tracking.title)}</h3>
         <p class="text-slate-500 text-sm mb-6 relative z-10" id="tracking-subtitle">${escapeHtml(content.tracking.subtitle)}</p>
+        <div id="tracking-proof" class="tracking-proof-grid mb-6 relative z-10" aria-label="Indicadores del servicio">
+            ${trackingProofItems
+                .map(
+                    (item) => `
+                        <div class="tracking-proof-pill">
+                            <span class="tracking-proof-value">${escapeHtml(item.value)}</span>
+                            <span class="tracking-proof-label">${escapeHtml(item.label)}</span>
+                        </div>
+                    `
+                )
+                .join('')}
+        </div>
         <form id="tracking-form" class="space-y-4 relative z-10">
             <div>
                 <label for="tracking-input" class="sr-only">Numero de guia</label>
@@ -44,6 +71,12 @@ export function renderTrackingWidget(content: SiteContent, dom: ContentDomWriter
                 ${renderIconMarkup('fa-solid fa-chevron-right text-xs')}
             </button>
         </form>
+        <p id="tracking-direct-contact" class="tracking-direct-contact text-xs text-slate-500 mt-4 relative z-10">
+            Cotizacion inmediata?
+            <a href="${safePhoneHref}" id="tracking-direct-contract-link" class="tracking-direct-contract-link">
+                Hablar con ${escapeHtml(content.contact.contractsLabel)}
+            </a>
+        </p>
         <div
             id="tracking-result"
             class="hidden mt-6 pt-6 border-t border-slate-100 relative z-10"
