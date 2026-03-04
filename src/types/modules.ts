@@ -27,3 +27,13 @@ export interface HorizontalCarouselOptions {
 export interface StickyFeatureListOptions {
     mobileBreakpoint?: number;
 }
+
+export interface SmoothScrollOptions {
+    lerp?: number;
+}
+
+export interface ScrollRevealOptions {
+    threshold?: number;
+    rootMargin?: string;
+    duration?: number;
+}

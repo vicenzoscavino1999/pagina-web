@@ -5,13 +5,18 @@ import { SITE_CONTENT } from '../src/content/siteContent';
 describe('ContentHydrator', () => {
     beforeEach(() => {
         document.body.innerHTML = `
-            <span id="logo-text"></span>
-            <span id="logo-subtext"></span>
             <span id="uf-company-label"></span>
-            <span id="footer-brand-name"></span>
 
-            <img id="hero-bg">
-            <img id="apple-bg-image">
+            <picture>
+                <source id="hero-bg-avif-source" type="image/avif">
+                <source id="hero-bg-webp-source" type="image/webp">
+                <img id="hero-bg">
+            </picture>
+            <picture>
+                <source id="apple-bg-avif-source" type="image/avif">
+                <source id="apple-bg-webp-source" type="image/webp">
+                <img id="apple-bg-image">
+            </picture>
             <img id="stats-bg">
 
             <a id="nav-services-link"></a>
@@ -23,36 +28,20 @@ describe('ContentHydrator', () => {
 
             <a id="nav-contract-link"></a>
             <a id="mobile-contract-link"></a>
-            <a id="hero-contract-link"></a>
             <a id="contact-contract-link"></a>
-            <a id="footer-contract-link"></a>
-            <span id="hero-contract-text"></span>
-            <span id="footer-contract-text"></span>
             <h2 id="contact-title"></h2>
             <span id="contact-subtitle-prefix"></span>
 
-            <a id="footer-whatsapp-link"></a>
             <a id="floating-whatsapp-link"></a>
-            <span id="footer-whatsapp-text"></span>
             <span id="floating-whatsapp-text"></span>
 
-            <span id="hero-badge-text"></span>
-            <span id="hero-title-main"></span>
-            <span id="hero-title-sub"></span>
-            <span id="hero-description"></span>
-            <span id="hero-primary-cta-text"></span>
+            <div id="hero-layout">
+                <div id="hero-copy"></div>
+            </div>
 
-            <span id="tracking-title"></span>
-            <span id="tracking-subtitle"></span>
-            <input id="tracking-input">
-            <span id="tracking-submit-text"></span>
-            <span id="tracking-result-guide-label"></span>
-            <span id="tracking-result-estimated-label"></span>
-            <span id="tracking-reset-text"></span>
-            <div id="tracking-timeline"></div>
+            <div id="tracking-widget"></div>
 
-            <h2 id="apple-heading"></h2>
-            <p id="apple-subheading"></p>
+            <div id="apple-copy"></div>
 
             <div id="ts-status"></div>
             <h2 id="truck-headline"></h2>
@@ -66,54 +55,10 @@ describe('ContentHydrator', () => {
             <div id="uf-nav-label"></div>
             <div id="uf-feature-list"></div>
             <div id="uf-nav-dots"></div>
-            <span id="uf-mockup-chip"></span>
-            <span id="uf-mockup-pickup-text"></span>
-            <span id="uf-mockup-pickup-tag-one"></span>
-            <span id="uf-mockup-pickup-tag-two"></span>
-            <span id="uf-mockup-shield-text"></span>
-            <span id="uf-mockup-shield-coverage"></span>
-            <span id="uf-mockup-notif-one"></span>
-            <span id="uf-mockup-notif-two"></span>
-            <span id="uf-mockup-notif-three"></span>
-            <span id="uf-mockup-method-one"></span>
-            <span id="uf-mockup-method-two"></span>
-            <span id="uf-mockup-method-three"></span>
-            <span id="uf-mockup-method-four"></span>
-            <span id="uf-mockup-receipt-one-label"></span>
-            <span id="uf-mockup-receipt-one-value"></span>
-            <span id="uf-mockup-receipt-two-label"></span>
-            <span id="uf-mockup-receipt-two-value"></span>
-            <span id="uf-mockup-receipt-three-label"></span>
-            <span id="uf-mockup-receipt-three-value"></span>
+            <div id="uf-mockup-screens"></div>
 
-            <span id="carousel-slide-1-label"></span>
-            <h2 id="carousel-slide-1-title"></h2>
-            <p id="carousel-slide-1-body"></p>
-            <span id="carousel-slide-1-badge-one"></span>
-            <span id="carousel-slide-1-badge-two"></span>
-            <span id="carousel-slide-1-badge-three"></span>
-            <span id="carousel-slide-1-phone-title"></span>
-            <span id="carousel-slide-1-phone-label"></span>
-            <span id="carousel-slide-1-phone-cta"></span>
-            <span id="carousel-slide-2-label"></span>
-            <h2 id="carousel-slide-2-title"></h2>
-            <p id="carousel-slide-2-body"></p>
-            <span id="carousel-slide-2-stat-one-label"></span>
-            <span id="carousel-slide-2-stat-two-label"></span>
-            <span id="carousel-slide-2-phone-title"></span>
-            <span id="carousel-slide-2-route-one"></span>
-            <span id="carousel-slide-2-route-two"></span>
-            <span id="carousel-slide-2-route-three"></span>
-            <span id="carousel-slide-2-eta-prefix"></span>
-            <span id="carousel-slide-2-eta-value"></span>
-            <span id="carousel-slide-3-label"></span>
-            <h2 id="carousel-slide-3-title"></h2>
-            <p id="carousel-slide-3-body"></p>
-            <span id="carousel-slide-3-timer-one"></span>
-            <span id="carousel-slide-3-timer-two"></span>
-            <span id="carousel-slide-3-phone-title"></span>
-            <span id="carousel-slide-3-delivered-message"></span>
-            <span id="carousel-slide-3-delivered-time"></span>
+            <div id="carousel-track"></div>
+            <div id="carousel-dots"></div>
 
             <span id="services-eyebrow"></span>
             <span id="services-title"></span>
@@ -129,15 +74,7 @@ describe('ContentHydrator', () => {
             <div id="faq-list"></div>
             <template id="ticker-content"><div></div></template>
 
-            <p id="footer-intro"></p>
-            <h4 id="footer-company-heading"></h4>
-            <h4 id="footer-coverage-heading"></h4>
-            <h4 id="footer-contracts-heading"></h4>
-            <p id="footer-contracts-description"></p>
-            <p id="footer-copyright"></p>
-            <ul id="footer-company-list"></ul>
-            <ul id="footer-coverage-list"></ul>
-            <div id="footer-signoff"></div>
+            <div id="footer-content"></div>
         `;
     });
 
@@ -145,20 +82,49 @@ describe('ContentHydrator', () => {
         const hydrator = new ContentHydrator();
         hydrator.init();
 
-        expect(document.getElementById('logo-text')?.textContent).toBe(SITE_CONTENT.brand.logoPrimary);
+        expect(document.getElementById('uf-company-label')?.textContent).toBe(SITE_CONTENT.brand.legalName);
         expect(document.getElementById('hero-title-main')?.textContent).toBe(SITE_CONTENT.hero.titleMain);
         expect(document.getElementById('tracking-title')?.textContent).toBe(SITE_CONTENT.tracking.title);
+        expect(document.getElementById('tracking-result')?.getAttribute('role')).toBe('status');
+        expect(document.getElementById('tracking-result')?.getAttribute('aria-live')).toBe('polite');
+        expect(document.getElementById('tracking-result')?.getAttribute('aria-atomic')).toBe('true');
 
         expect((document.getElementById('nav-contract-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.phoneHref);
+        expect((document.getElementById('hero-contract-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.phoneHref);
         expect((document.getElementById('footer-whatsapp-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.whatsappHref);
         expect((document.getElementById('tracking-input') as HTMLInputElement).placeholder).toBe(SITE_CONTENT.tracking.inputPlaceholder);
-        expect((document.getElementById('hero-bg') as HTMLImageElement).src).toContain('/media/hero-warehouse.png');
+        expect((document.getElementById('hero-bg') as HTMLImageElement).src).toContain(
+            SITE_CONTENT.media.heroBackgroundSrc
+        );
+        expect(document.getElementById('hero-bg-avif-source')?.getAttribute('srcset')).toContain('/media/optimized/hero-warehouse-640.avif');
+        expect(document.getElementById('hero-bg-webp-source')?.getAttribute('srcset')).toContain('/media/optimized/hero-warehouse-960.webp');
+        expect(document.getElementById('apple-bg-avif-source')?.getAttribute('srcset')).toContain(
+            '/media/optimized/furgoneta-hero-1920.avif'
+        );
+        expect(document.getElementById('apple-bg-webp-source')?.getAttribute('srcset')).toContain(
+            '/media/optimized/furgoneta-hero-1280.webp'
+        );
+        expect(document.getElementById('apple-heading')?.innerHTML.replace(/\s+/g, ' ').trim()).toBe(
+            SITE_CONTENT.apple.headingHtml
+        );
 
+        expect(document.querySelectorAll('#hero-copy [data-magnetic]')).toHaveLength(2);
         expect(document.querySelectorAll('#tracking-timeline .timeline-item')).toHaveLength(SITE_CONTENT.tracking.timeline.length);
         expect(document.querySelectorAll('#truck-waypoints .ts-waypoint')).toHaveLength(SITE_CONTENT.truck.waypoints.length);
         expect(document.querySelectorAll('#uf-feature-list .feature-item')).toHaveLength(SITE_CONTENT.features.items.length);
         expect(document.querySelectorAll('#uf-nav-dots .uf-nav-dot')).toHaveLength(SITE_CONTENT.features.items.length);
+        expect(document.querySelector('#uf-nav-dots .uf-nav-dot')?.getAttribute('role')).toBe('tab');
+        expect(document.querySelector('#uf-nav-dots .uf-nav-dot')?.getAttribute('aria-selected')).toBe('true');
+        expect(document.querySelectorAll('#uf-mockup-screens .mockup-screen')).toHaveLength(4);
+        expect(document.querySelectorAll('#carousel-track .carousel-slide')).toHaveLength(3);
+        expect(document.querySelectorAll('#carousel-dots .carousel-dot')).toHaveLength(3);
+        expect(document.getElementById('slide-1')?.getAttribute('role')).toBe('tabpanel');
+        expect(document.getElementById('slide-1')?.getAttribute('aria-labelledby')).toBe('carousel-tab-1');
+        expect(document.getElementById('carousel-tab-1')?.getAttribute('aria-controls')).toBe('slide-1');
+        expect(document.getElementById('carousel-tab-1')?.getAttribute('role')).toBe('tab');
         expect(document.querySelectorAll('#services-grid .parallax-img')).toHaveLength(SITE_CONTENT.services.cards.length);
+        expect(document.querySelector('#services-grid picture source[type="image/avif"]')?.getAttribute('srcset')).toContain('/media/optimized/docs-cinematic-320.avif');
+        expect(document.querySelector('#services-grid picture source[type="image/webp"]')?.getAttribute('srcset')).toContain('/media/optimized/docs-cinematic-640.webp');
         expect(document.querySelectorAll('#service-characteristics-list li')).toHaveLength(SITE_CONTENT.serviceCharacteristics.items.length);
         expect(document.querySelectorAll('#flow-steps .reveal')).toHaveLength(SITE_CONTENT.flow.steps.length);
         expect(document.querySelectorAll('#stats-grid .counter')).toHaveLength(SITE_CONTENT.stats.items.length);
@@ -168,6 +134,7 @@ describe('ContentHydrator', () => {
         expect(document.querySelectorAll('#footer-signoff span')).toHaveLength(SITE_CONTENT.footer.signoff.length);
 
         expect(document.getElementById('carousel-slide-3-delivered-message')?.textContent).toBe(SITE_CONTENT.carousel.slideThree.deliveredMessage);
+        expect(document.getElementById('uf-mockup-chip')?.textContent).toBe(SITE_CONTENT.features.mockup.coverageChip);
         expect(document.getElementById('footer-contracts-heading')?.textContent).toBe(SITE_CONTENT.footer.contractsHeading);
 
         const tickerTemplate = document.getElementById('ticker-content') as HTMLTemplateElement;

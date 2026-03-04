@@ -310,7 +310,7 @@
     color: #334155;
 }
 
-.timer-circle i {
+.timer-circle .app-icon {
     font-size: 1.25rem;
     color: #64748b;
 }
@@ -321,7 +321,7 @@
     color: #166534;
 }
 
-.timer-circle--green i {
+.timer-circle--green .app-icon {
     color: #16a34a;
 }
 
@@ -631,6 +631,10 @@
 }
 
 .carousel-dot {
+    appearance: none;
+    border: 0;
+    padding: 0;
+    display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;

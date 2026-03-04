@@ -2,17 +2,15 @@ import { siteContentSchema } from './siteContentSchema';
 
 const RAW_SITE_CONTENT = {
     media: {
-        heroBackgroundSrc: '/media/hero-warehouse.png',
+        heroBackgroundSrc: '/media/optimized/hero-warehouse-1280.webp',
         heroBackgroundAlt: 'Operación logística en almacén con unidad de reparto',
-        appleBackgroundSrc: '/media/furgoneta-hero.jpg',
+        appleBackgroundSrc: '/media/optimized/furgoneta-hero-1280.webp',
         appleBackgroundAlt: 'Unidad de reparto en operación logística nocturna',
         statsBackgroundSrc: '/media/stats-cinematic.svg',
         statsBackgroundAlt: 'Fondo cinematográfico de métricas logísticas',
     },
     brand: {
         legalName: 'Postal Express SAC',
-        logoPrimary: 'POSTAL',
-        logoSecondary: 'Express SAC',
         footerBrand: 'POSTAL EXPRESS',
     },
     nav: {
@@ -205,7 +203,7 @@ const RAW_SITE_CONTENT = {
                 title: 'Trámite documentario',
                 description: 'Gestión y distribución de documentos en entidades públicas y privadas con control de cargo.',
                 cta: 'Servicio especializado',
-                imageSrc: '/media/docs_cinematic.png',
+                imageSrc: '/media/optimized/docs-cinematic-640.webp',
                 imageAlt: 'Personal operando trámite documentario',
             },
             {
@@ -214,7 +212,7 @@ const RAW_SITE_CONTENT = {
                 title: 'Documentos valorados y diplomas',
                 description: 'Custodia segura, entrega a titular o apoderado y devolución después de 03 visitas infructuosas.',
                 cta: 'Custodia y trazabilidad',
-                imageSrc: '/media/valued_cinematic.png',
+                imageSrc: '/media/optimized/valued-cinematic-640.webp',
                 imageAlt: 'Custodia segura de documentos valorados',
             },
             {
@@ -223,7 +221,7 @@ const RAW_SITE_CONTENT = {
                 title: 'Paquetería y carga',
                 description: 'Embalaje de cajas y paquetería con despacho continuo a sedes de Provincia y entrega domiciliaria.',
                 cta: 'Cobertura nacional',
-                imageSrc: '/media/parcel_cinematic.png',
+                imageSrc: '/media/optimized/parcel-cinematic-1280.webp',
                 imageAlt: 'Operación de paquetería y carga',
             },
         ],
@@ -251,7 +249,7 @@ const RAW_SITE_CONTENT = {
             {
                 iconClass: 'fa-solid fa-clipboard-check',
                 iconWrapperClass: 'w-24 h-24 bg-white border-4 border-brand-50 rounded-full flex items-center justify-center text-brand-600 text-3xl mx-auto mb-6 shadow-xl',
-                imageSrc: '/media/docs_cinematic.png',
+                imageSrc: '/media/flow-recojo.png',
                 imageAlt: 'Control documentario y validación de recojo',
                 title: '1. Recojo y control',
                 description: 'Registro con orden de servicio y control de ingreso desde las instalaciones del cliente.',
@@ -259,7 +257,7 @@ const RAW_SITE_CONTENT = {
             {
                 iconClass: 'fa-solid fa-box-open',
                 iconWrapperClass: 'w-24 h-24 bg-brand-600 border-4 border-brand-200 rounded-full flex items-center justify-center text-white text-3xl mx-auto mb-6 shadow-xl ring-4 ring-brand-50',
-                imageSrc: '/media/furgoneta-hero.jpg',
+                imageSrc: '/media/flow-despacho.png',
                 imageAlt: 'Habilitación y despacho con unidad de transporte Postal Express',
                 title: '2. Habilitación y despacho',
                 description: 'Preparación documentaria y embalaje para despacho local o a sedes de Provincia.',
@@ -267,7 +265,7 @@ const RAW_SITE_CONTENT = {
             {
                 iconClass: 'fa-solid fa-circle-check',
                 iconWrapperClass: 'w-24 h-24 bg-white border-4 border-green-50 rounded-full flex items-center justify-center text-green-500 text-3xl mx-auto mb-6 shadow-xl',
-                imageSrc: '/media/parcel_cinematic.png',
+                imageSrc: '/media/flow-entrega.png',
                 imageAlt: 'Entrega de paquetería y cierre de servicio con confirmación',
                 title: '3. Entrega y cierre',
                 description: 'Entrega al destinatario, reporte final y cargos 24 horas después de culminar.',
@@ -323,7 +321,7 @@ const RAW_SITE_CONTENT = {
         contractsHeading: 'Contratos',
         contractsDescription: 'Atención comercial y coordinaciones de servicio.',
         signoff: ['Atentamente', 'José Mejía Tejada', 'Gerente General'],
-        copyright: '&copy; 2026 Postal Express SAC.',
+        copyright: '© 2026 Postal Express SAC.',
         companyItems: [
             'Postal Express SAC',
             'Gerencia General',

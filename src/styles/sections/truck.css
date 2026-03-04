@@ -6,6 +6,21 @@
     height: 300vh;
     /* scroll room for the truck to travel */
     position: relative;
+    --ts-city-shift: 0px;
+    --ts-cue-opacity: 1;
+    --ts-cue-y: 0px;
+    --ts-dash-duration: 0.8s;
+    --ts-overlay-opacity: 0.8;
+    --ts-overlay-y: 18px;
+    --ts-progress-glow: 0.4;
+    --ts-road-glow-opacity: 0.14;
+    --ts-sky-brightness: 0.94;
+    --ts-sky-saturate: 0.92;
+    --ts-sun-scale: 0.9;
+    --ts-truck-glow: 0.2;
+    --ts-truck-rotate: 0deg;
+    --ts-truck-scale: 0.96;
+    --ts-truck-y: 0px;
 }
 
 #truck-sticky {
@@ -26,6 +41,19 @@
             #f4a942 80%,
             #f97316 95%,
             #ea580c 100%);
+    filter: saturate(var(--ts-sky-saturate)) brightness(var(--ts-sky-brightness));
+    transition: filter 0.14s linear;
+}
+
+.ts-sky::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 28% 20%, rgba(125, 211, 252, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(7, 19, 43, 0.12) 0%, rgba(7, 19, 43, 0.28) 58%, rgba(7, 19, 43, 0.44) 100%);
+    opacity: var(--ts-road-glow-opacity);
+    transition: opacity 0.14s linear;
 }
 
 /* Sun glow */
@@ -38,6 +66,9 @@
     border-radius: 50%;
     background: radial-gradient(circle, #fff7c0 0%, #fbbf24 40%, rgba(251, 191, 36, 0) 75%);
     box-shadow: 0 0 60px 30px rgba(251, 191, 36, 0.35);
+    opacity: calc(0.72 + var(--ts-road-glow-opacity) * 0.22);
+    transform: scale(var(--ts-sun-scale));
+    transition: opacity 0.14s linear, transform 0.14s linear;
 }
 
 /* Clouds */
@@ -137,6 +168,9 @@
     display: flex;
     align-items: flex-end;
     pointer-events: none;
+    opacity: calc(0.84 + var(--ts-road-glow-opacity) * 0.14);
+    transform: translate3d(var(--ts-city-shift), 0, 0);
+    transition: transform 0.14s linear, opacity 0.14s linear;
 }
 
 .ts-building {
@@ -233,6 +267,26 @@
     border-top: 3px solid #374151;
 }
 
+.ts-road::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 16px;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(34, 197, 94, 0.35), rgba(59, 130, 246, 0.1));
+    filter: blur(16px);
+    opacity: var(--ts-road-glow-opacity);
+    pointer-events: none;
+}
+
+.ts-road::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+    opacity: calc(var(--ts-road-glow-opacity) * 0.5);
+    pointer-events: none;
+}
+
 /* Animated dashed center line */
 .ts-road-dashes {
     position: absolute;
@@ -245,7 +299,7 @@
             #fbbf24 40px,
             transparent 40px,
             transparent 80px);
-    animation: dash-move 0.8s linear infinite;
+    animation: dash-move var(--ts-dash-duration) linear infinite;
 }
 
 @keyframes dash-move {
@@ -301,7 +355,7 @@
     transition: background 0.4s ease;
 }
 
-.wp-pin i {
+.wp-pin .app-icon {
     transform: rotate(45deg);
     color: white;
     font-size: 0.85rem;
@@ -359,9 +413,11 @@
     bottom: calc(28% + 2px);
     left: -5vw;
     /* JS moves this */
-    transition: left 0.12s linear;
-    will-change: left;
+    transition: left 0.12s linear, transform 0.12s linear, filter 0.12s linear;
+    will-change: left, transform, filter;
+    transform: translate3d(0, var(--ts-truck-y), 0) scale(var(--ts-truck-scale)) rotate(var(--ts-truck-rotate));
     z-index: 10;
+    filter: drop-shadow(0 14px 22px rgba(8, 47, 73, calc(0.34 + var(--ts-truck-glow) * 0.42)));
 }
 
 .truck-body {
@@ -369,6 +425,20 @@
     display: flex;
     align-items: flex-end;
     gap: 0;
+}
+
+.truck-body::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    right: 14px;
+    bottom: -10px;
+    height: 14px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(56, 189, 248, 0) 72%);
+    opacity: var(--ts-truck-glow);
+    filter: blur(8px);
+    pointer-events: none;
 }
 
 .truck-icon {
@@ -497,6 +567,9 @@
 
 .ts-overlay-inner {
     max-width: 400px;
+    opacity: var(--ts-overlay-opacity);
+    transform: translate3d(0, var(--ts-overlay-y), 0);
+    transition: opacity 0.14s linear, transform 0.14s linear;
 }
 
 .ts-badge {
@@ -571,7 +644,7 @@
     letter-spacing: 0.06em;
 }
 
-.ts-progress-labels i {
+.ts-progress-labels .app-icon {
     margin-right: 4px;
 }
 
@@ -588,7 +661,7 @@
     background: linear-gradient(90deg, #3b82f6, #22c55e);
     border-radius: 100px;
     transition: width 0.15s linear;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 14px rgba(34, 197, 94, var(--ts-progress-glow));
 }
 
 /* ---- SCROLL CUE ---- */
@@ -605,6 +678,9 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
+    opacity: var(--ts-cue-opacity);
+    transform: translate3d(0, var(--ts-cue-y), 0);
+    transition: opacity 0.14s linear, transform 0.14s linear;
 }
 
 .ts-scroll-arrow {

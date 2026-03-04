@@ -1,6 +1,11 @@
-﻿import { EventBus } from '../utils/events';
-import { clamp } from '../utils/math';
 import { SITE_CONTENT } from '../content/siteContent';
+import { EventBus } from '../utils/events';
+import {
+    getStickyFeatureScrollIndex,
+    getStickyFeatureScrollTarget,
+    hasStickyFeatureScrollableRange,
+} from './sticky-features/scroll';
+import { applyStickyFeatureState, updateStickyFeatureNav } from './sticky-features/view';
 
 export class StickyFeatureList {
     #section: HTMLElement | null;
@@ -38,15 +43,13 @@ export class StickyFeatureList {
             return;
         }
 
-        // Attach click handlers to each feature item (desktop)
-        this.#items.forEach((item, i) => {
-            const handler = (): void => this.#activate(i, true);
+        this.#items.forEach((item, index) => {
+            const handler = (): void => this.#activate(index, true);
             this.#clickHandlers.push(handler);
             item.addEventListener('click', handler);
             item.style.cursor = 'pointer';
         });
 
-        // Wire up mobile nav: prev/next arrows
         this.#navPrevHandler = (): void => {
             this.#activate(this.#currentIndex - 1, true);
             this.#scrollToFeature(this.#currentIndex);
@@ -59,18 +62,16 @@ export class StickyFeatureList {
         };
         this.#navNext?.addEventListener('click', this.#navNextHandler);
 
-        // Wire up mobile nav: dots
         this.#navDots.forEach((dot) => {
-            const idx = parseInt(dot.dataset['index'] ?? '0', 10);
+            const index = parseInt(dot.dataset['index'] ?? '0', 10);
             const handler = (): void => {
-                this.#activate(idx, true);
-                this.#scrollToFeature(idx);
+                this.#activate(index, true);
+                this.#scrollToFeature(index);
             };
             this.#navDotHandlers.push({ dot, handler });
             dot.addEventListener('click', handler);
         });
 
-        // Hide the nav bar when the university-features section is not in view
         const featureNav = document.getElementById('uf-feature-nav');
         if (featureNav) {
             this.#visibilityObserver = new IntersectionObserver(
@@ -84,116 +85,68 @@ export class StickyFeatureList {
             this.#visibilityObserver.observe(this.#section);
         }
 
-        // Activate first item by default
         this.#activate(0, false);
 
-        // Subscribe to scroll for auto-advance
         this.#unsubscribeScroll = EventBus.on('scroll', ({ y }): void => {
             this.#onScroll(y);
         });
     }
 
-    /** Scroll the page to make the given feature active in the sticky section */
     #scrollToFeature(index: number): void {
         if (!this.#section) return;
-        const totalItems = this.#items.length;
+        if (!hasStickyFeatureScrollableRange(this.#section.offsetHeight, window.innerHeight)) return;
+
         const sectionTop = this.#section.getBoundingClientRect().top + window.scrollY;
-        const sectionHeight = this.#section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        const scrollable = sectionHeight - windowHeight;
-        const targetProgress = index / (totalItems - 1);
-        const targetScroll = sectionTop + targetProgress * scrollable;
+        const targetScroll = getStickyFeatureScrollTarget({
+            index,
+            totalItems: this.#items.length,
+            sectionTop,
+            sectionHeight: this.#section.offsetHeight,
+            windowHeight: window.innerHeight,
+        });
+
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
 
     #activate(index: number, clicked = false): void {
         this.#prevIndex = this.#currentIndex;
-        this.#currentIndex = clamp(index, 0, this.#items.length - 1);
 
-        const goingForward = this.#currentIndex >= this.#prevIndex;
+        const maxIndex = Math.max(this.#items.length - 1, 0);
+        this.#currentIndex = Math.min(Math.max(index, 0), maxIndex);
 
-        this.#items.forEach((item, i) => {
-            item.classList.toggle('feature-item--active', i === this.#currentIndex);
-            item.classList.toggle('feature-item--done', i < this.#currentIndex);
-        });
-
-        this.#mockupScreens.forEach((screen, i) => {
-            screen.classList.remove(
-                'mockup-screen--visible',
-                'mockup-slide-from-right',
-                'mockup-slide-from-left',
-            );
-
-            if (i === this.#currentIndex) {
-                void screen.offsetHeight;
-                screen.classList.add(goingForward ? 'mockup-slide-from-right' : 'mockup-slide-from-left');
-                screen.classList.add('mockup-screen--visible');
-            }
-        });
-
-        // Update mobile feature nav strip
+        applyStickyFeatureState(this.#items, this.#mockupScreens, this.#currentIndex, this.#prevIndex);
         this.#updateNavStrip();
 
         void clicked;
     }
 
     #updateNavStrip(): void {
-        const idx = this.#currentIndex;
-        const total = this.#items.length;
-
-        // Update label with fade animation
-        if (this.#navLabel) {
-            this.#navLabel.classList.remove('uf-nav-label--fade');
-            void this.#navLabel.offsetHeight; // reflow
-            this.#navLabel.textContent = SITE_CONTENT.features.items[idx]?.title ?? '';
-            this.#navLabel.classList.add('uf-nav-label--fade');
-        }
-
-        // Update dots
-        this.#navDots.forEach((dot, i) => {
-            dot.classList.toggle('uf-nav-dot--active', i === idx);
-        });
-
-        // Update arrow disabled states
-        if (this.#navPrev) {
-            this.#navPrev.classList.toggle('uf-nav-arrow--disabled', idx === 0);
-        }
-        if (this.#navNext) {
-            this.#navNext.classList.toggle('uf-nav-arrow--disabled', idx === total - 1);
-        }
+        updateStickyFeatureNav(
+            {
+                label: this.#navLabel,
+                dots: this.#navDots,
+                prev: this.#navPrev,
+                next: this.#navNext,
+            },
+            SITE_CONTENT.features.items.map((item) => item.title),
+            this.#currentIndex,
+            this.#items.length,
+        );
     }
 
     #onScroll(_scrollY: number): void {
         void _scrollY;
         if (!this.#section) return;
+        if (!hasStickyFeatureScrollableRange(this.#section.offsetHeight, window.innerHeight)) return;
 
-        const rect = this.#section.getBoundingClientRect();
-        const scrolled = -rect.top;
-        const sectionHeight = this.#section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        const scrollable = sectionHeight - windowHeight;
+        const scrollIndex = getStickyFeatureScrollIndex({
+            totalItems: this.#items.length,
+            rectTop: this.#section.getBoundingClientRect().top,
+            sectionHeight: this.#section.offsetHeight,
+            windowHeight: window.innerHeight,
+        });
 
-        if (scrolled < 0 || scrolled > scrollable + windowHeight) return;
-
-        const progress = clamp(scrolled / scrollable, 0, 1);
-        const totalItems = this.#items.length;
-
-        const rawIndex = progress * totalItems;
-        const fractional = rawIndex % 1;
-        const slotIndex = Math.floor(rawIndex);
-
-        let scrollIndex: number;
-        if (slotIndex >= totalItems - 1) {
-            scrollIndex = totalItems - 1;
-        } else if (fractional >= 0.60) {
-            scrollIndex = slotIndex + 1;
-        } else {
-            scrollIndex = slotIndex;
-        }
-
-        scrollIndex = clamp(scrollIndex, 0, totalItems - 1);
-
-        if (scrollIndex !== this.#currentIndex) {
+        if (scrollIndex !== null && scrollIndex !== this.#currentIndex) {
             this.#activate(scrollIndex);
         }
     }
@@ -201,21 +154,24 @@ export class StickyFeatureList {
     destroy(): void {
         this.#unsubscribeScroll();
         this.#visibilityObserver?.disconnect();
+
         if (this.#navPrev && this.#navPrevHandler) {
             this.#navPrev.removeEventListener('click', this.#navPrevHandler);
         }
+
         if (this.#navNext && this.#navNextHandler) {
             this.#navNext.removeEventListener('click', this.#navNextHandler);
         }
+
         this.#navDotHandlers.forEach(({ dot, handler }) => {
             dot.removeEventListener('click', handler);
         });
 
-        this.#items.forEach((item, i) => {
-            const handler = this.#clickHandlers[i];
-            if (handler) item.removeEventListener('click', handler);
+        this.#items.forEach((item, index) => {
+            const handler = this.#clickHandlers[index];
+            if (handler) {
+                item.removeEventListener('click', handler);
+            }
         });
     }
 }
-
-

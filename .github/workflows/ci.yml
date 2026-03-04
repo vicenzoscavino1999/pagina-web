@@ -1,9 +1,38 @@
-﻿name: CI
+name: CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: CI lane to run
+        required: true
+        default: core
+        type: choice
+        options:
+          - core
+          - extended
+          - release
+          - all
+      release_version:
+        description: Version objetivo para release lane (ej. 1.4.0)
+        required: false
+        default: ''
+        type: string
+  schedule:
+    - cron: '0 10 * * *'
 
 jobs:
-  quality:
+  core-quality:
+    name: Core Quality
+    if: >
+      github.event_name == 'push' ||
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'core' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,14 +42,23 @@ jobs:
           cache: 'npm'
 
       - run: npm ci
-      - run: npm run typecheck    # TypeScript
-      - run: npm run lint         # ESLint
-      - run: npm run test:coverage # Vitest + coverage
-      - run: npm run build        # Build de producción
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:core
+      - run: npm run build
+      - run: npm run perf:budgets
 
-  e2e:
+  core-e2e-smoke:
+    name: Core E2E Smoke
+    if: >
+      github.event_name == 'push' ||
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'core' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
     runs-on: ubuntu-latest
-    needs: quality
+    needs: core-quality
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -30,17 +68,129 @@ jobs:
 
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run e2e
+      - run: npm run e2e:smoke
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-smoke
           path: playwright-report/
           retention-days: 7
 
-  lighthouse:
+  extended-quality:
+    name: Extended Quality
+    if: >
+      github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'extended' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
     runs-on: ubuntu-latest
-    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:coverage
+      - run: npm run build
+      - run: npm run perf:budgets
+
+  extended-e2e-smoke:
+    name: Extended E2E Smoke
+    if: >
+      github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'extended' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
+    runs-on: ubuntu-latest
+    needs: extended-quality
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run e2e:smoke:extended
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-smoke-extended
+          path: playwright-report/
+          retention-days: 7
+
+  extended-e2e-visual:
+    name: Extended E2E Visual
+    if: >
+      github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'extended' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
+    runs-on: ubuntu-latest
+    needs: extended-e2e-smoke
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e:visual
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-visual
+          path: playwright-report/
+          retention-days: 7
+
+  extended-e2e-a11y:
+    name: Extended E2E Accessibility
+    if: >
+      github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'extended' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
+    runs-on: ubuntu-latest
+    needs: extended-e2e-smoke
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run e2e:a11y
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-a11y
+          path: playwright-report/
+          retention-days: 7
+
+  extended-lighthouse:
+    name: Extended Lighthouse
+    if: >
+      github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'extended' ||
+       github.event.inputs.lane == 'release' ||
+       github.event.inputs.lane == 'all'))
+    continue-on-error: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.lane == 'extended') }}
+    runs-on: ubuntu-latest
+    needs: extended-quality
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -58,3 +208,85 @@ jobs:
           path: .lighthouseci/
           retention-days: 7
 
+  release-gate:
+    name: Release Gate
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'release' || github.event.inputs.lane == 'all')
+    runs-on: ubuntu-latest
+    needs:
+      - core-e2e-smoke
+      - extended-e2e-visual
+      - extended-e2e-a11y
+      - extended-lighthouse
+      - release-security
+      - release-preparation
+    steps:
+      - run: echo "Release lane quality gate passed."
+
+  release-security:
+    name: Release Security
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'release' || github.event.inputs.lane == 'all')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run security:runtime
+
+  release-preparation:
+    name: Release Preparation
+    if: >
+      github.event_name == 'workflow_dispatch' &&
+      (github.event.inputs.lane == 'release' || github.event.inputs.lane == 'all')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Resolve release version
+        id: release-meta
+        run: |
+          VERSION_INPUT="${{ github.event.inputs.release_version }}"
+          if [ -n "$VERSION_INPUT" ]; then
+            VERSION="$VERSION_INPUT"
+          else
+            VERSION="0.1.0-${GITHUB_RUN_NUMBER}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Using release version: $VERSION"
+
+      - name: Generate release notes
+        run: >
+          node scripts/generate-release-notes.mjs
+          --version "${{ steps.release-meta.outputs.version }}"
+          --to "${{ github.sha }}"
+          --out release-notes.md
+          --changelog-file CHANGELOG.md
+
+      - name: Check release readiness
+        run: >
+          node scripts/check-release-readiness.mjs
+          --version "${{ steps.release-meta.outputs.version }}"
+          --notes-file release-notes.md
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-preparation
+          path: |
+            release-notes.md
+            CHANGELOG.md
+          retention-days: 14

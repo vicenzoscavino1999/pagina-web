@@ -1,6 +1,22 @@
 import { z } from 'zod';
 
 const nonEmptyString = z.string().trim().min(1);
+const containsHtmlTag = (value: string): boolean => /<\s*\/?\s*[a-z][^>]*>/i.test(value);
+const plainText = nonEmptyString.refine((value) => !containsHtmlTag(value), {
+    message: 'Plain text values cannot contain HTML tags',
+});
+const safeClassName = nonEmptyString.refine((value) => /^[a-zA-Z0-9:_/\-\s]+$/.test(value), {
+    message: 'Expected class-like token string',
+});
+
+const isLineBreakOnlyHtml = (value: string): boolean => {
+    const withoutLineBreakTags = value.replace(/<br\s*\/?>/gi, '');
+    return !/[<>]/.test(withoutLineBreakTags);
+};
+
+const lineBreakHtml = nonEmptyString.refine(isLineBreakOnlyHtml, {
+    message: 'Only <br> tags are allowed in HTML-enabled copy fields',
+});
 
 const isHttpUrl = (value: string): boolean => {
     try {
@@ -11,195 +27,197 @@ const isHttpUrl = (value: string): boolean => {
     }
 };
 
-const mediaSource = nonEmptyString.refine((value) => value.startsWith('/') || isHttpUrl(value), {
-    message: 'Expected an http(s) URL or root-relative asset path',
-});
+const mediaSource = nonEmptyString
+    .refine((value) => value.startsWith('/') || isHttpUrl(value), {
+        message: 'Expected an http(s) URL or root-relative asset path',
+    })
+    .refine((value) => !(/[<>"'`]/.test(value)), {
+        message: 'Media source cannot contain HTML-special quote characters',
+    });
 
 const servicesCardSchema = z.object({
-    badge: nonEmptyString,
-    badgeClass: nonEmptyString,
-    title: nonEmptyString,
-    description: nonEmptyString,
-    cta: nonEmptyString,
+    badge: plainText,
+    badgeClass: safeClassName,
+    title: plainText,
+    description: plainText,
+    cta: plainText,
     imageSrc: mediaSource,
-    imageAlt: nonEmptyString,
+    imageAlt: plainText,
 });
 
 const timelineItemSchema = z.object({
-    title: nonEmptyString,
-    detail: nonEmptyString,
+    title: plainText,
+    detail: plainText,
     state: z.enum(['completed', 'current', 'pending']),
 });
 
 const truckWaypointSchema = z.object({
     left: z.string().regex(/^\d+%$/),
-    iconClass: nonEmptyString,
-    title: nonEmptyString,
-    subtitle: nonEmptyString,
+    iconClass: safeClassName,
+    title: plainText,
+    subtitle: plainText,
     isHome: z.boolean(),
 });
 
 const featureItemSchema = z.object({
-    iconClass: nonEmptyString,
-    title: nonEmptyString,
-    description: nonEmptyString,
+    iconClass: safeClassName,
+    title: plainText,
+    description: plainText,
 });
 
 const flowStepSchema = z.object({
-    iconClass: nonEmptyString,
-    iconWrapperClass: nonEmptyString,
+    iconClass: safeClassName,
+    iconWrapperClass: safeClassName,
     imageSrc: mediaSource,
-    imageAlt: nonEmptyString,
-    title: nonEmptyString,
-    description: nonEmptyString,
+    imageAlt: plainText,
+    title: plainText,
+    description: plainText,
 });
 
 const statsItemSchema = z.object({
     target: z.number().int().positive(),
-    suffix: nonEmptyString,
-    label: nonEmptyString,
+    suffix: plainText,
+    label: plainText,
 });
 
 const faqItemSchema = z.object({
-    question: nonEmptyString,
-    answer: nonEmptyString,
+    question: plainText,
+    answer: plainText,
 });
 
 const tickerItemSchema = z.object({
-    iconClass: nonEmptyString,
-    label: nonEmptyString,
+    iconClass: safeClassName,
+    label: plainText,
 });
 
 export const siteContentSchema = z.object({
     media: z.object({
         heroBackgroundSrc: mediaSource,
-        heroBackgroundAlt: nonEmptyString,
+        heroBackgroundAlt: plainText,
         appleBackgroundSrc: mediaSource,
-        appleBackgroundAlt: nonEmptyString,
+        appleBackgroundAlt: plainText,
         statsBackgroundSrc: mediaSource,
-        statsBackgroundAlt: nonEmptyString,
+        statsBackgroundAlt: plainText,
     }),
     brand: z.object({
-        legalName: nonEmptyString,
-        logoPrimary: nonEmptyString,
-        logoSecondary: nonEmptyString,
-        footerBrand: nonEmptyString,
+        legalName: plainText,
+        footerBrand: plainText,
     }),
     nav: z.object({
-        servicesLabel: nonEmptyString,
-        trackingLabel: nonEmptyString,
-        coverageLabel: nonEmptyString,
+        servicesLabel: plainText,
+        trackingLabel: plainText,
+        coverageLabel: plainText,
     }),
     contact: z.object({
         phoneDisplay: z.string().regex(/^\d{9}$/),
-        contractsLabel: nonEmptyString,
+        contractsLabel: plainText,
         phoneHref: z.string().regex(/^tel:\+\d+$/),
         whatsappHref: z.url(),
-        sectionTitle: nonEmptyString,
-        sectionSubtitlePrefix: nonEmptyString,
+        sectionTitle: plainText,
+        sectionSubtitlePrefix: plainText,
     }),
     hero: z.object({
-        badge: nonEmptyString,
-        titleMain: nonEmptyString,
-        titleSub: nonEmptyString,
-        description: nonEmptyString,
-        primaryCta: nonEmptyString,
+        badge: plainText,
+        titleMain: plainText,
+        titleSub: plainText,
+        description: plainText,
+        primaryCta: plainText,
     }),
     tracking: z.object({
-        title: nonEmptyString,
-        subtitle: nonEmptyString,
-        inputPlaceholder: nonEmptyString,
-        submitLabel: nonEmptyString,
-        resultGuideLabel: nonEmptyString,
-        resultEstimatedLabel: nonEmptyString,
-        resetLabel: nonEmptyString,
+        title: plainText,
+        subtitle: plainText,
+        inputPlaceholder: plainText,
+        submitLabel: plainText,
+        resultGuideLabel: plainText,
+        resultEstimatedLabel: plainText,
+        resetLabel: plainText,
         timeline: z.array(timelineItemSchema).min(1),
     }),
     apple: z.object({
-        headingHtml: nonEmptyString,
-        subheading: nonEmptyString,
+        headingHtml: lineBreakHtml,
+        subheading: plainText,
     }),
     truck: z.object({
-        headlineHtml: nonEmptyString,
-        subheading: nonEmptyString,
-        originLabel: nonEmptyString,
-        destinationLabel: nonEmptyString,
-        scrollCue: nonEmptyString,
-        statuses: z.array(nonEmptyString).min(1),
+        headlineHtml: lineBreakHtml,
+        subheading: plainText,
+        originLabel: plainText,
+        destinationLabel: plainText,
+        scrollCue: plainText,
+        statuses: z.array(plainText).min(1),
         waypoints: z.array(truckWaypointSchema).min(1),
     }),
     features: z.object({
-        titleHtml: nonEmptyString,
+        titleHtml: lineBreakHtml,
         items: z.array(featureItemSchema).min(1),
         mockup: z.object({
-            coverageChip: nonEmptyString,
-            pickupTextHtml: nonEmptyString,
-            pickupTagOne: nonEmptyString,
-            pickupTagTwo: nonEmptyString,
-            shieldText: nonEmptyString,
-            shieldCoverage: nonEmptyString,
-            notificationOne: nonEmptyString,
-            notificationTwo: nonEmptyString,
-            notificationThree: nonEmptyString,
-            methodOne: nonEmptyString,
-            methodTwo: nonEmptyString,
-            methodThree: nonEmptyString,
-            methodFour: nonEmptyString,
-            receiptOneLabel: nonEmptyString,
-            receiptOneValue: nonEmptyString,
-            receiptTwoLabel: nonEmptyString,
-            receiptTwoValue: nonEmptyString,
-            receiptThreeLabel: nonEmptyString,
-            receiptThreeValue: nonEmptyString,
+            coverageChip: plainText,
+            pickupTextHtml: lineBreakHtml,
+            pickupTagOne: plainText,
+            pickupTagTwo: plainText,
+            shieldText: plainText,
+            shieldCoverage: plainText,
+            notificationOne: plainText,
+            notificationTwo: plainText,
+            notificationThree: plainText,
+            methodOne: plainText,
+            methodTwo: plainText,
+            methodThree: plainText,
+            methodFour: plainText,
+            receiptOneLabel: plainText,
+            receiptOneValue: plainText,
+            receiptTwoLabel: plainText,
+            receiptTwoValue: plainText,
+            receiptThreeLabel: plainText,
+            receiptThreeValue: plainText,
         }),
     }),
     carousel: z.object({
         slideOne: z.object({
-            label: nonEmptyString,
-            titleHtml: nonEmptyString,
-            body: nonEmptyString,
-            badgeOne: nonEmptyString,
-            badgeTwo: nonEmptyString,
-            badgeThree: nonEmptyString,
-            phoneTitle: nonEmptyString,
-            phoneLabel: nonEmptyString,
-            phoneCta: nonEmptyString,
+            label: plainText,
+            titleHtml: lineBreakHtml,
+            body: plainText,
+            badgeOne: plainText,
+            badgeTwo: plainText,
+            badgeThree: plainText,
+            phoneTitle: plainText,
+            phoneLabel: plainText,
+            phoneCta: plainText,
         }),
         slideTwo: z.object({
-            label: nonEmptyString,
-            titleHtml: nonEmptyString,
-            body: nonEmptyString,
-            statOneLabel: nonEmptyString,
-            statTwoLabel: nonEmptyString,
-            phoneTitle: nonEmptyString,
-            routeOne: nonEmptyString,
-            routeTwo: nonEmptyString,
-            routeThree: nonEmptyString,
-            etaPrefix: nonEmptyString,
-            etaValue: nonEmptyString,
+            label: plainText,
+            titleHtml: lineBreakHtml,
+            body: plainText,
+            statOneLabel: plainText,
+            statTwoLabel: plainText,
+            phoneTitle: plainText,
+            routeOne: plainText,
+            routeTwo: plainText,
+            routeThree: plainText,
+            etaPrefix: plainText,
+            etaValue: plainText,
         }),
         slideThree: z.object({
-            label: nonEmptyString,
-            titleHtml: nonEmptyString,
-            body: nonEmptyString,
-            timerOne: nonEmptyString,
-            timerTwo: nonEmptyString,
-            phoneTitle: nonEmptyString,
-            deliveredMessage: nonEmptyString,
-            deliveredTime: nonEmptyString,
+            label: plainText,
+            titleHtml: lineBreakHtml,
+            body: plainText,
+            timerOne: plainText,
+            timerTwo: plainText,
+            phoneTitle: plainText,
+            deliveredMessage: plainText,
+            deliveredTime: plainText,
         }),
     }),
     services: z.object({
-        eyebrow: nonEmptyString,
-        title: nonEmptyString,
+        eyebrow: plainText,
+        title: plainText,
         cards: z.array(servicesCardSchema).min(1),
     }),
     serviceCharacteristics: z.object({
-        title: nonEmptyString,
-        items: z.array(nonEmptyString).min(1),
+        title: plainText,
+        items: z.array(plainText).min(1),
     }),
     flow: z.object({
-        title: nonEmptyString,
+        title: plainText,
         steps: z.array(flowStepSchema).min(1),
     }),
     stats: z.object({
@@ -212,16 +230,16 @@ export const siteContentSchema = z.object({
         items: z.array(tickerItemSchema).min(1),
     }),
     footer: z.object({
-        intro: nonEmptyString,
-        whatsappLabel: nonEmptyString,
-        companyHeading: nonEmptyString,
-        coverageHeading: nonEmptyString,
-        contractsHeading: nonEmptyString,
-        contractsDescription: nonEmptyString,
-        signoff: z.array(nonEmptyString).min(1),
-        copyright: nonEmptyString,
-        companyItems: z.array(nonEmptyString).min(1),
-        coverageItems: z.array(nonEmptyString).min(1),
+        intro: plainText,
+        whatsappLabel: plainText,
+        companyHeading: plainText,
+        coverageHeading: plainText,
+        contractsHeading: plainText,
+        contractsDescription: plainText,
+        signoff: z.array(plainText).min(1),
+        copyright: plainText,
+        companyItems: z.array(plainText).min(1),
+        coverageItems: z.array(plainText).min(1),
     }),
 });
 

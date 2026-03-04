@@ -14,17 +14,14 @@ export default defineConfig({
         coverage: {
             provider: 'v8',
             reporter: ['text', 'html'],
-            all: false,
-            include: [
-                'src/app/App.ts',
-                'src/utils/events.ts',
-                'src/modules/ContentHydrator.ts',
-                'src/modules/TrackingForm.ts',
-                'src/modules/ParallaxEngine.ts',
-            ],
+            all: true,
+            include: ['src/**/*.ts'],
+            exclude: ['src/**/*.d.ts'],
             thresholds: {
-                lines: 80, // El build falla si baja del 80%
-                functions: 80,
+                branches: 90,
+                functions: 85,
+                lines: 90,
+                statements: 90,
             },
         },
     },

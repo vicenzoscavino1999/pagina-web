@@ -1,10 +1,12 @@
-﻿import { EventBus } from '../utils/events';
-import { clamp } from '../utils/math';
 import { SITE_CONTENT } from '../content/siteContent';
+import { EventBus } from '../utils/events';
+import { getTruckSceneProgress, getTruckStatusIndex, getTruckViewportLeft } from './truck/progress';
+import { applyTruckSceneVisualState, getTruckSceneVisualState, resetTruckSceneVisualState } from './truck/scene';
+import { applyTruckSceneState, applyTruckStatus } from './truck/view';
 
 interface Waypoint {
     el: HTMLElement;
-    position: number; // 0-1 progress when this waypoint activates
+    position: number;
 }
 
 export class TruckScrollScene {
@@ -14,6 +16,8 @@ export class TruckScrollScene {
     #statusBadge: HTMLElement | null;
     #waypoints: Waypoint[] = [];
     #unsubscribeScroll: () => void;
+    #statusFlashTimeout: ReturnType<typeof setTimeout> | null = null;
+    #currentStatus = '';
 
     private static readonly STATUSES = SITE_CONTENT.truck.statuses;
 
@@ -29,10 +33,9 @@ export class TruckScrollScene {
             return;
         }
 
-        // Gather waypoints
-        const wpEls = document.querySelectorAll<HTMLElement>('.ts-waypoint');
-        wpEls.forEach((el, i) => {
-            const position = (i + 1) / (wpEls.length + 1);
+        const waypointElements = document.querySelectorAll<HTMLElement>('.ts-waypoint');
+        waypointElements.forEach((el, index) => {
+            const position = (index + 1) / (waypointElements.length + 1);
             this.#waypoints.push({ el, position });
         });
 
@@ -40,7 +43,6 @@ export class TruckScrollScene {
             this.#update(y);
         });
 
-        // Initial update
         this.#update(window.scrollY);
     }
 
@@ -48,58 +50,59 @@ export class TruckScrollScene {
         void _scrollY;
         if (!this.#section || !this.#truck) return;
 
-        const rect = this.#section.getBoundingClientRect();
-        const scrolled = -rect.top;
-        const sectionHeight = this.#section.offsetHeight;
-        const windowHeight = window.innerHeight;
-        const scrollable = sectionHeight - windowHeight;
-
-        if (scrolled < 0 || scrolled > scrollable) return;
-
-        const progress = clamp(scrolled / scrollable, 0, 1);
-
-        // Move truck from -5% to 92% of viewport width
-        const truckX = -5 + progress * 97; // percent of viewport
-        this.#truck.style.left = `${truckX}vw`;
-
-        // Update progress bar
-        if (this.#progressFill) {
-            this.#progressFill.style.width = `${progress * 100}%`;
-        }
-
-        // Update status badge
-        if (this.#statusBadge) {
-            const statusIndex = Math.min(
-                Math.floor(progress * TruckScrollScene.STATUSES.length),
-                TruckScrollScene.STATUSES.length - 1
-            );
-            const newStatus = TruckScrollScene.STATUSES[statusIndex];
-            if (newStatus && this.#statusBadge.textContent !== newStatus) {
-                this.#statusBadge.textContent = newStatus;
-                this.#statusBadge.classList.add('ts-badge--flash');
-                setTimeout(() => {
-                    this.#statusBadge?.classList.remove('ts-badge--flash');
-                }, 400);
-            }
-        }
-
-        // Activate waypoints as truck passes them
-        this.#waypoints.forEach(({ el, position }) => {
-            const passed = progress >= position - 0.08;
-            el.classList.toggle('wp--active', passed);
+        const progress = getTruckSceneProgress({
+            rectTop: this.#section.getBoundingClientRect().top,
+            sectionHeight: this.#section.offsetHeight,
+            windowHeight: window.innerHeight,
         });
 
-        // Show delivered state
-        if (progress >= 0.98) {
-            this.#truck.classList.add('truck--arrived');
-        } else {
-            this.#truck.classList.remove('truck--arrived');
+        if (progress === null) return;
+
+        applyTruckSceneState(
+            {
+                truck: this.#truck,
+                progressFill: this.#progressFill,
+                waypoints: this.#waypoints,
+            },
+            progress,
+            getTruckViewportLeft(progress),
+        );
+        applyTruckSceneVisualState(this.#section, getTruckSceneVisualState(progress));
+
+        this.#updateStatus(progress);
+    }
+
+    #updateStatus(progress: number): void {
+        const statusIndex = getTruckStatusIndex(progress, TruckScrollScene.STATUSES.length);
+        const status = TruckScrollScene.STATUSES[statusIndex];
+        const flashed = applyTruckStatus(this.#statusBadge, status, this.#currentStatus);
+
+        if (!status) return;
+
+        this.#currentStatus = status;
+
+        if (flashed) {
+            if (this.#statusFlashTimeout) {
+                clearTimeout(this.#statusFlashTimeout);
+            }
+
+            this.#statusFlashTimeout = setTimeout(() => {
+                this.#statusBadge?.classList.remove('ts-badge--flash');
+                this.#statusFlashTimeout = null;
+            }, 400);
         }
     }
 
     destroy(): void {
         this.#unsubscribeScroll();
+
+        if (this.#statusFlashTimeout) {
+            clearTimeout(this.#statusFlashTimeout);
+            this.#statusFlashTimeout = null;
+        }
+
+        if (this.#section) {
+            resetTruckSceneVisualState(this.#section);
+        }
     }
 }
-
-

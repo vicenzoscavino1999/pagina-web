@@ -1,41 +1,78 @@
 /* =====================================================
    LANDING POLISH - Hero, services, stats, FAQ finishing
 ===================================================== */
-#tracking-widget {
-    background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.96) 100%);
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    box-shadow:
-        0 28px 56px rgba(3, 29, 58, 0.2),
-        0 1px 0 rgba(255, 255, 255, 0.72) inset;
+#servicios {
+    --services-accent: rgba(14, 165, 233, 0.18);
+    --services-grid-shift: 18px;
+    --services-scroll-energy: 0.16;
+    --services-scroll-glow-opacity: 0.05;
+    --services-scroll-progress: 0;
+    --services-scroll-sweep-x: 48%;
+    --services-scroll-sweep-y: 20%;
+    --services-spotlight-opacity: 0;
+    --services-spotlight-x: 50%;
+    --services-spotlight-y: 22%;
+    background:
+        radial-gradient(circle at calc(var(--services-scroll-sweep-x) - 28%) -6%, rgba(14, 116, 144, calc(0.08 + var(--services-scroll-energy) * 0.09)), transparent 36%),
+        radial-gradient(circle at calc(var(--services-scroll-sweep-x) + 24%) calc(var(--services-scroll-sweep-y) - 8%), rgba(245, 158, 11, calc(0.06 + var(--services-scroll-progress) * 0.08)), transparent 28%),
+        linear-gradient(180deg, #f8fafc 0%, #eff5fa 100%);
+    isolation: isolate;
+    overflow: hidden;
+    position: relative;
 }
 
-#tracking-widget::after {
+#servicios::before,
+#servicios::after {
     content: '';
     position: absolute;
-    inset: auto 0 0 0;
-    height: 3px;
-    background: linear-gradient(90deg, #0284c7 0%, #22c55e 55%, #f59e0b 100%);
-    opacity: 0.75;
+    inset: 0;
+    pointer-events: none;
 }
 
-#tracking-input {
-    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
-}
-
-#tracking-input:focus {
-    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
-}
-
-#servicios {
+#servicios::before {
     background:
-        radial-gradient(circle at 12% -10%, rgba(14, 116, 144, 0.13), transparent 36%),
-        radial-gradient(circle at 92% 8%, rgba(245, 158, 11, 0.13), transparent 28%),
-        linear-gradient(180deg, #f8fafc 0%, #eff5fa 100%);
+        radial-gradient(440px circle at var(--services-spotlight-x) var(--services-spotlight-y), var(--services-accent), transparent 72%),
+        radial-gradient(760px circle at var(--services-scroll-sweep-x) var(--services-scroll-sweep-y), rgba(56, 189, 248, 0.18), transparent 72%);
+    opacity: calc(var(--services-spotlight-opacity) + var(--services-scroll-glow-opacity));
+    transform: translate3d(0, calc(var(--services-grid-shift) * -0.18), 0);
+    transition:
+        opacity 220ms ease,
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#servicios::after {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0));
+    opacity: calc(var(--services-spotlight-opacity) * 0.38 + var(--services-scroll-energy) * 0.12);
+    transform: translate3d(0, calc(var(--services-grid-shift) * -0.12), 0);
+    transition:
+        opacity 320ms ease,
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#servicios > .max-w-7xl {
+    position: relative;
+    z-index: 1;
+}
+
+#services-grid {
+    opacity: calc(0.92 + var(--services-scroll-energy) * 0.08);
+    transform: translate3d(0, var(--services-grid-shift), 0);
+    transition:
+        opacity 360ms ease,
+        transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
 }
 
 #services-grid>div {
-    border: 1px solid rgba(148, 163, 184, 0.2);
-    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+    border: 1px solid rgba(148, 163, 184, calc(0.18 + var(--services-scroll-energy) * 0.14));
+    box-shadow: 0 calc(16px + var(--services-scroll-energy) * 14px) calc(32px + var(--services-scroll-energy) * 18px) rgba(15, 23, 42, calc(0.1 + var(--services-scroll-energy) * 0.08));
+    transition:
+        box-shadow 360ms ease,
+        border-color 300ms ease;
 }
 
 #services-grid>div:hover {
@@ -48,12 +85,40 @@
 }
 
 #flow-steps {
+    --flow-card-shift: 20px;
+    --flow-connector-fill: 0.12;
+    --flow-glow-opacity: 0.04;
+    --flow-image-shift: -10px;
+    --flow-scroll-energy: 0.16;
+    --flow-scroll-progress: 0;
+    --flow-sweep-x: 18%;
     perspective: 1000px;
+    isolation: isolate;
+    position: relative;
+}
+
+#flow-steps::before {
+    content: '';
+    position: absolute;
+    inset: -1.6rem -1rem -0.6rem;
+    background:
+        radial-gradient(560px circle at var(--flow-sweep-x) 16%, rgba(56, 189, 248, 0.14), transparent 70%),
+        radial-gradient(520px circle at calc(var(--flow-sweep-x) + 12%) 100%, rgba(16, 185, 129, 0.08), transparent 72%);
+    opacity: var(--flow-glow-opacity);
+    pointer-events: none;
+    transition:
+        opacity 360ms ease,
+        background-position 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .flow-connector {
     top: 6.95rem;
     height: 2px;
+    opacity: calc(0.46 + var(--flow-scroll-energy) * 0.34);
+    transform: translate3d(0, calc(var(--flow-card-shift) * -0.22), 0);
+    transition:
+        opacity 320ms ease,
+        transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .flow-connector-line,
@@ -71,12 +136,28 @@
             rgba(56, 189, 248, 0.3) 48%,
             rgba(148, 163, 184, 0.45) 82%,
             rgba(148, 163, 184, 0.1) 100%);
+    overflow: hidden;
+}
+
+.flow-connector-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: calc(var(--flow-connector-fill) * 100%);
+    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(14, 165, 233, 0.95) 0%, rgba(34, 197, 94, 0.72) 100%);
+    box-shadow:
+        0 0 22px rgba(14, 165, 233, 0.28),
+        0 0 34px rgba(34, 197, 94, 0.18);
+    transition:
+        width 520ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 300ms ease;
 }
 
 .flow-connector-scan {
     background: linear-gradient(90deg, transparent 0%, rgba(14, 165, 233, 0.55) 45%, rgba(34, 197, 94, 0.35) 55%, transparent 100%);
     filter: blur(0.5px);
-    opacity: 0.8;
+    opacity: calc(0.28 + var(--flow-scroll-energy) * 0.78);
     animation: flow-connector-scan 3.6s ease-in-out infinite;
 }
 
@@ -89,8 +170,12 @@
     background: #fff;
     border: 2px solid rgba(59, 130, 246, 0.35);
     box-shadow: 0 0 0 6px rgba(191, 219, 254, 0.3);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(calc(0.9 + var(--flow-scroll-energy) * 0.2));
     animation: flow-node-pulse 2.6s ease-in-out infinite;
+    transition:
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 320ms ease,
+        border-color 320ms ease;
 }
 
 .flow-connector-node--start {
@@ -115,13 +200,14 @@
     height: 100%;
     overflow: hidden;
     border-radius: 1.25rem;
-    border: 1px solid rgba(148, 163, 184, 0.22);
+    border: 1px solid rgba(148, 163, 184, calc(0.2 + var(--flow-scroll-energy) * 0.1));
     background:
         radial-gradient(circle at 10% 0%, rgba(14, 165, 233, 0.04), transparent 38%),
         linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     box-shadow:
-        0 18px 36px rgba(15, 23, 42, 0.08),
+        0 calc(18px + var(--flow-scroll-energy) * 12px) calc(36px + var(--flow-scroll-energy) * 18px) rgba(15, 23, 42, calc(0.08 + var(--flow-scroll-energy) * 0.08)),
         0 1px 0 rgba(255, 255, 255, 0.75) inset;
+    transform: translate3d(0, var(--flow-card-shift), 0) scale(calc(0.985 + var(--flow-scroll-energy) * 0.03));
     transition:
         transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
         box-shadow 380ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -159,6 +245,12 @@
     background: linear-gradient(145deg, #0f172a 0%, #0b2d4b 52%, #0f172a 100%);
 }
 
+.flow-step-picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
 .flow-step-image {
     position: absolute;
     inset: 0;
@@ -166,8 +258,9 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    opacity: 0.94;
-    transform: scale(1.02);
+    opacity: calc(0.88 + var(--flow-scroll-energy) * 0.12);
+    transform: scale(calc(1.01 + var(--flow-scroll-energy) * 0.06)) translate3d(var(--flow-image-shift), calc(var(--flow-card-shift) * -0.12), 0);
+    filter: saturate(calc(0.96 + var(--flow-scroll-energy) * 0.16)) contrast(calc(0.98 + var(--flow-scroll-energy) * 0.08));
     transition:
         transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
         filter 500ms ease,
@@ -199,7 +292,8 @@
         linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
     background-size: 28px 28px;
     mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    opacity: 0.6;
+    opacity: calc(0.42 + var(--flow-scroll-energy) * 0.34);
+    transition: opacity 320ms ease;
 }
 
 .flow-step-chip {
@@ -240,6 +334,7 @@
     box-shadow:
         0 14px 26px rgba(3, 37, 65, 0.28),
         0 1px 0 rgba(255, 255, 255, 0.35) inset;
+    transform: translateY(calc(var(--flow-card-shift) * -0.08)) scale(calc(0.96 + var(--flow-scroll-energy) * 0.06));
     transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
     animation: flow-icon-float 4.4s ease-in-out infinite;
 }
@@ -317,6 +412,7 @@
     width: 44%;
     border-radius: inherit;
     background: linear-gradient(90deg, rgba(2, 132, 199, 0.85) 0%, rgba(34, 197, 94, 0.65) 100%);
+    opacity: calc(0.62 + var(--flow-scroll-energy) * 0.26);
     transform: translateX(-105%);
     animation: flow-progress 3.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
@@ -462,10 +558,6 @@
 }
 
 @media (max-width: 768px) {
-    #tracking-widget {
-        margin-top: 0.5rem;
-    }
-
     .flow-step-shell {
         border-radius: 1rem;
     }

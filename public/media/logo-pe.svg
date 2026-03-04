@@ -1,0 +1,30 @@
+﻿<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="orbit" x1="0" y1="0%" x2="0" y2="100%">
+      <stop offset="0%" stop-color="#1b416e"/>
+      <stop offset="100%" stop-color="#28568c"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <!-- Sweeping arrow from left to right -->
+    <path d="M 330,140 
+             C 170,170 30,170 30,100
+             C 30,40 160,20 280,20
+             C 210,15 90,20 60,60
+             C 20,110 90,150 330,130
+             Z" 
+          fill="url(#orbit)"/>
+    <path d="M 320,115 L 360,135 L 325,155 Z" fill="url(#orbit)"/>
+
+    <!-- Text P.E. -->
+    <text x="120" y="110" font-family="Georgia, serif" font-weight="bold" font-size="80" fill="#1b416e">P.</text>
+    <text x="210" y="110" font-family="Georgia, serif" font-weight="bold" font-size="80" fill="#1b416e">E.</text>
+
+    <!-- Subtitle -->
+    <text x="40" y="180" font-family="'Arial Black', Arial, sans-serif" font-weight="900" font-size="28" fill="#1b416e">POSTAL EXPRESS S.A.C.</text>
+  </g>
+</svg>

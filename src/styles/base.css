@@ -4,6 +4,7 @@
 :root {
     --font-body: 'Manrope', 'Segoe UI', sans-serif;
     --font-display: 'Sora', 'Segoe UI', sans-serif;
+    --nav-anchor-offset: 96px;
     --surface-0: #f8fbff;
     --surface-1: #eef4f9;
     --ink-900: #10213b;
@@ -49,15 +50,49 @@ body.menu-open {
     overflow: hidden;
 }
 
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 120;
+    padding: 0.65rem 0.95rem;
+    border-radius: 0.625rem;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    box-shadow: 0 12px 24px rgba(2, 34, 73, 0.2);
+    transform: translateY(-180%);
+    opacity: 0;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
 html {
     scroll-behavior: auto;
+}
+
+#main-content {
+    scroll-margin-top: var(--nav-anchor-offset);
+}
+
+#hero-section,
+#tracking-widget,
+#servicios,
+#contacto,
+#coverage-section {
+    scroll-margin-top: var(--nav-anchor-offset);
 }
 
 h1,
 h2,
 h3,
 h4,
-#logo-text,
 .ts-headline,
 .slide-title,
 .uf-title {
@@ -73,6 +108,23 @@ h4,
 *:focus-visible {
     outline: 2px solid var(--ring-focus);
     outline-offset: 2px;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-stopped {
+    overflow: clip;
+}
+
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
 }
 
 /* Reveal animation */

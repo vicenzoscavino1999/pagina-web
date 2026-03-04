@@ -1,0 +1,47 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "America/Lima"
+    labels:
+      - dependencies
+      - security
+    open-pull-requests-limit: 8
+    groups:
+      tooling:
+        patterns:
+          - eslint*
+          - prettier*
+          - typescript
+          - vitest
+          - @vitest/*
+          - @typescript-eslint/*
+          - @playwright/*
+      build-and-css:
+        patterns:
+          - vite
+          - vite-*
+          - tailwindcss
+          - @tailwindcss/*
+          - postcss
+          - autoprefixer
+      runtime:
+        patterns:
+          - zod
+          - gsap
+          - lenis
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:30"
+      timezone: "America/Lima"
+    labels:
+      - dependencies
+      - ci

@@ -6,47 +6,45 @@ import { requireById, requireQs } from '../utils/dom';
 export class TrackingForm {
     #form: HTMLFormElement | null;
     #abortController: AbortController | null = null;
-    #submitHandler: (e: Event) => void;
+    #submitHandler: ((e: Event) => void) | null = null;
     #resetBtn: HTMLElement | null = null;
     #resetHandler: (() => void) | null = null;
     static #TRACKING_REGEX = /^[A-Z0-9-]{4,20}$/;
 
     constructor(formElement: HTMLElement | null) {
-        this.#submitHandler = (): void => { };
         if (!formElement || !(formElement instanceof HTMLFormElement)) {
             console.warn('[TrackingForm] Form not found');
             this.#form = null;
             return;
         }
-        this.#form = formElement;
-        this.#assertMarkupContract();
+        const form = formElement;
+        this.#form = form;
+        this.#assertMarkupContract(form);
         this.#submitHandler = (e: Event): void => {
-            void this.#handleSubmit(e);
+            void this.#handleSubmit(e, form);
         };
-        this.#form.addEventListener('submit', this.#submitHandler);
+        form.addEventListener('submit', this.#submitHandler);
     }
 
     static #validate(value: string): boolean {
         return TrackingForm.#TRACKING_REGEX.test(value.toUpperCase());
     }
 
-    #assertMarkupContract(): void {
-        if (!this.#form) return;
-
-        requireQs('#tracking-input', this.#form, 'TrackingForm');
-        requireQs('#tracking-btn', this.#form, 'TrackingForm');
+    #assertMarkupContract(form: HTMLFormElement): void {
+        requireQs('#tracking-input', form, 'TrackingForm');
+        requireQs('#tracking-btn', form, 'TrackingForm');
         requireById('tracking-result', document, 'TrackingForm');
         requireById('result-id', document, 'TrackingForm');
         requireById('result-date', document, 'TrackingForm');
         requireById('reset-tracking-btn', document, 'TrackingForm');
     }
 
-    async #handleSubmit(e: Event): Promise<void> {
+    async #handleSubmit(e: Event, form: HTMLFormElement): Promise<void> {
         e.preventDefault();
-        if (!this.#form) return;
 
-        const trackingInput = requireQs<HTMLInputElement>('#tracking-input', this.#form, 'TrackingForm');
-        const trackingBtn = requireQs<HTMLButtonElement>('#tracking-btn', this.#form, 'TrackingForm');
+        const trackingInput = requireQs<HTMLInputElement>('#tracking-input', form, 'TrackingForm');
+        const trackingBtn = requireQs<HTMLButtonElement>('#tracking-btn', form, 'TrackingForm');
+        const trackingResult = requireById('tracking-result', document, 'TrackingForm');
 
         const raw = trackingInput.value;
         const clean = raw.replace(/[^A-Z0-9-]/gi, '').toUpperCase();
@@ -59,6 +57,7 @@ export class TrackingForm {
         this.#abortController?.abort();
         this.#abortController = new AbortController();
         const { signal } = this.#abortController;
+        trackingResult.setAttribute('aria-busy', 'true');
 
         const originalBtnContent = trackingBtn.innerHTML;
         trackingBtn.disabled = true;
@@ -77,6 +76,7 @@ export class TrackingForm {
                 trackingBtn.innerHTML = originalBtnContent;
                 trackingBtn.disabled = false;
             }
+            trackingResult.setAttribute('aria-busy', 'false');
         }
     }
 
@@ -88,8 +88,6 @@ export class TrackingForm {
                 reject(new DOMException('Aborted', 'AbortError'));
             }, { once: true });
         });
-
-        if (signal.aborted) return;
 
         this.#renderResult(trackingId);
         EventBus.emit('tracking:success', { trackingId, date: new Date() });
@@ -109,6 +107,7 @@ export class TrackingForm {
         resultDate.innerText = "Estimado: " + dateString;
 
         trackingResult.classList.remove('hidden');
+        trackingResult.setAttribute('aria-busy', 'false');
         trackingResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
         const resetBtn = requireById('reset-tracking-btn', document, 'TrackingForm');
@@ -123,7 +122,10 @@ export class TrackingForm {
         this.#resetBtn = resetBtn;
         this.#resetHandler = (): void => {
             trackingResult.classList.add('hidden');
+            trackingResult.setAttribute('aria-busy', 'false');
             this.#form?.reset();
+            const trackingInput = requireQs<HTMLInputElement>('#tracking-input', this.#form as HTMLFormElement, 'TrackingForm');
+            trackingInput.focus();
         };
 
         this.#resetBtn.addEventListener('click', this.#resetHandler);
@@ -131,13 +133,14 @@ export class TrackingForm {
 
     destroy(): void {
         this.#abortController?.abort();
-        if (this.#form) {
+        if (this.#form && this.#submitHandler) {
             this.#form.removeEventListener('submit', this.#submitHandler);
         }
         if (this.#resetBtn && this.#resetHandler) {
             this.#resetBtn.removeEventListener('click', this.#resetHandler);
         }
         this.#form = null;
+        this.#submitHandler = null;
         this.#resetBtn = null;
         this.#resetHandler = null;
     }

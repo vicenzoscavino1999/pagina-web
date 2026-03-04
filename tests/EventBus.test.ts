@@ -26,4 +26,10 @@ describe('EventBus', () => {
 
         expect(handler).not.toHaveBeenCalled();
     });
+
+    it('off no falla si el evento no tiene listeners registrados', () => {
+        const handler = vi.fn();
+
+        expect(() => EventBus.off('scroll', handler)).not.toThrow();
+    });
 });

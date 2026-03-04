@@ -1,46 +1,74 @@
-import { clamp } from '../utils/math';
 import { qsa } from '../utils/dom';
+import {
+    applyServiceCardMotionState,
+    applyServiceSpotlightState,
+    getServiceCardMotionState,
+    getServiceSpotlightState,
+    resetServiceCardMotionState,
+    resetServiceSpotlightState,
+} from './services/motion';
 
 interface ServiceCardBinding {
     card: HTMLElement;
+    kind: string;
     layers: HTMLElement[];
     pointerX: number;
     pointerY: number;
     rect: DOMRect;
     rafId: number | null;
-    onPointerEnter: (event: PointerEvent) => void;
-    onPointerMove: (event: PointerEvent) => void;
-    onPointerLeave: () => void;
+    onPointerEnter?: (event: PointerEvent) => void;
+    onPointerMove?: (event: PointerEvent) => void;
+    onPointerLeave?: () => void;
+    onTap?: (event: MouseEvent) => void;
 }
 
 export class ServiceCardMotion {
     #bindings: ServiceCardBinding[] = [];
-    #isInteractive: boolean;
+    #isFinePointer: boolean;
+    #prefersReducedMotion: boolean;
+    #section: HTMLElement | null;
+    #touchResetHandle: number | null = null;
 
     constructor() {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-        this.#isInteractive = !prefersReducedMotion && hasFinePointer;
+        this.#prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.#isFinePointer = window.matchMedia('(pointer: fine)').matches;
+        this.#section = document.getElementById('servicios');
     }
 
     init(): void {
-        if (!this.#isInteractive) return;
+        if (this.#prefersReducedMotion) return;
 
         const cards = qsa('[data-service-card]');
         cards.forEach((card) => this.#bindCard(card));
     }
 
     destroy(): void {
+        if (this.#touchResetHandle !== null) {
+            window.clearTimeout(this.#touchResetHandle);
+            this.#touchResetHandle = null;
+        }
+
         this.#bindings.forEach((binding) => {
-            const { card, onPointerEnter, onPointerMove, onPointerLeave, rafId } = binding;
-            card.removeEventListener('pointerenter', onPointerEnter);
-            card.removeEventListener('pointermove', onPointerMove);
-            card.removeEventListener('pointerleave', onPointerLeave);
+            const { card, onPointerEnter, onPointerMove, onPointerLeave, onTap, rafId } = binding;
+
+            if (onPointerEnter) {
+                card.removeEventListener('pointerenter', onPointerEnter);
+            }
+            if (onPointerMove) {
+                card.removeEventListener('pointermove', onPointerMove);
+            }
+            if (onPointerLeave) {
+                card.removeEventListener('pointerleave', onPointerLeave);
+            }
+            if (onTap) {
+                card.removeEventListener('click', onTap);
+            }
 
             if (rafId !== null) {
                 window.cancelAnimationFrame(rafId);
             }
 
+            card.classList.remove('is-interacting', 'is-active-service', 'is-touch-active');
             this.#resetCard(binding);
         });
 
@@ -51,50 +79,105 @@ export class ServiceCardMotion {
         const layers = qsa('[data-service-depth]', card);
         const rect = card.getBoundingClientRect();
 
-        const binding: ServiceCardBinding = {
+        let binding: ServiceCardBinding;
+
+        let onPointerEnter: ((event: PointerEvent) => void) | undefined;
+        let onPointerMove: ((event: PointerEvent) => void) | undefined;
+        let onPointerLeave: (() => void) | undefined;
+        let onTap: ((event: MouseEvent) => void) | undefined;
+
+        if (this.#isFinePointer) {
+            onPointerEnter = (event: PointerEvent): void => {
+                binding.rect = card.getBoundingClientRect();
+                binding.pointerX = event.clientX;
+                binding.pointerY = event.clientY;
+                card.classList.add('is-interacting');
+                this.#setActiveCard(card);
+                this.#scheduleUpdate(binding);
+            };
+
+            onPointerMove = (event: PointerEvent): void => {
+                binding.pointerX = event.clientX;
+                binding.pointerY = event.clientY;
+                this.#scheduleUpdate(binding);
+            };
+
+            onPointerLeave = (): void => {
+                card.classList.remove('is-interacting');
+                this.#setActiveCard(null);
+                this.#resetCard(binding);
+            };
+        } else {
+            onTap = (event: MouseEvent): void => {
+                binding.rect = card.getBoundingClientRect();
+                binding.pointerX = Number.isFinite(event.clientX)
+                    ? event.clientX
+                    : binding.rect.left + binding.rect.width / 2;
+                binding.pointerY = Number.isFinite(event.clientY)
+                    ? event.clientY
+                    : binding.rect.top + binding.rect.height / 2;
+
+                this.#resetInactiveCards(card);
+
+                card.classList.add('is-interacting', 'is-touch-active');
+                this.#setActiveCard(card);
+                this.#applyMotion(binding);
+                this.#queueTouchReset();
+            };
+        }
+
+        binding = {
             card,
+            kind: card.dataset['serviceKind'] ?? 'docs',
             layers,
             pointerX: rect.left + rect.width / 2,
             pointerY: rect.top + rect.height / 2,
             rect,
             rafId: null,
-            onPointerEnter: (_event): void => {
-                void _event;
-            },
-            onPointerMove: (_event): void => {
-                void _event;
-            },
-            onPointerLeave: (): void => undefined,
         };
 
-        const onPointerEnter = (event: PointerEvent): void => {
-            binding.rect = card.getBoundingClientRect();
-            binding.pointerX = event.clientX;
-            binding.pointerY = event.clientY;
-            card.classList.add('is-interacting');
-            this.#scheduleUpdate(binding);
-        };
+        if (onPointerEnter) {
+            binding.onPointerEnter = onPointerEnter;
+        }
+        if (onPointerMove) {
+            binding.onPointerMove = onPointerMove;
+        }
+        if (onPointerLeave) {
+            binding.onPointerLeave = onPointerLeave;
+        }
+        if (onTap) {
+            binding.onTap = onTap;
+        }
 
-        const onPointerMove = (event: PointerEvent): void => {
-            binding.pointerX = event.clientX;
-            binding.pointerY = event.clientY;
-            this.#scheduleUpdate(binding);
-        };
-
-        const onPointerLeave = (): void => {
-            card.classList.remove('is-interacting');
-            this.#resetCard(binding);
-        };
-
-        binding.onPointerEnter = onPointerEnter;
-        binding.onPointerMove = onPointerMove;
-        binding.onPointerLeave = onPointerLeave;
-
-        card.addEventListener('pointerenter', onPointerEnter);
-        card.addEventListener('pointermove', onPointerMove);
-        card.addEventListener('pointerleave', onPointerLeave);
+        if (onPointerEnter) {
+            card.addEventListener('pointerenter', onPointerEnter);
+        }
+        if (onPointerMove) {
+            card.addEventListener('pointermove', onPointerMove);
+        }
+        if (onPointerLeave) {
+            card.addEventListener('pointerleave', onPointerLeave);
+        }
+        if (onTap) {
+            card.addEventListener('click', onTap);
+        }
 
         this.#bindings.push(binding);
+    }
+
+    #queueTouchReset(): void {
+        if (this.#touchResetHandle !== null) {
+            window.clearTimeout(this.#touchResetHandle);
+        }
+
+        this.#touchResetHandle = window.setTimeout(() => {
+            this.#bindings.forEach((binding) => {
+                binding.card.classList.remove('is-interacting', 'is-active-service', 'is-touch-active');
+                this.#resetCard(binding);
+            });
+
+            this.#touchResetHandle = null;
+        }, 900);
     }
 
     #scheduleUpdate(binding: ServiceCardBinding): void {
@@ -107,53 +190,45 @@ export class ServiceCardMotion {
     }
 
     #applyMotion(binding: ServiceCardBinding): void {
-        const { card } = binding;
-        const rect = binding.rect;
+        const motionState = getServiceCardMotionState(binding.rect, binding.pointerX, binding.pointerY);
+        if (!motionState) return;
 
-        if (rect.width <= 0 || rect.height <= 0) return;
+        applyServiceCardMotionState(binding.card, binding.layers, motionState);
 
-        const ratioX = clamp((binding.pointerX - rect.left) / rect.width, 0, 1);
-        const ratioY = clamp((binding.pointerY - rect.top) / rect.height, 0, 1);
+        if (this.#section) {
+            const spotlightState = getServiceSpotlightState(
+                this.#section.getBoundingClientRect(),
+                binding.pointerX,
+                binding.pointerY,
+                binding.kind
+            );
 
-        const normalizedX = ratioX - 0.5;
-        const normalizedY = ratioY - 0.5;
-
-        const tiltY = normalizedX * 9;
-        const tiltX = normalizedY * -8;
-        const shiftX = normalizedX * 16;
-        const shiftY = normalizedY * 12;
-
-        card.style.setProperty('--svc-tilt-x', `${tiltX.toFixed(2)}deg`);
-        card.style.setProperty('--svc-tilt-y', `${tiltY.toFixed(2)}deg`);
-        card.style.setProperty('--svc-shift-x', `${shiftX.toFixed(2)}px`);
-        card.style.setProperty('--svc-shift-y', `${shiftY.toFixed(2)}px`);
-        card.style.setProperty('--svc-glow-x', `${(ratioX * 100).toFixed(2)}%`);
-        card.style.setProperty('--svc-glow-y', `${(ratioY * 100).toFixed(2)}%`);
-
-        binding.layers.forEach((layer) => {
-            const depthRaw = layer.dataset['serviceDepth'] ?? '0.35';
-            const depth = Number.parseFloat(depthRaw);
-            const depthFactor = Number.isFinite(depth) ? depth : 0.35;
-            const layerX = shiftX * depthFactor;
-            const layerY = shiftY * depthFactor;
-
-            layer.style.setProperty('--svc-layer-x', `${layerX.toFixed(2)}px`);
-            layer.style.setProperty('--svc-layer-y', `${layerY.toFixed(2)}px`);
-        });
+            if (spotlightState) {
+                applyServiceSpotlightState(this.#section, spotlightState);
+            }
+        }
     }
 
     #resetCard(binding: ServiceCardBinding): void {
-        const { card, layers } = binding;
-        card.style.setProperty('--svc-tilt-x', '0deg');
-        card.style.setProperty('--svc-tilt-y', '0deg');
-        card.style.setProperty('--svc-shift-x', '0px');
-        card.style.setProperty('--svc-shift-y', '0px');
-        card.style.setProperty('--svc-glow-x', '50%');
-        card.style.setProperty('--svc-glow-y', '50%');
+        resetServiceCardMotionState(binding.card, binding.layers);
 
-        layers.forEach((layer) => {
-            layer.style.setProperty('--svc-layer-x', '0px');
-            layer.style.setProperty('--svc-layer-y', '0px');
+        if (this.#section) {
+            resetServiceSpotlightState(this.#section);
+        }
+    }
+
+    #setActiveCard(activeCard: HTMLElement | null): void {
+        this.#bindings.forEach(({ card }) => {
+            card.classList.toggle('is-active-service', card === activeCard);
+        });
+    }
+
+    #resetInactiveCards(activeCard: HTMLElement): void {
+        this.#bindings.forEach((binding) => {
+            if (binding.card === activeCard) return;
+
+            binding.card.classList.remove('is-interacting', 'is-touch-active');
+            this.#resetCard(binding);
         });
     }
 }

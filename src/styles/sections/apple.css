@@ -8,6 +8,18 @@
     --apple-overlay-opacity: 0;
     --apple-text-opacity: 0;
     --apple-scale: 1.04;
+    --apple-image-y: 0px;
+    --apple-copy-opacity: 0;
+    --apple-copy-y: 52px;
+    --apple-copy-scale: 0.94;
+    --apple-copy-rotate: 8deg;
+    --apple-copy-blur: 14px;
+    --apple-heading-opacity: 0;
+    --apple-heading-y: 24px;
+    --apple-subheading-opacity: 0;
+    --apple-subheading-y: 20px;
+    --apple-glow-opacity: 0.22;
+    --apple-vignette-opacity: 0.3;
 }
 
 #apple-section {
@@ -68,12 +80,14 @@
         radial-gradient(460px 250px at 78% 54%, rgba(148, 163, 184, 0.12), transparent 72%);
     mix-blend-mode: screen;
     filter: blur(8px);
+    opacity: var(--apple-glow-opacity);
 }
 
 #apple-sticky-container::after {
     background:
         linear-gradient(180deg, rgba(2, 6, 23, 0.04), rgba(2, 6, 23, 0.34)),
         radial-gradient(ellipse at center, rgba(15, 23, 42, 0.05), rgba(2, 6, 23, 0.46));
+    opacity: var(--apple-vignette-opacity);
 }
 
 #apple-bg-image {
@@ -83,7 +97,7 @@
     height: 100%;
     object-fit: cover;
     object-position: center 56%;
-    transform: scale(var(--apple-scale));
+    transform: translate3d(0, var(--apple-image-y), 0) scale(var(--apple-scale));
     filter: blur(var(--apple-blur)) brightness(0.84) saturate(1.03);
     transition: filter 0.05s linear;
     will-change: filter, transform;
@@ -104,18 +118,25 @@
     z-index: 2;
 }
 
+#apple-copy {
+    position: relative;
+    z-index: 3;
+    opacity: var(--apple-copy-opacity);
+    transform: translate3d(0, var(--apple-copy-y), 0) scale(var(--apple-copy-scale)) rotateX(var(--apple-copy-rotate));
+    transform-origin: center bottom;
+    filter: blur(var(--apple-copy-blur));
+    will-change: transform, opacity, filter;
+}
+
 .apple-text-reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition:
-        opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-        transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     color: #ffffff;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
     text-align: center;
 }
 
 #apple-heading {
+    opacity: var(--apple-heading-opacity);
+    transform: translate3d(0, var(--apple-heading-y), 0);
     font-size: clamp(2.8rem, 7.2vw, 7.2rem);
     line-height: 1.07;
     letter-spacing: -0.018em;
@@ -127,6 +148,8 @@
 }
 
 #apple-subheading {
+    opacity: var(--apple-subheading-opacity);
+    transform: translate3d(0, var(--apple-subheading-y), 0);
     max-width: 940px;
     margin-left: auto;
     margin-right: auto;
@@ -138,7 +161,7 @@
 
 .apple-text-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 @keyframes apple-fade-up {

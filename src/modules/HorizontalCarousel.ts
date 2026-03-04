@@ -1,4 +1,6 @@
 import { clamp } from '../utils/math';
+import { getCarouselSwipeStep } from './carousel/gesture';
+import { applyCarouselViewState } from './carousel/view';
 
 export class HorizontalCarousel {
     #section: HTMLElement | null;
@@ -19,7 +21,7 @@ export class HorizontalCarousel {
     #handleTouchEnd: (e: TouchEvent) => void;
     #handleMouseDown: (e: MouseEvent) => void;
     #handleMouseUp: (e: MouseEvent) => void;
-    #dotHandlers: Array<{ dot: HTMLElement; handler: () => void }> = [];
+    #dotHandlers: Array<{ clickHandler: () => void; dot: HTMLElement; keydownHandler: (e: KeyboardEvent) => void }> = [];
 
     constructor() {
         this.#section = document.getElementById('features-carousel');
@@ -43,33 +45,28 @@ export class HorizontalCarousel {
 
         this.#handlePrev = (): void => this.#goTo(this.#currentIndex - 1);
         this.#handleNext = (): void => this.#goTo(this.#currentIndex + 1);
-        this.#handleTouchStart = (e: TouchEvent): void => {
-            const touch = e.touches[0];
+        this.#handleTouchStart = (event: TouchEvent): void => {
+            const touch = event.touches[0];
             if (!touch) return;
+
             this.#startX = touch.clientX;
             this.#isDragging = true;
         };
-        this.#handleTouchEnd = (e: TouchEvent): void => {
+        this.#handleTouchEnd = (event: TouchEvent): void => {
             if (!this.#isDragging) return;
-            const touch = e.changedTouches[0];
+
+            const touch = event.changedTouches[0];
             if (!touch) return;
-            const diffX = this.#startX - touch.clientX;
-            if (Math.abs(diffX) > this.#dragThreshold) {
-                this.#goTo(this.#currentIndex + (diffX > 0 ? 1 : -1));
-            }
-            this.#isDragging = false;
+
+            this.#applySwipe(touch.clientX);
         };
-        this.#handleMouseDown = (e: MouseEvent): void => {
-            this.#startX = e.clientX;
+        this.#handleMouseDown = (event: MouseEvent): void => {
+            this.#startX = event.clientX;
             this.#isDragging = true;
         };
-        this.#handleMouseUp = (e: MouseEvent): void => {
+        this.#handleMouseUp = (event: MouseEvent): void => {
             if (!this.#isDragging) return;
-            const diffX = this.#startX - e.clientX;
-            if (Math.abs(diffX) > this.#dragThreshold) {
-                this.#goTo(this.#currentIndex + (diffX > 0 ? 1 : -1));
-            }
-            this.#isDragging = false;
+            this.#applySwipe(event.clientX);
         };
 
         this.#prevBtn?.addEventListener('click', this.#handlePrev);
@@ -79,45 +76,82 @@ export class HorizontalCarousel {
         this.#track.addEventListener('mousedown', this.#handleMouseDown);
         window.addEventListener('mouseup', this.#handleMouseUp);
 
-        this.#dots.forEach((dot, i) => {
-            const handler = (): void => this.#goTo(i);
-            this.#dotHandlers.push({ dot, handler });
-            dot.addEventListener('click', handler);
+        this.#dots.forEach((dot, index) => {
+            const clickHandler = (): void => this.#goTo(index);
+            const keydownHandler = (event: KeyboardEvent): void => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    this.#goTo(index);
+                    return;
+                }
+
+                if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    const nextIndex = clamp(index + 1, 0, this.#totalSlides - 1);
+                    this.#goTo(nextIndex);
+                    this.#focusDot(nextIndex);
+                    return;
+                }
+
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    const prevIndex = clamp(index - 1, 0, this.#totalSlides - 1);
+                    this.#goTo(prevIndex);
+                    this.#focusDot(prevIndex);
+                    return;
+                }
+
+                if (event.key === 'Home') {
+                    event.preventDefault();
+                    this.#goTo(0);
+                    this.#focusDot(0);
+                    return;
+                }
+
+                if (event.key === 'End') {
+                    event.preventDefault();
+                    const lastIndex = this.#totalSlides - 1;
+                    this.#goTo(lastIndex);
+                    this.#focusDot(lastIndex);
+                }
+            };
+            this.#dotHandlers.push({ clickHandler, dot, keydownHandler });
+            dot.addEventListener('click', clickHandler);
+            dot.addEventListener('keydown', keydownHandler);
         });
 
         this.#goTo(0);
     }
 
+    #applySwipe(endX: number): void {
+        const step = getCarouselSwipeStep(this.#startX, endX, this.#dragThreshold);
+        if (step !== 0) {
+            this.#goTo(this.#currentIndex + step);
+        }
+
+        this.#isDragging = false;
+    }
+
     #goTo(index: number): void {
         const prevIndex = this.#currentIndex;
         this.#currentIndex = clamp(index, 0, this.#totalSlides - 1);
-        const goingForward = this.#currentIndex >= prevIndex;
 
-        if (this.#track) {
-            this.#track.style.transform = `translateX(-${this.#currentIndex * 100}%)`;
-        }
+        applyCarouselViewState(
+            {
+                track: this.#track,
+                slides: this.#slides,
+                dots: this.#dots,
+                prevButton: this.#prevBtn,
+                nextButton: this.#nextBtn,
+            },
+            this.#currentIndex,
+            prevIndex,
+            this.#totalSlides,
+        );
+    }
 
-        this.#dots.forEach((dot, i) => {
-            dot.classList.toggle('carousel-dot--active', i === this.#currentIndex);
-        });
-
-        // Animate slide content with direction-aware entrance class
-        this.#slides.forEach((slide, i) => {
-            slide.classList.remove('slide--active', 'slide--enter-left');
-
-            if (i === this.#currentIndex) {
-                // Force reflow so animation re-triggers
-                void slide.offsetHeight;
-                slide.classList.add(goingForward ? 'slide--active' : 'slide--enter-left');
-            }
-        });
-
-        if (this.#prevBtn) {
-            this.#prevBtn.classList.toggle('btn--disabled', this.#currentIndex === 0);
-        }
-        if (this.#nextBtn) {
-            this.#nextBtn.classList.toggle('btn--disabled', this.#currentIndex === this.#totalSlides - 1);
-        }
+    #focusDot(index: number): void {
+        this.#dots[index]?.focus();
     }
 
     destroy(): void {
@@ -127,8 +161,10 @@ export class HorizontalCarousel {
         this.#section?.removeEventListener('touchend', this.#handleTouchEnd);
         this.#track?.removeEventListener('mousedown', this.#handleMouseDown);
         window.removeEventListener('mouseup', this.#handleMouseUp);
-        this.#dotHandlers.forEach(({ dot, handler }) => {
-            dot.removeEventListener('click', handler);
+
+        this.#dotHandlers.forEach(({ clickHandler, dot, keydownHandler }) => {
+            dot.removeEventListener('click', clickHandler);
+            dot.removeEventListener('keydown', keydownHandler);
         });
     }
 }

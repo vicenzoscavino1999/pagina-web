@@ -17,7 +17,7 @@
         content="Servicio local y nacional con tracking desde el recojo hasta la entrega final." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://postalexpress.demo" />
-    <meta property="og:image" content="/media/hero-warehouse.png" />
+    <meta property="og:image" content="/media/optimized/hero-warehouse-1280.webp" />
 
     <!-- PWA — iOS specific -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,18 +35,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/critical.css">
+    <link rel="stylesheet" href="/src/styles/deferred.css">
 </head>
 
 <body class="text-slate-600 antialiased bg-slate-50 relative overflow-x-hidden">
+    <a href="#main-content" id="skip-to-content" class="skip-link">Saltar al contenido principal</a>
 
     <!-- Navegación -->
     <nav class="fixed w-full z-50" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
-                <a href="/" class="flex-shrink-0 flex items-center cursor-pointer group bg-white/95 px-4 py-2 rounded-xl shadow-md border border-white/20 transition-transform hover:scale-105" aria-label="Ir al inicio"><img src="/media/logo.png" alt="Postal Express SAC Logo" class="h-10 w-auto object-contain" id="site-logo"></a>
+                <a href="/" id="nav-brand-link" class="flex-shrink-0 flex items-center cursor-pointer group" aria-label="Ir al inicio">
+                    <img src="/media/logo-pe.svg" alt="Postal Express SAC Logo" class="h-10 w-auto object-contain" id="site-logo">
+                </a>
 
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#servicios" id="nav-services-link"
@@ -54,26 +57,28 @@
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="#tracking-widget" id="nav-tracking-link"
+                    <a href="#hero-section" id="nav-tracking-link"
                         class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Tracking
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="#servicios" id="nav-coverage-link"
+                    <a href="#coverage-section" id="nav-coverage-link"
                         class="nav-link font-medium text-sm uppercase tracking-wide transition relative group">Cobertura
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-500 transition-[width] duration-300 ease-out group-hover:w-full"></span>
                     </a>
-                    <a href="tel:+51996983530" id="nav-contract-link"
-                        data-magnetic
-                        class="bg-white text-brand-900 hover:bg-accent-500 hover:text-white px-6 py-2.5 rounded font-bold transition-all shadow-lg hover:shadow-accent-500/30 text-sm transform hover:-translate-y-0.5">Contratos:
-                        996983530</a>
+                    <a href="tel:+51996983530" id="nav-contract-link" data-magnetic
+                        class="inline-flex items-center rounded-full transition-all">
+                        <span class="nav-contract-label">Contratos</span>
+                        <span class="nav-contract-divider" aria-hidden="true">•</span>
+                        <span class="nav-contract-number">996 983 530</span>
+                    </a>
                 </div>
 
                 <div class="md:hidden">
                     <button id="mobile-btn" type="button" class="text-2xl focus:outline-none p-2"
                         aria-label="Abrir menú de navegación" aria-controls="mobile-menu" aria-expanded="false">
-                        <i class="fa-solid fa-bars"></i>
+                        <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16" /><path d="M4 12h16" /><path d="M4 17h16" /></svg>
                     </button>
                 </div>
             </div>
@@ -84,106 +89,48 @@
             <div class="flex flex-col p-6 space-y-6 text-lg">
                 <a href="#servicios" id="mobile-services-link"
                     class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Servicios</a>
-                <a href="#tracking-widget" id="mobile-tracking-link"
+                <a href="#hero-section" id="mobile-tracking-link"
                     class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Tracking</a>
-                <a href="#servicios" id="mobile-coverage-link"
+                <a href="#coverage-section" id="mobile-coverage-link"
                     class="text-slate-700 font-bold hover:text-brand-600 border-b border-slate-100 pb-2">Cobertura</a>
                 <a href="tel:+51996983530" id="mobile-contract-link"
                     class="bg-brand-900 text-white text-center py-4 rounded-xl font-bold shadow-lg mt-4">Contratos:
-                    996983530</a>
+                    996 983 530</a>
             </div>
         </div>
     </nav>
 
+    <main id="main-content" tabindex="-1">
     <!-- Hero Section -->
     <section id="hero-section" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
             <!-- LCP Optimization: fetchpriority high, sync decoding -->
-            <img id="hero-bg"
-                src="/media/hero-warehouse.png"
-                width="1920" height="1080" alt="Operación logística en almacén con unidad de reparto"
-                class="w-full h-[120%] object-cover absolute top-0 left-0 will-change-transform" fetchpriority="high"
-                decoding="sync">
+            <picture>
+                <source id="hero-bg-avif-source" type="image/avif"
+                    srcset="/media/optimized/hero-warehouse-640.avif 640w, /media/optimized/hero-warehouse-960.avif 960w, /media/optimized/hero-warehouse-1280.avif 1280w"
+                    sizes="100vw">
+                <source id="hero-bg-webp-source" type="image/webp"
+                    srcset="/media/optimized/hero-warehouse-640.webp 640w, /media/optimized/hero-warehouse-960.webp 960w, /media/optimized/hero-warehouse-1280.webp 1280w"
+                    sizes="100vw">
+                <img id="hero-bg"
+                    src="/media/optimized/hero-warehouse-1280.webp"
+                    width="1920" height="1080" alt="Operación logística en almacén con unidad de reparto"
+                    class="w-full h-[120%] object-cover absolute top-0 left-0 will-change-transform" fetchpriority="high"
+                    decoding="sync">
+            </picture>
             <div class="absolute inset-0 hero-overlay"></div>
         </div>
 
         <div id="hero-layout"
             class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid lg:grid-cols-12 gap-12 items-center">
             <div id="hero-copy" class="lg:col-span-7 text-white">
-                <div
-                    class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold uppercase tracking-widest mb-6 rounded-full">
-                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> <span id="hero-badge-text">Postal Express SAC</span>
-                </div>
-                <h1 id="hero-title" class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none mb-6 drop-shadow-lg">
-                    <span id="hero-title-main">Logística corporativa.</span> <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-600" id="hero-title-sub">Redefinida.</span>
-                </h1>
-                <p class="text-xl text-slate-200 mb-10 max-w-xl leading-relaxed font-light drop-shadow" id="hero-description">
-                    15 años de experiencia entregando seguridad, control y confianza en Lima, Callao y Provincias.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <!-- Botones placeholder con type="button" y disabled para evitar confusión -->
-                    <button type="button"
-                        data-magnetic
-                        class="bg-accent-600 hover:bg-accent-700 text-white px-8 py-4 rounded font-bold transition shadow-lg shadow-accent-600/30 transform hover:-translate-y-1 flex items-center gap-2"
-                        onclick="document.getElementById('contacto').scrollIntoView({behavior: 'smooth'})">
-                        <span id="hero-primary-cta-text">Solicitar servicio</span> <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                    <a href="tel:+51996983530" id="hero-contract-link"
-                        data-magnetic
-                        class="px-8 py-4 rounded font-bold text-white border border-white/30 hover:bg-white/10 transition backdrop-blur-sm flex items-center gap-2">
-                        <i class="fa-solid fa-phone text-xl"></i> <span id="hero-contract-text">Contratos: 996983530</span>
-                    </a>
-                </div>
+                <!-- Injected by ContentHydrator -->
             </div>
 
             <!-- Widget de Rastreo -->
             <div id="tracking-widget"
                 class="lg:col-span-5 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-accent-500 relative overflow-hidden group">
-                <div
-                    class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-brand-50 rounded-full blur-3xl opacity-50 group-hover:scale-150 transition-transform duration-1000 ease-in-out">
-                </div>
-
-                <h3 class="text-2xl font-bold text-slate-900 mb-2 relative z-10" id="tracking-title">Tracking Postal Express</h3>
-                <p class="text-slate-500 text-sm mb-6 relative z-10" id="tracking-subtitle">Seguimiento de documentos, paquetería, carnés y diplomas desde el recojo hasta la entrega.
-                </p>
-
-                <form id="tracking-form" class="space-y-4 relative z-10">
-                    <div>
-                        <label for="tracking-input" class="sr-only">Numero de guia</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i class="fa-solid fa-magnifying-glass text-brand-400"></i>
-                            </div>
-                            <input type="text" id="tracking-input"
-                                class="block w-full pl-11 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 placeholder-slate-400 font-mono uppercase tracking-wide transition-all shadow-inner focus:outline-none focus-visible:outline-none"
-                                placeholder="Ejem: PE-2024-001" required>
-                        </div>
-                    </div>
-                    <button type="submit" id="tracking-btn"
-                        data-magnetic
-                        class="w-full bg-brand-900 hover:bg-brand-800 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-brand-900/30 flex justify-center items-center gap-3">
-                        <span id="tracking-submit-text">RASTREAR</span> <i class="fa-solid fa-chevron-right text-xs"></i>
-                    </button>
-                </form>
-
-                <div id="tracking-result" class="hidden mt-6 pt-6 border-t border-slate-100 relative z-10">
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <p class="text-xs text-slate-400 uppercase font-bold" id="tracking-result-guide-label">Guía</p>
-                            <p class="text-brand-900 font-mono font-bold" id="result-id">TRACK-123</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs text-slate-400 uppercase font-bold" id="tracking-result-estimated-label">Estimado</p>
-                            <p class="text-green-600 font-bold" id="result-date">Calculando...</p>
-                        </div>
-                    </div>
-                    <div class="space-y-0 mt-4" id="tracking-timeline">
-                        <!-- Injected by ContentHydrator -->
-                    </div>
-                    <button type="button" id="reset-tracking-btn"
-                        class="mt-4 text-xs text-slate-400 hover:text-brand-600 underline w-full text-center"><span id="tracking-reset-text">Nueva búsqueda</span></button>
-                </div>
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
     </section>
@@ -191,20 +138,21 @@
     <!-- NEW APPLE-STYLE IMMERSIVE SECTION -->
     <section id="apple-section" aria-label="Tecnología de rastreo">
         <div id="apple-sticky-container">
-            <img id="apple-bg-image"
-                src="/media/furgoneta-hero.jpg"
-                width="1920" height="1080" alt="Unidad de reparto en operación logística nocturna" decoding="async">
+            <picture>
+                <source id="apple-bg-avif-source" type="image/avif"
+                    srcset="/media/optimized/furgoneta-hero-640.avif 640w, /media/optimized/furgoneta-hero-960.avif 960w, /media/optimized/furgoneta-hero-1280.avif 1280w, /media/optimized/furgoneta-hero-1600.avif 1600w, /media/optimized/furgoneta-hero-1920.avif 1920w"
+                    sizes="100vw">
+                <source id="apple-bg-webp-source" type="image/webp"
+                    srcset="/media/optimized/furgoneta-hero-640.webp 640w, /media/optimized/furgoneta-hero-960.webp 960w, /media/optimized/furgoneta-hero-1280.webp 1280w, /media/optimized/furgoneta-hero-1600.webp 1600w, /media/optimized/furgoneta-hero-1920.webp 1920w"
+                    sizes="100vw">
+                <img id="apple-bg-image"
+                    src="/media/optimized/furgoneta-hero-1280.webp"
+                    width="1920" height="1080" alt="Unidad de reparto en operación logística nocturna" decoding="async">
+            </picture>
             <div id="apple-overlay"></div>
 
-            <div class="relative z-10 max-w-5xl px-6 text-center">
-                <!-- Se ha eliminado aria-hidden dinámico. El contenido es visible o está en opacidad 0, pero accesible en el DOM -->
-                <h2 id="apple-heading" class="apple-text-reveal text-5xl md:text-8xl font-bold tracking-tight mb-6">
-                    Control <br> Integrado.
-                </h2>
-                <p id="apple-subheading"
-                    class="apple-text-reveal text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                    El seguimiento inicia cuando recogemos en la sede del cliente y culmina con la entrega al destinatario.
-                </p>
+            <div class="relative z-10 max-w-5xl px-6 text-center" id="apple-copy">
+                <!-- Injected by ContentHydrator -->
             </div>
         </div>
     </section>
@@ -255,10 +203,10 @@
                 <div class="truck-body">
                     <!-- Cargo box -->
                     <div class="truck-cargo">
-                        <i class="fa-solid fa-box"></i>
+                        <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7.5 9-4.5 9 4.5-9 4.5-9-4.5Z" /><path d="M3 7.5v9L12 21l9-4.5v-9" /><path d="M12 12v9" /></svg>
                     </div>
                     <!-- Truck cab icon -->
-                    <i class="fa-solid fa-truck-fast truck-icon"></i>
+                    <svg class="app-icon truck-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 9H4v7h9v-5" /><path d="M13 11h4l3 3v2h-7" /><circle cx="7.5" cy="18" r="1.5" /><circle cx="17.5" cy="18" r="1.5" /><path d="M2 10h2" /><path d="M1 13h3" /><path d="M2 16h2" /></svg>
                     <!-- Speed lines -->
                     <div class="truck-speed-lines">
                         <span></span><span></span><span></span>
@@ -274,8 +222,8 @@
                     <p class="ts-sub" id="truck-subheading">Control operativo con 03 visitas y cargo estandar.</p>
                     <div class="ts-progress-track">
                         <div class="ts-progress-labels">
-                            <span><i class="fa-solid fa-building"></i> <span id="truck-origin-label">Origen</span></span>
-                            <span><i class="fa-solid fa-house"></i> <span id="truck-destination-label">Destino</span></span>
+                            <span><svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20" /><path d="M4 21V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v16" /><path d="M17 21V10a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v11" /><path d="M8 8h2" /><path d="M12 8h2" /><path d="M8 12h2" /><path d="M12 12h2" /><path d="M9 21v-4h2v4" /></svg> <span id="truck-origin-label">Origen</span></span>
+                            <span><svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5" /><path d="M5 10.5V20h14v-9.5" /><path d="M10 20v-5h4v5" /></svg> <span id="truck-destination-label">Destino</span></span>
                         </div>
                         <div class="ts-progress-bar">
                             <div id="ts-progress-fill"></div>
@@ -288,7 +236,7 @@
             <div class="ts-scroll-cue">
                 <span id="truck-scroll-cue-text">Sigue scrolleando</span>
                 <div class="ts-scroll-arrow">
-                    <i class="fa-solid fa-chevron-down"></i>
+                    <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                 </div>
             </div>
 
@@ -301,7 +249,7 @@
     ======================================================== -->
     <div id="uf-feature-nav" aria-label="Características del servicio">
         <button id="uf-nav-prev" class="uf-nav-arrow" aria-label="Anterior">
-            <i class="fa-solid fa-chevron-left"></i>
+            <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
         </button>
 
         <div class="uf-nav-center">
@@ -312,7 +260,7 @@
         </div>
 
         <button id="uf-nav-next" class="uf-nav-arrow" aria-label="Siguiente">
-            <i class="fa-solid fa-chevron-right"></i>
+            <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
         </button>
     </div>
 
@@ -332,57 +280,8 @@
                 </div>
             </div>
             <div class="uf-right">
-                <div class="uf-mockup-wrapper">
-                    <div class="mockup-screen mockup-screen--visible" id="ms-0">
-                        <div class="ms-inner ms-campus">
-                            <div class="ms-icon"><i class="fa-solid fa-truck"></i></div>
-                            <div class="ms-chip" id="uf-mockup-chip">Lima · Callao · Provincias</div>
-                            <p class="ms-text" id="uf-mockup-pickup-text">Recojo programado<br>y ruta asignada</p>
-                            <div class="ms-badge-row">
-                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> <span id="uf-mockup-pickup-tag-one">Minivan y autos</span>
-                                </div>
-                                <div class="ms-campus-card"><i class="fa-solid fa-location-dot"></i> <span id="uf-mockup-pickup-tag-two">Motorizados</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mockup-screen" id="ms-1">
-                        <div class="ms-inner ms-shield">
-                            <div class="ms-shield-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                            <p class="ms-text ms-text--light" id="uf-mockup-shield-text">Custodia documentaria</p>
-                            <div class="ms-coverage">
-                                <div class="ms-bar">
-                                    <div class="ms-bar-fill" style="width:100%"></div>
-                                </div>
-                                <span id="uf-mockup-shield-coverage">Estantes metálicos bajo llave</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mockup-screen" id="ms-2">
-                        <div class="ms-inner ms-notify">
-                            <div class="ms-notify-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                            <div class="ms-notification">
-                                <div class="notif-row"><span class="notif-dot done"></span><span id="uf-mockup-notif-one">Recojo confirmado</span></div>
-                                <div class="notif-row"><span class="notif-dot active pulse"></span><span id="uf-mockup-notif-two">Distribución en curso</span></div>
-                                <div class="notif-row dimmed"><span class="notif-dot"></span><span id="uf-mockup-notif-three">Entrega o devolución</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mockup-screen" id="ms-3">
-                        <div class="ms-inner ms-payment">
-                            <div class="ms-payment-row">
-                                <div class="pay-method active"><i class="fa-solid fa-clipboard-check"></i> <span id="uf-mockup-method-one">Recojo</span></div>
-                                <div class="pay-method"><i class="fa-solid fa-box-open"></i> <span id="uf-mockup-method-two">Habilitación</span></div>
-                                <div class="pay-method"><i class="fa-solid fa-truck-fast"></i> <span id="uf-mockup-method-three">Distribución</span></div>
-                                <div class="pay-method"><i class="fa-solid fa-circle-check"></i> <span id="uf-mockup-method-four">Entrega</span></div>
-                            </div>
-                            <div class="ms-receipt">
-                                <div class="receipt-row"><span id="uf-mockup-receipt-one-label">Reporte parcial</span><span id="uf-mockup-receipt-one-value">Cada 48 h</span></div>
-                                <div class="receipt-row"><span id="uf-mockup-receipt-two-label">Entrega de cargos</span><span id="uf-mockup-receipt-two-value">24 h</span></div>
-                                <div class="receipt-row receipt-total"><span id="uf-mockup-receipt-three-label">Visitas incluidas</span><span id="uf-mockup-receipt-three-value">03</span></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="uf-mockup-wrapper" id="uf-mockup-screens">
+                    <!-- Injected by ContentHydrator -->
                 </div>
             </div>
         </div>
@@ -400,158 +299,24 @@
 
             <!-- Slides track -->
             <div id="carousel-track">
-
-                <!-- Slide 1: Recojo y habilitación -->
-                <div class="carousel-slide" id="slide-1">
-                    <div class="carousel-content">
-                        <div class="slide-icon-wrap">
-                            <div class="slide-icon">
-                                <i class="fa-solid fa-clipboard-check"></i>
-                            </div>
-                            <div class="slide-icon-ring"></div>
-                        </div>
-                        <div class="slide-label" id="carousel-slide-1-label">Operación local</div>
-                        <h2 class="slide-title" id="carousel-slide-1-title">Recojo y<br>habilitación documental.</h2>
-                        <p class="slide-body" id="carousel-slide-1-body">Recogemos en las instalaciones del cliente y preparamos documentos con ensobrado, etiquetado, embolsado y cargo.</p>
-                        <div class="slide-universities">
-                            <span class="uni-badge"><i class="fa-solid fa-file-lines"></i> <span id="carousel-slide-1-badge-one">Documentos</span></span>
-                            <span class="uni-badge"><i class="fa-solid fa-scroll"></i> <span id="carousel-slide-1-badge-two">Diplomas</span></span>
-                            <span class="uni-badge"><i class="fa-solid fa-id-card"></i> <span id="carousel-slide-1-badge-three">Carnés</span></span>
-                        </div>
-                    </div>
-                    <div class="slide-visual">
-                        <div class="phone-mockup">
-                            <div class="phone-screen screen-pickup">
-                                <div class="pm-header">
-                                    <span class="pm-dot green"></span>
-                                    <span class="pm-title" id="carousel-slide-1-phone-title">Orden de servicio</span>
-                                </div>
-                                <div class="pm-map">
-                                    <div class="pm-pin bounce">
-                                        <i class="fa-solid fa-location-dot text-brand-500"></i>
-                                    </div>
-                                    <div class="pm-map-grid"></div>
-                                    <div class="pm-campus-label" id="carousel-slide-1-phone-label">Recojo en cliente</div>
-                                </div>
-                                <div class="pm-cta" id="carousel-slide-1-phone-cta">Iniciar habilitación ?</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 2: Tracking en tiempo real -->
-                <div class="carousel-slide" id="slide-2">
-                    <div class="carousel-content">
-                        <div class="slide-icon-wrap">
-                            <div class="slide-icon slide-icon--blue">
-                                <i class="fa-solid fa-satellite-dish"></i>
-                            </div>
-                            <div class="slide-icon-ring ring--blue"></div>
-                        </div>
-                        <div class="slide-label" id="carousel-slide-2-label">Control integrado</div>
-                        <h2 class="slide-title" id="carousel-slide-2-title">Tracking de<br>principio a fin.</h2>
-                        <p class="slide-body" id="carousel-slide-2-body">El seguimiento inicia desde el recojo y termina en la entrega al titular o apoderado autorizado, con reportes de control.</p>
-                        <div class="slide-stat-row">
-                            <div class="slide-stat">
-                                <span class="slide-stat-num">48h</span>
-                                <span class="slide-stat-label" id="carousel-slide-2-stat-one-label">Reporte parcial</span>
-                            </div>
-                            <div class="slide-stat">
-                                <span class="slide-stat-num">24h</span>
-                                <span class="slide-stat-label" id="carousel-slide-2-stat-two-label">Entrega de cargos</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide-visual">
-                        <div class="phone-mockup">
-                            <div class="phone-screen screen-tracking">
-                                <div class="pm-header">
-                                    <span class="pm-dot blue"></span>
-                                    <span class="pm-title" id="carousel-slide-2-phone-title">En camino</span>
-                                </div>
-                                <div class="track-route">
-                                    <div class="route-line">
-                                        <div class="route-dot route-dot--done"></div>
-                                        <div class="route-segment done"></div>
-                                        <div class="route-dot route-dot--active pulse"></div>
-                                        <div class="route-segment pending"></div>
-                                        <div class="route-dot route-dot--pending"></div>
-                                    </div>
-                                    <div class="route-labels">
-                                        <span id="carousel-slide-2-route-one">Recojo</span>
-                                        <span class="active-label" id="carousel-slide-2-route-two">En ruta</span>
-                                        <span id="carousel-slide-2-route-three">Entrega</span>
-                                    </div>
-                                </div>
-                                <div class="pm-eta"><span id="carousel-slide-2-eta-prefix">Reporte parcial:</span> <strong id="carousel-slide-2-eta-value">Cada 48 h</strong></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 3: Cobertura -->
-                <div class="carousel-slide" id="slide-3">
-                    <div class="carousel-content">
-                        <div class="slide-icon-wrap">
-                            <div class="slide-icon slide-icon--green">
-                                <i class="fa-solid fa-bolt"></i>
-                            </div>
-                            <div class="slide-icon-ring ring--green"></div>
-                        </div>
-                        <div class="slide-label" id="carousel-slide-3-label">Cobertura nacional</div>
-                        <h2 class="slide-title" id="carousel-slide-3-title">Distribución local<br>y provincias.</h2>
-                        <p class="slide-body" id="carousel-slide-3-body">Tiempo de distribución local de 1 a 4 días. El flujo a sedes se programa según pedidos y la distribución a domicilios es diaria.</p>
-                        <div class="slide-timer">
-                            <div class="timer-circle">
-                                <i class="fa-regular fa-clock"></i>
-                                <span id="carousel-slide-3-timer-one">1 a 4 días</span>
-                            </div>
-                            <div class="timer-arrow">?</div>
-                            <div class="timer-circle timer-circle--green">
-                                <i class="fa-solid fa-check"></i>
-                                <span id="carousel-slide-3-timer-two">Servicio diario</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slide-visual">
-                        <div class="phone-mockup">
-                            <div class="phone-screen screen-delivered">
-                                <div class="pm-header">
-                                    <span class="pm-dot green"></span>
-                                    <span class="pm-title" id="carousel-slide-3-phone-title">Entrega final</span>
-                                </div>
-                                <div class="delivered-check">
-                                    <div class="check-circle">
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </div>
-                                    <p class="delivered-msg" id="carousel-slide-3-delivered-message">Titular o apoderado autorizado</p>
-                                    <p class="delivered-time" id="carousel-slide-3-delivered-time">Cargo entregado en 24 h</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Injected by ContentHydrator -->
             </div><!-- /carousel-track -->
 
             <!-- Navigation Controls -->
             <div class="carousel-controls">
                 <!-- Prev button -->
-                <button id="carousel-prev" class="carousel-nav-btn btn--disabled" aria-label="Anterior">
-                    <i class="fa-solid fa-chevron-left"></i>
+                <button id="carousel-prev" class="carousel-nav-btn btn--disabled" aria-label="Anterior" aria-controls="carousel-track">
+                    <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6" /></svg>
                 </button>
 
                 <!-- Dot indicators -->
-                <div class="carousel-dots" role="tablist" aria-label="Diapositivas">
-                    <span class="carousel-dot carousel-dot--active" data-slide="0" role="tab" aria-label="Slide 1"
-                        tabindex="0"></span>
-                    <span class="carousel-dot" data-slide="1" role="tab" aria-label="Slide 2" tabindex="0"></span>
-                    <span class="carousel-dot" data-slide="2" role="tab" aria-label="Slide 3" tabindex="0"></span>
+                <div class="carousel-dots" role="tablist" aria-label="Diapositivas" id="carousel-dots">
+                    <!-- Injected by ContentHydrator -->
                 </div>
 
                 <!-- Next button -->
-                <button id="carousel-next" class="carousel-nav-btn" aria-label="Siguiente">
-                    <i class="fa-solid fa-chevron-right"></i>
+                <button id="carousel-next" class="carousel-nav-btn" aria-label="Siguiente" aria-controls="carousel-track">
+                    <svg class="app-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6" /></svg>
                 </button>
             </div>
 
@@ -640,60 +405,18 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-16 text-sm border-t border-slate-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-6">
-                        <div class="w-8 h-8 bg-brand-600 rounded flex items-center justify-center text-white"><i
-                                class="fa-solid fa-box-open"></i></div>
-                        <span class="font-bold text-xl text-white" id="footer-brand-name">POSTAL EXPRESS</span>
-                    </div>
-                    <p class="mb-6 leading-relaxed" id="footer-intro">Nos es grato presentar nuestra empresa Postal Express SAC, con 15 años de experiencia en mensajería y servicios postales.</p>
-                    <a href="https://wa.me/51996983530" target="_blank" rel="noopener noreferrer" id="footer-whatsapp-link"
-                        class="inline-flex items-center gap-2 bg-green-600 px-4 py-2 rounded-lg text-white hover:bg-green-500 transition font-bold">
-                        <i class="fa-brands fa-whatsapp"></i> <span id="footer-whatsapp-text">WhatsApp 996983530</span>
-                    </a>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-company-heading">Empresa</h4>
-                    <ul class="space-y-3" id="footer-company-list">
-                        <li class="hover:text-white transition">Postal Express SAC</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-coverage-heading">Cobertura</h4>
-                    <ul class="space-y-3" id="footer-coverage-list">
-                        <li class="hover:text-white transition">Lima y Callao</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold uppercase tracking-wider mb-6" id="footer-contracts-heading">Contratos</h4>
-                    <p class="mb-4 text-xs" id="footer-contracts-description">Atención comercial y coordinaciones de servicio.</p>
-                    <a href="tel:+51996983530" id="footer-contract-link"
-                        class="inline-flex items-center gap-2 bg-brand-600 px-4 py-2 rounded-lg text-white hover:bg-brand-500 transition font-bold"
-                        aria-label="Llamar a contratos">
-                        <i class="fa-solid fa-phone"></i> <span id="footer-contract-text">996983530</span>
-                    </a>
-                </div>
-            </div>
-            <div
-                class="border-t border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-                <p id="footer-copyright">&copy; 2026 Postal Express SAC.</p>
-                <div class="flex gap-6" id="footer-signoff">
-                    <span>Atentamente</span>
-                    <span>José Mejía Tejada</span>
-                    <span>Gerente General</span>
-                </div>
-            </div>
+    <footer id="coverage-section" class="bg-slate-950 text-slate-400 py-16 text-sm border-t border-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="footer-content">
+            <!-- Injected by ContentHydrator -->
         </div>
     </footer>
+    </main>
 
     <!-- Chat Soporte -->
     <a href="https://wa.me/51996983530" target="_blank" rel="noopener noreferrer" id="floating-whatsapp-link"
         class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl z-50 transition transform hover:scale-110 flex items-center gap-2 group"
         aria-label="Chat de soporte">
-        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <svg class="app-icon text-2xl" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5a8.5 8.5 0 0 1-12.5 7.5L4 20l1-3.1A8.5 8.5 0 1 1 20 11.5Z" /><path d="M9 8.5c-.5 0-1 .4-1 .9 0 2.8 3.7 6.6 6.5 6.6.5 0 .9-.4 1-.9l.1-.8c.1-.4-.1-.8-.5-1l-1.4-.6c-.3-.1-.7-.1-.9.2l-.3.4c-.6-.3-1.5-1.2-1.8-1.8l.4-.3c.3-.2.3-.6.2-.9l-.6-1.4c-.2-.4-.6-.6-1-.5l-.9.1z" /></svg>
         <span id="floating-whatsapp-text"
             class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap font-bold">Chat
             996983530</span>

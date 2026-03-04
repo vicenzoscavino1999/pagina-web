@@ -1,0 +1,30 @@
+#tracking-widget {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.96) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow:
+        0 28px 56px rgba(3, 29, 58, 0.2),
+        0 1px 0 rgba(255, 255, 255, 0.72) inset;
+}
+
+#tracking-widget::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0284c7 0%, #22c55e 55%, #f59e0b 100%);
+    opacity: 0.75;
+}
+
+#tracking-input {
+    background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+}
+
+#tracking-input:focus {
+    box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+}
+
+@media (max-width: 768px) {
+    #tracking-widget {
+        margin-top: 0.5rem;
+    }
+}

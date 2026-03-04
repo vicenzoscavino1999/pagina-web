@@ -1,4 +1,6 @@
 import { App } from './app/App';
+import { installRuntimeMonitor } from './app/runtimeMonitor';
+import { installWebVitalsMonitor } from './app/webVitalsMonitor';
 
 const clearStalePwaCachesInDev = (): void => {
     if (!import.meta.env.DEV) return;
@@ -25,6 +27,8 @@ const clearStalePwaCachesInDev = (): void => {
 };
 
 clearStalePwaCachesInDev();
+installRuntimeMonitor();
+installWebVitalsMonitor();
 
 const app = new App();
 
