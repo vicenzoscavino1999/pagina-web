@@ -30,7 +30,7 @@ const RAW_SITE_CONTENT = {
         badge: 'Postal Express SAC',
         titleMain: 'Logística corporativa.',
         titleSub: 'Redefinida.',
-        description: '15 años de experiencia entregando seguridad, control y confianza en Lima, Callao y Provincias.',
+        description: '17 años de experiencia entregando seguridad, control y confianza en Lima, Callao y Provincias.',
         primaryCta: 'Solicitar servicio',
     },
     tracking: {
@@ -66,7 +66,7 @@ const RAW_SITE_CONTENT = {
     },
     apple: {
         headingHtml: 'Control <br> Integrado.',
-        subheading: 'El seguimiento inicia al recojo y culmina al entregar documentos, paquetería, carnés y diplomas.',
+        subheading: 'El seguimiento inicia al recojo y culmina al entregar documentos, paquetería, carnés, diplomas y valorados.',
     },
     truck: {
         headlineHtml: 'Del recojo<br>a la entrega.',
@@ -274,7 +274,7 @@ const RAW_SITE_CONTENT = {
     },
     stats: {
         items: [
-            { target: 15, suffix: '+', label: 'Años de experiencia' },
+            { target: 17, suffix: '+', label: 'Años de experiencia' },
             { target: 3, suffix: '+', label: 'Visitas por envío' },
             { target: 48, suffix: 'h', label: 'Reporte parcial' },
             { target: 24, suffix: 'h', label: 'Entrega de cargos' },
@@ -314,18 +314,17 @@ const RAW_SITE_CONTENT = {
         ],
     },
     footer: {
-        intro: 'Postal Express SAC cuenta con 15 años de experiencia en mensajería y servicios postales para clientes institucionales y corporativos.',
+        intro: 'Postal Express SAC cuenta con 17 años de experiencia en mensajería y servicios postales para clientes institucionales y corporativos.',
         whatsappLabel: 'WhatsApp 996983530',
         companyHeading: 'Empresa',
         coverageHeading: 'Cobertura',
         contractsHeading: 'Contratos',
         contractsDescription: 'Atención comercial y coordinaciones de servicio.',
-        signoff: ['Atentamente', 'José Mejía Tejada', 'Gerente General'],
+        signoff: ['Atentamente', 'Gerente General'],
         copyright: '© 2026 Postal Express SAC.',
         companyItems: [
             'Postal Express SAC',
             'Gerencia General',
-            'José Mejía Tejada',
         ],
         coverageItems: [
             'Lima y Callao',
