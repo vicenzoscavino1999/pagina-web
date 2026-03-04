@@ -54,6 +54,7 @@ function renderNavigation(content: SiteContent, dom: ContentDomWriter): void {
     dom.setText('mobile-services-link', content.nav.servicesLabel);
     dom.setText('mobile-tracking-link', content.nav.trackingLabel);
     dom.setText('mobile-coverage-link', content.nav.coverageLabel);
+    dom.setText('mobile-quick-track-text', content.nav.trackingLabel);
 }
 
 function renderContact(content: SiteContent, dom: ContentDomWriter): void {
@@ -79,10 +80,11 @@ function renderContact(content: SiteContent, dom: ContentDomWriter): void {
     dom.setText('contact-title', content.contact.sectionTitle);
     dom.setText('contact-subtitle-prefix', content.contact.sectionSubtitlePrefix);
 
-    ['floating-whatsapp-link'].forEach((id) => {
+    ['floating-whatsapp-link', 'mobile-quick-whatsapp-link'].forEach((id) => {
         dom.setHref(id, content.contact.whatsappHref);
     });
     dom.setText('floating-whatsapp-text', `Chat ${formattedPhone}`);
+    dom.setText('mobile-quick-chat-text', `WhatsApp ${formattedPhone}`);
 }
 
 function renderHero(content: SiteContent, dom: ContentDomWriter): void {

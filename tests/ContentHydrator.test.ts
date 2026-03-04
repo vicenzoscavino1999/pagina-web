@@ -34,6 +34,9 @@ describe('ContentHydrator', () => {
 
             <a id="floating-whatsapp-link"></a>
             <span id="floating-whatsapp-text"></span>
+            <a id="mobile-quick-whatsapp-link"></a>
+            <span id="mobile-quick-chat-text"></span>
+            <span id="mobile-quick-track-text"></span>
 
             <div id="hero-layout">
                 <div id="hero-copy"></div>
@@ -92,6 +95,15 @@ describe('ContentHydrator', () => {
         expect((document.getElementById('nav-contract-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.phoneHref);
         expect((document.getElementById('hero-contract-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.phoneHref);
         expect((document.getElementById('footer-whatsapp-link') as HTMLAnchorElement).href).toBe(SITE_CONTENT.contact.whatsappHref);
+        expect((document.getElementById('mobile-quick-whatsapp-link') as HTMLAnchorElement).href).toBe(
+            SITE_CONTENT.contact.whatsappHref
+        );
+        expect(document.getElementById('mobile-quick-track-text')?.textContent).toBe(
+            SITE_CONTENT.nav.trackingLabel
+        );
+        expect(document.getElementById('mobile-quick-chat-text')?.textContent).toMatch(
+            /WhatsApp 996 983 530/
+        );
         expect((document.getElementById('tracking-input') as HTMLInputElement).placeholder).toBe(SITE_CONTENT.tracking.inputPlaceholder);
         expect((document.getElementById('hero-bg') as HTMLImageElement).src).toContain(
             SITE_CONTENT.media.heroBackgroundSrc

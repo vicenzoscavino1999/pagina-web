@@ -35,6 +35,10 @@ export function registerCoreSmokeTests(): void {
         await expect(page.locator('#nav-contract-link')).toHaveAttribute('href', 'tel:+51996983530');
         await expect(page.locator('#hero-contract-link')).toHaveAttribute('href', 'tel:+51996983530');
         await expect(page.locator('#floating-whatsapp-link')).toHaveAttribute('href', 'https://wa.me/51996983530');
+        await expect(page.locator('#mobile-quick-whatsapp-link')).toHaveAttribute(
+            'href',
+            'https://wa.me/51996983530'
+        );
     });
 
     test('navbar navega a servicios, tracking y cobertura sin desalinear el layout', async ({ page }) => {
@@ -103,5 +107,20 @@ export function registerCoreSmokeTests(): void {
 
         await page.locator('#mobile-btn').click();
         await expect(menu).toBeVisible();
+    });
+
+    test('quickbar mobile ofrece accesos de tracking y whatsapp', async ({ page }) => {
+        await page.setViewportSize({ width: 390, height: 844 });
+        await page.goto('/');
+
+        const quickbar = page.locator('#mobile-quickbar');
+        await expect(quickbar).toBeVisible();
+        await expect(page.locator('#mobile-quick-track-link')).toHaveAttribute('href', '#hero-section');
+        await expect(page.locator('#mobile-quick-track-text')).toHaveText('Tracking');
+        await expect(page.locator('#mobile-quick-whatsapp-link')).toHaveAttribute(
+            'href',
+            'https://wa.me/51996983530'
+        );
+        await expect(page.locator('#mobile-quick-chat-text')).toHaveText(/WhatsApp/);
     });
 }
